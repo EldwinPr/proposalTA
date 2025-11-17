@@ -1,0 +1,35 @@
+# LaTeX specific
+*.aux
+*.bbl
+*.bbl-SAVE-ERROR
+*.bcf
+*.blg
+*.lof
+*.log
+*.lol
+*.lot
+*.out
+*.toc
+*.run.xml
+*.synctex.gz
+*.pdf
+*.fls
+*.fdb_latexmk
+*.nav
+*.snm
+*.vrb
+*.dvi
+*.ps
+
+# Editor/IDE specific
+.vscode/
+*~
+*.bak
+*.swp
+*.tmp
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+GEMINI.md
