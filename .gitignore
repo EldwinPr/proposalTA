@@ -32,4 +32,6 @@
 .DS_Store
 Thumbs.db
 
+.claude
+CLAUDE.md
 GEMINI.md

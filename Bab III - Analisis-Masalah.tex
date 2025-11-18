@@ -43,9 +43,25 @@ Dengan demikian, pemilihan infrastruktur perlu mempertimbangkan kebutuhan bisnis
 \section{Analisis Kebutuhan}
 
 \subsection{Identifikasi Masalah Pengguna}
-\begin{itemize}
-    \item Kendala digitalisasi: biaya mahal, sistem rumit, maintenance sulit, perlu SDM khusus, fitur ERP tidak cocok untuk UMKM kecil/mikro.
-\end{itemize}
+\label{sec:identifikasi-masalah}
+Berdasarkan analisis kondisi yang telah dipaparkan, teridentifikasi beberapa masalah utama yang dihadapi UMKM dalam upaya adopsi teknologi digital, khususnya sistem ERP. Masalah-masalah ini menjadi kendala fundamental yang menghambat efisiensi dan pertumbuhan bisnis.
+
+\begin{enumerate}
+    \item \textbf{Biaya Adopsi dan Operasional yang Tinggi.}
+    Justifikasi: UMKM dihadapkan pada dua pilihan yang sama-sama memberatkan. Di satu sisi, solusi berbasis \textit{cloud} (SaaS atau VPS) menuntut biaya langganan berkelanjutan (\textit{recurring cost}) yang menjadi beban operasional tetap. Di sisi lain, solusi \textit{on-premise} tradisional memerlukan investasi awal yang sangat besar untuk pembelian server, ditambah biaya tak terduga untuk listrik, pendinginan, dan pemeliharaan. Keduanya merupakan penghalang finansial yang signifikan bagi usaha dengan modal terbatas.
+
+    \item \textbf{Ketergantungan Penuh pada Konektivitas Internet.}
+    Justifikasi: Solusi \textit{cloud} mewajibkan adanya koneksi internet yang stabil dan andal. Bagi UMKM yang berlokasi di daerah dengan infrastruktur internet kurang memadai, ketergantungan ini menjadi risiko operasional. Ketika koneksi terputus, seluruh aktivitas bisnis yang terintegrasi dalam sistem dapat terhenti total, menyebabkan kerugian produktivitas dan pendapatan.
+
+    \item \textbf{Kompleksitas Sistem dan Keterbatasan Sumber Daya Manusia (SDM).}
+    Justifikasi: Perangkat lunak ERP sering kali dirancang dengan kompleksitas fitur untuk perusahaan skala besar, sehingga tidak relevan dan sulit dipelajari oleh pengguna di level UMKM. Selain itu, manajemen infrastruktur, baik \textit{on-premise} maupun \textit{cloud}, membutuhkan keahlian teknis khusus untuk instalasi, pemeliharaan, dan keamanan. Mayoritas UMKM tidak memiliki SDM dengan kompetensi IT, sehingga implementasi menjadi sulit dan berisiko.
+
+    \item \textbf{Skalabilitas Infrastruktur yang Tidak Fleksibel.}
+    Justifikasi: Bisnis UMKM bersifat dinamis dan membutuhkan solusi yang dapat tumbuh secara bertahap. Solusi \textit{on-premise} tradisional sulit untuk ditingkatkan kapasitasnya tanpa investasi besar kembali. Sebaliknya, peningkatan kapasitas pada layanan \textit{cloud} sering kali diikuti dengan lonjakan biaya langganan yang signifikan, membuat skalabilitas menjadi mahal.
+
+    \item \textbf{Kekhawatiran atas Kontrol dan Keamanan Data.}
+    Justifikasi: Penggunaan layanan \textit{cloud} berarti data bisnis sensitif disimpan pada server milik pihak ketiga. Hal ini menimbulkan kekhawatiran bagi sebagian pemilik UMKM terkait privasi, kerahasiaan, dan keamanan data strategis mereka. Keinginan untuk memiliki kontrol penuh atas aset data menjadi pertimbangan penting yang tidak dapat dipenuhi oleh model SaaS pada umumnya.
+\end{enumerate}
 
 \subsection{Kebutuhan Fungsional}
 \begin{itemize}

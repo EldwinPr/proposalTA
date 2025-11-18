@@ -3,4 +3,75 @@
 % ==========================================
 \chapter{DESAIN KONSEP SOLUSI}
 \label{chap:desain-konsep-solusi}
-[Isi bagian ini...]
+
+\section{Gambaran Umum Solusi}
+
+Berdasarkan analisis pada Bab III, solusi yang diajukan adalah:
+\begin{itemize}
+    \item Implementasi infrastruktur edge computing berbasis Single Board Computer untuk hosting aplikasi ERP.
+    \item Evaluasi kelayakan teknis dan finansial deployment ERP pada perangkat bertenaga rendah sebagai alternatif terhadap cloud konvensional.
+    \item Framework pengujian untuk perbandingan performa dan biaya antara deployment lokal dan cloud.
+\end{itemize}
+
+\section{Arsitektur Deployment}
+
+\subsection{Deployment pada Edge Computing}
+\begin{itemize}
+    \item Konsumsi daya rendah dengan investasi satu kali tanpa biaya berlangganan berkala.
+    \item Kontrol penuh atas data dengan kemampuan operasi offline.
+    \item Platform menggunakan sistem operasi berbasis Linux dengan stack aplikasi standar.
+    \item Akses jaringan lokal untuk integrasi dengan perangkat bisnis.
+\end{itemize}
+
+\subsection{Deployment pada Cloud}
+\begin{itemize}
+    \item Managed infrastructure dengan skalabilitas resources sesuai kebutuhan.
+    \item High availability dengan biaya operasional berulang.
+    \item Dependency pada koneksi internet stabil.
+    \item Digunakan sebagai baseline perbandingan performa dan biaya.
+\end{itemize}
+
+\subsection{Simulasi Distributed System}
+\begin{itemize}
+    \item Simulasi distributed deployment menggunakan metode alternating karena keterbatasan sumber daya.
+    \item Membuktikan kelayakan multi-node deployment dengan single unit hardware.
+\end{itemize}
+
+\section{Metodologi Pengujian}
+
+\subsection{Skenario Pengujian}
+\begin{itemize}
+    \item Load testing untuk mensimulasikan workload UMKM.
+    \item Simulasi concurrent users dengan transaction scenarios umum.
+    \item Pengukuran performa pada berbagai kondisi beban.
+\end{itemize}
+
+\subsection{Metrics Pengukuran}
+\begin{itemize}
+    \item Response time untuk berbagai operasi bisnis.
+    \item Throughput dan kapasitas pemrosesan transaksi.
+    \item Resource utilization (CPU, memori, storage).
+    \item Error rate dan reliability sistem.
+\end{itemize}
+
+\subsection{Infrastruktur Monitoring}
+\begin{itemize}
+    \item Tools monitoring untuk data collection real-time.
+    \item Analisis performa berdasarkan metrics yang dikumpulkan.
+\end{itemize}
+
+\section{Analisis Biaya}
+
+\subsection{Total Cost of Ownership (TCO)}
+\begin{itemize}
+    \item Perbandingan TCO untuk deployment edge computing vs cloud.
+    \item Capital expenditure: investasi awal hardware dan software.
+    \item Operational expenditure: biaya listrik, maintenance, dan subscription.
+\end{itemize}
+
+\subsection{Proyeksi Finansial}
+\begin{itemize}
+    \item Proyeksi biaya multi-tahun untuk kedua alternatif infrastruktur.
+    \item Identifikasi break-even point antara investasi edge computing dan cloud.
+    \item Analisis cost-effectiveness berdasarkan skala dan kebutuhan UMKM.
+\end{itemize}
