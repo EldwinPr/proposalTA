@@ -12,7 +12,6 @@
 *.toc
 *.run.xml
 *.synctex.gz
-*.pdf
 *.fls
 *.fdb_latexmk
 *.nav
@@ -32,6 +31,8 @@
 .DS_Store
 Thumbs.db
 
+*.txt
 .claude
+sources
 CLAUDE.md
 GEMINI.md

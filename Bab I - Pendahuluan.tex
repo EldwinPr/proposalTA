@@ -5,118 +5,60 @@
 \label{chap:pendahuluan}
 % --- Latar Belakang ---
 \section{Latar Belakang}
-Usaha Mikro, Kecil, dan Menengah (UMKM) merupakan tulang punggung dari perekonomian Indonesia. Menurut Deputi Bidang Usaha Mikro Kementerian UMKM Eiza Damanik, pada tahun 2025 jumlah UMKM mencapai 65.5 juta dan menyumbang 61,9\% terhadap Produk Domestik Bruto. Tidak hanya menyumbang secara finansial, UMKM juga menyerap 97\% dari total tenaga kerja nasional atau 119 juta tenaga kerja \cite{aprionis2025}. Sektor ini terbukti merupakan bagian vital tidak hanya untuk ekonomi nasional tapi daerah-daerah terutama yang tidak terjangkau industri besar. Meski peran UMKM sangat vital dalam perekonomian, mayoritas pelaku usaha menghadapi masalah klasik seperti pengelolaan sumber daya (stok, pelanggan, pemasok) dan keuangan yang manual serta tidak efisien. Masalah klasik ini sering kali menjadi alasan UMKM tidak tahan lama \cite{rismawati2025}.
+Sejak pertama kali komputer dikenalkan pada tahun 1960, banyak kelompok yang membuat aplikasi untuk mencatat sumber daya. Pada tahun 1970 \textit{Materials Requirements Planning} (MRP) pertama kali dikenalkan, kemudian berkembang menjadi MRP II dengan sistem manajemen sumber daya yang lebih komperhensif. Aplikasi ini kemudian berkembang dari pencatatan dan pengaturan menjadi alat bantu manajemen operasional yang disebut \textit{Enterprise Resource Planning} (ERP). Dengan ERP \textit{enterprise} dapat melakukan manajemen keuangan, sumber daya manusia, hingga manajemen rantai pasokan dalam satu \textit{platform}. Pada tahun 1990an \textit{market} ERP menjadi sangat kompetitif, namun setelah \textit{dotcom bubble} pada 2001 hanya tersisa tiga \textit{vendor} utama (yang awalnya dari enam atau lebih) yaitu SAP, Oracle, dan Infor \cite{goldston2020evolution}.
 
-Salah satu cara mengatasi masalah tersebut adalah melakukan digitalisasi untuk melakukan pencatatan sumber daya dan keuangan atau digitalisasi keseluruhan proses bisnis. Sayangnya, Tingkat digitalisasi UMKM di Indonesia masih tergolong rendah: baru sekitar 33,6\% pelaku UMKM yang mengadopsi sistem digital secara menyeluruh \cite{faturrahman2025}. Untuk digitalisasi sendiri, ada banyak cara mulai dari yang paling sederhana seperti mencatat menggunakan Micrsofot Excel hingga mengimplementasikan \textit{Enterprise Resource Planning} (ERP). Walaupun sederhana dan mudah, Microsoft Excel tidak bisa menjadi solusi akhir karena memiliki interoperabilitas dan skalabilitas yang sangat buruk. Maka agar sebuah UMKM tidak hanya dapat bertahan namun juga berkembang, dibutuhkanlah sistem ERP \cite{hasanah2024}.
+Pada awalnya, ERP merupakan sebuah aplikasi untuk mengatur sumber daya pada \textit{enterprise} besar yang membutuhkan biaya investasi awal yang sangat besar. Namun setelah meledaknya popularitas \textit{cloud computing} yang memungkinkan alternatif biaya berulang dan (hampir) tidak ada biaya investasi awal, usaha mikro, menengah, dan menengah (UMKM) mulai tertarik \cite{goldston2020evolution}. Keunggulan utama ERP adalah sifat interoperabilitasnya yang sangat baik, dirancang berdasarkan rantai pasok atau \textit{value chain} \cite{boza2015}. Interoperabilitas baik, \textit{platform} satu untuk semua, dan fleksibilitas \textit{deployment} (\textit{cloud} atau \textit{on-premise}) membuat ERP menjadi \textit{go-to} untuk manajemen sumber daya \textit{enterprise}. Hingga saat ini, popularitas ERP semakin berkembang dengan \textit{vendor} lama semakin populer dan munculnya \textit{vendor} baru yang menawarkan untuk UMKM contohnya Odoo dan Mekari.
 
-Sistem ERP memang menawarkan integrasi dan efisiensi, namun kebanyakan solusi ERP (khususnya \textit{deployment} dan pengadopsiannya) didesain untuk \textit{enterprise} besar, sehingga aspek modularitas—baik dari sisi perangkat lunak dan perangkat keras—seringkali belum fleksibel untuk implementasi bertahap pada UMKM skala kecil. Akibatnya, usaha kecil kesulitan menyesuaikan kebutuhan, memilih modul satu per satu, atau memulai digitalisasi secara parsial tanpa beban biaya/infrastruktur yang besar. Selain desain yang tidak fleksibel, ERP ini seringkali memiliki biaya lisensi, kostumisasi, dan \textit{deployment} yang cukup tinggi. Ditambah lagi dengan ERP yang seringkali disebut terlalu kompleks untuk digunakan pada skala UMKM, membuat pelaku UMKM menjadi malas untuk mengadopsinya \cite{hasanah2024}.
+Pada umumnya, ERP dapat di-\textit{deploy} menggunakan dua model infrastruktur yaitu \textit{cloud} dan \textit{on-premise}, walaupun belakangan ini muncul alternatif ketiga yaitu \textit{hybrid}. Untuk \textit{cloud} sendiri ada tiga jenis layanan utama yaitu \textit{Infrastructure-as-a-Service} (IaaS), \textit{Platform-as-a-Service} (PaaS), dan \textit{Software-as-a-Service} (SaaS). IaaS pemberi layanan menyediakan infrastruktur seperti \textit{server}, \textit{storage}, atau sumber daya komputasi (contohnya VPS), Paas menyediakan \textit{platform} komputasi tanpa berurusan langsung dengan \textit{operating system} (OS), dan SaaS menyediakan akses aplikasi melalui jaringan internet \cite{odunayo2018cloud}. Model \textit{on-premise}, berarti ERP dijalankan pada \textit{server} yang dimiliki sendiri. Model ini memiliki biaya investasi awal yang tinggi namun tidak memiliki biaya berulang seperti \textit{cloud} (pada umumnya) selain listrik \cite{Younus2024}.
 
-Masalah kompleksitas ERP sudah ada beberapa solusinya seperti ERP \textit{open-source} yang bersifat modular (seperti Odoo misalnya) memang mengatasi masalah pada tingkat perangkat lunak, namun belum menjawab tantangan infrastruktur fisik yang ramah anggaran namun bisa ditingkatkan skalanya \cite{hasanah2024}. Saat ini model \textit{deployment} yang umum digunakan seperti \textit{cloud} \textit{Virtual Private Server} (VPS) dan \textit{Platform as a Service} (PaaS atau \textit{serverless}) memiliki pengeluaran bulanan yang cukup tinggi. Sedangkan server fisik konvensional memiliki konsumsi daya yang tinggi, \textit{Total Cost of Ownership} yang tinggi (TCO), dan seringkali \textit{overkill} untuk skala UMKM (terutama mikro). Sehingga membuat sebuah celah permasalahan yaitu infrastruktur ERP yang modular dengan model \textit{deployment} yang hemat biaya dan hemat daya.
+Untuk mengatasi masalah biaya kepemilikan atau biaya berulang tinggi, diperlukan infrastruktur yang hemat biaya dan hemat daya. Salah satu kandidat yang menjanjikan adalah perangkat berbasis prosesor \textit{advanced RISC machine} (ARM). Prosesor ARM merupakan turunan dari \textit{Reduced Instruction Set Computing} (RISC) yang dalam satu dekade terakhir berkembang dengan pesat. RISC atau ARM dikenal dengan arsitekturnya yang dirancang agar lebih efisien dibandingkan kompetitor utamanya yaitu x86 (arsitektur prosessor terkenal untuk komputer dan \textit{server}) \cite{blem2013power, aroca2012towards}. Efisiensi telah menjadi senjata utama ARM yang membuatnya dominan dalam kategori perangkat seperti \textit{smartphone} dan \textit{tablet} hingga \textit{Single-Board Computer} (SBC) seperti Raspberry Pi dan Orange Pi.
 
-Studi-studi terdahulu yang membahas kelayakan teknis dan finansial alternatif \textit{deployment} ERP pada perangkat hemat biaya dan hemat daya masih sangat terbatas bahkan hampir tidak ada. Kebanyakan penelitian hanya berfokus pada manfaat perangkat lunak dan proses bisnis, tidak meninjau TCO maupun efisiensi daya dari model infrastruktur alternatif ini. Maka dari itu, tujuan penelitian dari penelitian ini untuk melihat apakah alternatif ini layak dari sisi teknis, bisnis, dan juga finansial.
+Perkembangan teknologi ARM yang berkelanjutan telah meningkatkan kemampuan komputasional SBC secara signifikan, yang awalnya hanya digunakan sebagai \textit{microcontroller} telah berubah menjadi komputer bahkan \textit{server} \cite{Ariza2022}. Pada "Implementasi \textit{Cluster Server} Pada Raspberry Pi Dengan Menggunakan Metode \textit{Load Balancing}" peneliti berhasil menjalankan \textit{web server} menggunakan Raspberry Pi 4 \cite{Putra2019}. Walaupun berhasil menjalankan \textit{web server}, penelitian tersebut hanya menguji skenario \textit{deployment} yang relatif sederhana—spesifiknya \textit{web server} dengan \textit{traffic} HTTP—yang tidak representative terhadap kompleksitas aplikasi ERP. ERP melibatkan operasi \textit{database} yang intensif, manajemen \textit{state} yang kompleks, pemrosesan \textit{business logic} yang berat, serta interaksi \textit{multi-user concurrent} yang simultan \cite{maddodi2018generating}.
+
+Kesenjangan ini menunjukkan bahwa belum ada bukti empiris yang memadai mengenai kelayakan \textit{deployment} ERP pada SBC: apakah perangkat ini mampu menangani beban ERP dari sisi performa, dan apakah \textit{Total Cost of Ownership}-nya benar-benar lebih hemat dibanding alternatif \textit{cloud} yang umum digunakan seperti VPS? Maka muncul pertanyaan penelitian: \textbf{"Bagaimana kelayakan \textit{deployment} ERP pada \textit{single-board computer} dibandingkan dengan VPS dari aspek performa dan biaya?"}
 
 % --- Rumusan Masalah ---
 \section{Rumusan Masalah}
 \begin{enumerate}[1.]
-    \item \textbf{Sulitnya UMKM melakukan digitalisasi menggunakan ERP.}
-    
-    Solusi ERP yang ada berfokus pada \textit{enterprise} besar sehingga perangkat lunak terasa terlalu kompleks dan \textit{overkill} untuk skala operasional UMKM.
-
-    \item \textbf{Infrastruktur ERP yang ada relatif terlalu mahal untuk skala UMKM.}
-    
-    Solusi umum seperti layanan \textit{cloud} berbayar atau server fisik membutuhkan biaya kepemilikan (TCO) yang tinggi, baik dari sisi investasi awal maupun biaya operasional.
-
-    \item \textbf{Belum ada kajian menyeluruh tentang kelayakan ERP modular pada perangkat berbiaya dan berdaya rendah.}
-    
-    Khususnya, belum banyak perbandingan langsung TCO dan efisiensi daya antara \textit{deployment} ERP modular pada perangkat \textit{low-cost/low-power} dengan model infrastruktur ERP konvensional.
+    \item Bagaimana kelayakan \textit{deployment} ERP pada \textit{single-board computer} dibandingkan dengan VPS dari aspek performa dan biaya?
+    \item Apa saja batasan \textit{deployment} ERP pada \textit{single-board computer}, khususnya dari aspek kapasitas \textit{user}, \textit{resource utilization}, dan kompleksitas modul?
 \end{enumerate}
 
 % --- Tujuan ---
 
 \section{Tujuan}
 \begin{enumerate}[1.]
-    \item \textbf{Merumuskan ERP yang sesuai untuk digitalisasi UMKM.}
-    
-    ERP atau perangkat lunak yang dikembangkan diharapkan memiliki kompleksitas rendah, bersifat modular, dan dapat diimplementasikan secara bertahap sesuai kebutuhan.
-
-    \item \textbf{Menemukan alternatif infrastruktur ERP yang lebih hemat biaya dan daya.}
-    
-    Alternatif ini ditujukan agar ERP dapat berjalan pada perangkat dengan biaya kepemilikan (TCO) rendah dan konsumsi daya yang rendah namun tetap memenuhi kebutuhan operasional UMKM.
-
-    \item \textbf{Mengkaji kelayakan teknis dan finansial \textit{deployment} ERP modular pada perangkat \textit{low-cost/low-power}.}
-    
-    Kajian ini mencakup perbandingan langsung TCO dan efisiensi daya antara \textit{deployment} tersebut dan model infrastruktur ERP konvensional yang banyak digunakan saat ini.
-\end{enumerate}
-
-
+    \item Melakukan studi kelayakan \textit{deployment} ERP pada \textit{single-board computer} dari aspek performa dan biaya.
+    \item Melakukan perbandingan dan \textit{trade-off analysis} antara \textit{deployment} ERP pada \textit{single-board computer} dan VPS.
+    \item Menemukan batasan \textit{deployment} ERP pada \textit{single-board computer} yang digunakan
+ \end{enumerate}
 
 % --- Batasan Masalah ---
 \section{Batasan Masalah}
 \begin{enumerate}[1.]
-    \item \textbf{Fokus pada alternatif \textit{deployment} ERP berbasis perangkat berbiaya dan berdaya rendah.}
-    
-    Penelitian ini hanya membahas implementasi sistem ERP modular berbasis microservices pada perangkat \textit{low-cost/low-power} (misalnya Orange Pi 5 atau mini-PC serupa), dan tidak membahas atau mengembangkan ERP pada infrastruktur konvensional seperti \textit{cloud} VPS/\textit{serverless} berbayar maupun server fisik \textit{enterprise}, kecuali sebagai pembanding dalam analisis TCO.
-
-    \item \textbf{Kelayakan yang dikaji terbatas pada aspek teknis dan finansial.}
-    
-    Ruang lingkup kajian kelayakan hanya mencakup aspek teknis dan finansial \textit{deployment} ERP modular pada perangkat rendah biaya dan daya, tanpa menganalisis manajemen perubahan, pelatihan SDM, adopsi pengguna, maupun aspek hukum dan kebijakan pemerintah.
-
-    \item \textbf{Komponen TCO yang dianalisis difokuskan pada perangkat keras dan konsumsi daya.}
-    
-    Analisis \textit{Total Cost of Ownership} (TCO) meliputi biaya perangkat keras, konsumsi daya listrik, serta perawatan dasar perangkat mini, dan tidak memperhitungkan biaya kustomisasi perangkat lunak atau lisensi, kecuali terkait penggunaan ERP modular berbasis \textit{open source}.
-
-    \item \textbf{Obyek studi dibatasi pada UMKM mikro dan kecil dengan modul ERP esensial.}
-    
-    Penelitian hanya meninjau UMKM mikro dan kecil dengan kebutuhan modul ERP dasar seperti keuangan, inventori, \textit{Point of Sales} (POS) dan \textit{Human Resource Module} (HRM) sederhana, tanpa membahas kebutuhan perusahaan menengah, besar, atau industri dengan modul ERP khusus.
-
-    \item \textbf{Perbandingan TCO dan efisiensi daya dibatasi pada dua kategori infrastruktur.}
-    
-    Perbandingan hanya dilakukan antara \textit{deployment} ERP modular pada perangkat \textit{low-cost/low-power} dan infrastruktur konvensional (cloud VPS atau server fisik \textit{enterprise}), sehingga model \textit{SaaS} murni maupun hybrid \textit{cloud} tidak menjadi fokus studi.
-
-    \item \textbf{Eksperimen dibatasi pada \textit{proof-of-concept} dan skenario simulasi beban kerja UMKM.}
-    
-    Studi eksperimen dibatasi pada implementasi \textit{proof-of-concept} pada perangkat tertentu dan pengujian menggunakan skenario simulasi beban kerja standar UMKM, tanpa mencakup uji coba di lingkungan produksi nyata berskala perusahaan menengah atau besar.
+    \item Penelitian ini berfokus pada \textit{deployment} ERP di \textit{single-board computer} dengan perbandingan terhadap \textit{Virtual Private Server} (VPS) \textit{cloud}.
+    \item Untuk \textit{cloud comparison}, penelitian menggunakan VPS \textit{free tier} atau \textit{trial credit} dari \textit{provider} seperti Oracle Cloud Always Free atau DigitalOcean \textit{trial}, dengan spesifikasi yang \textit{comparable} dengan SBC yang diuji (contoh: 2-4 vCPU, 4GB RAM).
+    \item ERP yang digunakan untuk perbandingan bersifat \textit{open-source} (contoh: Odoo Community atau ERPNext) agar tidak menambah biaya lisensi penelitian.
+    \item Pengujian dibatasi pada modul esensial ERP (keuangan, inventori, CRM) dengan simulasi beban kerja yang representatif untuk UMKM skala kecil-menengah (10-50 \textit{concurrent users}).
+    \item Penelitian ini mengkaji kelayakan teknis dan finansial, tidak mencakup aspek \textit{organizational readiness}, \textit{change management}, atau \textit{user training}.
+    \item Batasan \textit{deployment} ERP yang diidentifikasi dalam penelitian ini bersifat spesifik terhadap perangkat SBC yang diuji, namun dapat menjadi indikasi untuk perangkat sejenis dengan spesifikasi \textit{hardware} yang \textit{comparable}.
 \end{enumerate}
 
 % --- Metodologi Pengerjaan TA ---
 \section{Metode}
-Penelitian ini menggunakan pendekatan studi kelayakan teknis dan finansial \textit{deployment} ERP modular pada perangkat berbiaya dan berdaya rendah untuk UMKM. Metode penelitian mengikuti tahapan berikut:
-
 \begin{enumerate}
-\item \textbf{Studi Literatur}
-\begin{itemize}
-\item Mengkaji berbagai literatur dan sumber ilmiah terkait digitalisasi UMKM, keterbatasan solusi ERP konvensional, dan alternatif \textit{deployment} berbasis perangkat hemat biaya dan daya.
-\item Mengidentifikasi model-model infrastruktur ERP yang telah ada (\textit{cloud} VPS, server fisik, dan perangkat seperti Orange Pi 5).
-\end{itemize}
+    \item \textbf{Studi Literatur} \\
+      Mengumpulkan referensi mengenai ERP, \textit{deployment} pada SBC dan \textit{cloud}, serta metodologi analisis biaya kepemilikan (TCO).
 
-\item \textbf{Analisis dan Sintesis Literatur}
-\begin{itemize}
-\item Melakukan pencarian, pengelompokan, dan \textit{review} penelitian terkait kelayakan teknis dan finansial ERP modular pada perangkat low-cost/low-power.
-\item Menentukan indikator kunci evaluasi seperti biaya perangkat, konsumsi daya, TCO, serta performa teknis.
-\end{itemize}
+    \item \textbf{Persiapan Infrastruktur} \\
+      Menyiapkan SBC dan VPS dengan spesifikasi yang \textit{comparable}, kemudian melakukan instalasi \textit{platform} ERP \textit{open-source} (Odoo atau ERPNext) dengan konfigurasi identik.
 
-\item \textbf{Perancangan dan Implementasi Proof-of-Concept (PoC)}
-\begin{itemize}
-\item Mengembangkan \textit{prototype} ERP modular berbasis \textit{microservices} lalu diimplementasikan pada perangkat hemat biaya dan daya (contoh: Orange Pi 5).
-\item Modul esensial yang diimplementasikan meliputi keuangan, inventori, dan CRM sederhana.
-\end{itemize}
+    \item \textbf{Pengujian Performa} \\
+      Melakukan \textit{load testing} dengan simulasi \textit{concurrent users} (10-50 \textit{users}) untuk mengukur \textit{response time}, \textit{throughput}, dan \textit{resource utilization} pada kedua infrastruktur.
 
-\item \textbf{Pengujian Performa dan Konsumsi Daya dengan Simulasi API}
-\begin{itemize}
-\item Membuat perangkat lunak khusus (\textit{load generator}) yang melakukan simulasi penggunaan \textit{front-end} dengan memanggil API ERP secara otomatis, menggunakan interval waktu dan jenis permintaan acak sesuai pola penggunaan nyata (\textit{randomized request scenarios}).
-\item Melaksanakan simulasi beban nyata pada sejumlah \textit{endpoint}/modul untuk mengukur \textit{response time}, \textit{throughput}, dan \textit{error rate}.
-\item Mengukur konsumsi daya listrik perangkat secara langsung selama proses pengujian.
-\end{itemize}
+    \item \textbf{Analisis \textit{Total Cost of Ownership} (TCO)} \\
+      Menghitung dan membandingkan biaya kepemilikan untuk periode 1 tahun dan 3 tahun, mencakup biaya \textit{hardware}, operasional, dan konsumsi daya.
 
-\item \textbf{Analisis Finansial (TCO) dan Perbandingan Infrastruktur}
-\begin{itemize}
-\item Menghitung \textit{Total Cost of Ownership} (TCO) perangkat, termasuk investasi awal perangkat keras dan biaya operasional (listrik) multi-tahun.
-\item Membandingkan TCO dan efisiensi daya model \textit{prototype} dengan model \textit{deployment} ERP konvensional (\textit{cloud} VPS dan server fisik).
-\end{itemize}
-
-\item \textbf{Diskusi dan Evaluasi}
-\begin{itemize}
-\item Melakukan analisis kelayakan teknis dan finansial berdasar data uji eksperimen dan hasil perbandingan.
-\item Menyusun rekomendasi implementasi ERP modular hemat biaya dan daya bagi UMKM serta saran pengembangan lanjutan.
-\end{itemize}
+    \item \textbf{Analisis Hasil} \\
+      Membandingkan hasil performa dan TCO, melakukan \textit{trade-off analysis}, dan mengidentifikasi batasan \textit{deployment} ERP pada SBC.
 \end{enumerate}
