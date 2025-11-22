@@ -1,7 +1,66 @@
-% ==========================================
-% BAB IV DESAIN KONSEP SOLUSI
-% ==========================================
 \chapter{DESAIN KONSEP SOLUSI}
 \label{chap:desain-konsep-solusi}
 
-[harus diisi]
+\section{Gambaran Umum Solusi}
+\begin{itemize}
+    \item Penelitian ini mengusulkan sebuah kerangka kerja untuk mengevaluasi kelayakan teknis dan finansial dari sistem ERP pada SBC.
+    \item Metode evaluasi didasarkan pada dua pilar utama: \textit{benchmarking} performa aplikasi dan analisis \textit{Total Cost of Ownership} (TCO).
+    \item Objek yang dievaluasi adalah platform SBC (studi kasus: Orange Pi) yang akan dibandingkan dengan platform \textit{cloud} VPS sebagai \textit{baseline}.
+\end{itemize}
+
+\section{Arsitektur Solusi}
+\begin{itemize}
+    \item \textbf{Arsitektur A (On-Premise SBC):} Merepresentasikan model investasi CAPEX, di mana sistem ERP diinstalasi dan dijalankan secara lokal pada perangkat Orange Pi.
+    \item \textbf{Arsitektur B (Cloud VPS):} Merepresentasikan model investasi OPEX, di mana sistem ERP berjalan di server virtual yang disewa dari penyedia \textit{cloud}.
+    \item Kedua arsitektur akan menggunakan tumpukan perangkat lunak (OS, web server, basis data, ERP) yang identik untuk memastikan perbandingan yang adil.
+\end{itemize}
+
+\section{Desain Implementasi}
+\subsection{Penyiapan Lingkungan Perangkat Keras}
+\begin{itemize}
+    \item \textbf{SBC:} Melakukan instalasi sistem operasi Linux (misal: Armbian) pada Orange Pi, serta melakukan konfigurasi jaringan dasar.
+    \item \textbf{VPS:} Melakukan provisi sebuah \textit{virtual machine} pada penyedia \textit{cloud} dengan spesifikasi sebanding (2-4 core CPU, 4-8 GB RAM). Kandidatnya fleksibel, antara \textit{free tier} (Oracle) atau berbayar (Hostinger).
+\end{itemize}
+
+\subsection{Penyiapan Lingkungan Perangkat Lunak}
+\begin{itemize}
+    \item \textbf{Dependensi:} Instalasi semua komponen yang dibutuhkan, termasuk Python, Nginx, Supervisor, dan server basis data yang sesuai (PostgreSQL/MariaDB).
+    \item \textbf{ERP:} Instalasi dan konfigurasi sistem ERP \textit{open-source} (kandidat: ERPNext atau Odoo) pada kedua platform dengan dataset demo.
+\end{itemize}
+
+\section{Desain Pengujian dan Evaluasi}
+\subsection{Skenario Pengujian}
+\begin{itemize}
+    \item Skenario pengujian dirancang untuk mensimulasikan alur kerja bisnis yang realistis pada sistem ERP \cite{maddodi2018generating}.
+    \item \textbf{Operasi Baca:} Pengujian akses ke data master dan laporan (misal: membuka daftar produk, melihat riwayat penjualan).
+    \item \textbf{Operasi Tulis:} Pengujian pembuatan entitas data baru (misal: membuat \textit{sales order}, validasi faktur).
+    \item \textbf{Operasi Campuran:} Simulasi beban dari beberapa pengguna virtual yang melakukan operasi baca dan tulis secara bersamaan.
+\end{itemize}
+
+\subsection{Alat Benchmarking}
+\begin{itemize}
+    \item Simulasi beban akan dieksekusi menggunakan perangkat lunak \textit{load testing} (kandidat utama: Locust).
+    \item Skenario pengujian akan ditulis sebagai kode Python (dalam Locust) untuk memastikan akurasi dan kemudahan repetisi.
+\end{itemize}
+
+\subsection{Pengumpulan Data Metrik}
+\begin{itemize}
+    \item \textbf{Metrik Kinerja Aplikasi:} Data \textit{throughput} (RPS) dan waktu respons (ms) akan dicatat secara otomatis oleh Locust.
+    \item \textbf{Metrik Sumber Daya:} Data utilisasi CPU, RAM, dan I/O disk pada sisi server akan dipantau menggunakan utilitas `vmstat` dan `iostat`.
+\end{itemize}
+
+\section{Desain Analisis}
+\subsection{Analisis Kinerja Teknis}
+\begin{itemize}
+    \item Membuat grafik perbandingan performa (misal: throughput vs. jumlah pengguna) antara platform SBC dan VPS.
+    \item Menganalisis grafik utilisasi sumber daya untuk mengidentifikasi potensi \textit{bottleneck} pada setiap platform.
+    \item Mengevaluasi stabilitas dan tingkat kesalahan (\textit{error rate}) pada kedua platform di bawah beban puncak.
+\end{itemize}
+
+\subsection{Analisis Biaya (TCO)}
+\begin{itemize}
+    \item Menghitung dan membandingkan TCO untuk periode 3 dan 5 tahun.
+    \item \textbf{Komponen Biaya SBC:} Meliputi biaya perangkat keras (CAPEX) dan estimasi biaya konsumsi listrik (OPEX).
+    \item \textbf{Komponen Biaya VPS:} Meliputi biaya sewa tahunan (OPEX), dengan analisis untuk skenario \textit{free tier} dan berbayar.
+    \item Membuat grafik perbandingan TCO untuk mengidentifikasi \textit{break-even point}.
+\end{itemize}

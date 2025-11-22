@@ -7,4 +7,63 @@
 \chapter{ANALISIS MASALAH}
 \label{chap:analisis-masalah}
 
-[harus diisi]
+\section{Analisis Kondisi Saat ini}
+\begin{itemize}
+    \item Kebutuhan digitalisasi bagi UKM untuk meningkatkan daya saing.
+    \item Tingginya biaya adopsi ERP komersial menjadi hambatan utama \cite{hasanah2024}.
+    \item Alternatif cloud mengenalkan biaya operasional (OPEX) jangka panjang yang signifikan \cite{Younus2024}.
+    \item SBC berperforma tinggi hadir sebagai peluang infrastruktur \textit{on-premise} berbiaya rendah \cite{raspberrypi2024pi5}.
+\end{itemize}
+
+\section{Analisis Kebutuhan}
+
+\subsection{Identifikasi Masalah}
+\begin{itemize}
+    \item TCO infrastruktur ERP, baik \textit{on-premise} tradisional maupun \textit{cloud}, masih tinggi untuk skala kecil.
+    \item Keterbatasan sumber daya teknis pada UKM untuk manajemen server.
+    \item Ketiadaan data empiris mengenai kelayakan SBC untuk beban kerja ERP transaksional \cite{Arief2018}.
+\end{itemize}
+
+\subsection{Analisis Kebutuhan Fungsional}
+\begin{itemize}
+    \item Platform harus mampu menjalankan fungsionalitas penuh dari sebuah sistem ERP.
+    \item Kemampuan mengeksekusi modul-modul inti: Keuangan, Penjualan, Gudang, dan SDM.
+    \item Mendukung operasi bisnis standar (misal: pembuatan Sales Order, Invoice).
+    \item Menyediakan akses multi-pengguna melalui antarmuka web.
+\end{itemize}
+
+\subsection{Analisis Kebutuhan Non-Fungsional}
+\begin{itemize}
+    \item \textbf{Kinerja:} Waktu respons transaksi di bawah ambang batas wajar (<3 detik) untuk 5-10 pengguna \cite{iso25010}.
+    \item \textbf{Efisiensi Biaya:} TCO lebih rendah dari alternatif cloud dalam horizon 3-5 tahun \cite{buijsse2024reference}.
+    \item \textbf{Keandalan:} Stabilitas untuk operasi 24/7 dengan tingkat kesalahan minimal.
+    \item \textbf{Skalabilitas:} Adanya jalur untuk peningkatan kapasitas di masa depan \cite{Putra2019}.
+\end{itemize}
+
+\section{Analisis Alternatif Solusi}
+
+\subsection{Alternatif Perangkat Lunak}
+\begin{itemize}
+    \item \textbf{Odoo:} ERP \textit{open-source} populer dengan ekosistem aplikasi yang luas, arsitektur modular, dan komunitas global yang besar. Ditulis dengan Python dan menggunakan PostgreSQL sebagai basis data \cite{odoo2025documentation}.
+    \item \textbf{ERPNext:} Alternatif ERP \textit{open-source} yang dibangun di atas Frappe Framework (Python/MariaDB). Dikenal dengan antarmuka yang modern dan kesederhanaan implementasi \cite{erpnext2024introduction}.
+\end{itemize}
+
+\subsection{Alternatif Perangkat Keras}
+\begin{itemize}
+    \item \textbf{Single-Board Computer (SBC):} Komputer papan tunggal berbiaya rendah dengan konsumsi daya minimal. Model modern seperti Raspberry Pi 5 dan Orange Pi 5 Pro menawarkan performa CPU dan kapasitas RAM yang setara dengan server \textit{entry-level} \cite{raspberrypi2024pi5, orangepi2024pi5pro}.
+    \item \textbf{Cloud Virtual Private Server (VPS):} Server virtual yang disewakan oleh penyedia layanan \textit{cloud}. Menawarkan kemudahan \textit{setup} dan skalabilitas, namun dengan model biaya operasional (OPEX) bulanan/tahunan \cite{Younus2024}.
+\end{itemize}
+
+\section{Analisis Pemilihan Solusi}
+
+\subsection{Pemilihan Perangkat Lunak}
+\begin{itemize}
+    \item \textbf{Kriteria:} Dipilih berdasarkan kriteria \textit{open-source}, kematangan, arsitektur modular, dukungan komunitas, dan kompatibilitas dengan arsitektur ARM.
+    \item \textbf{Keputusan:} Odoo dan/atau ERPNext dipilih sebagai perangkat lunak studi kasus karena keduanya adalah pemimpin pasar yang paling memenuhi kriteria tersebut \cite{boza2015}.
+\end{itemize}
+
+\subsection{Pemilihan Perangkat Keras}
+\begin{itemize}
+    \item \textbf{Kriteria:} Dipilih berdasarkan arsitektur (ARM 64-bit), performa (RAM min. 4GB), dukungan perangkat lunak, dan ketersediaan di pasar.
+    \item \textbf{Keputusan:} Raspberry Pi 5 dan Orange Pi 5 Pro dipilih untuk merepresentasikan alternatif SBC. Sebuah Cloud VPS dengan spesifikasi setara dipilih sebagai platform pembanding (\textit{baseline}) untuk objektivitas analisis.
+\end{itemize}
