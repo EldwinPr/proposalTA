@@ -5,7 +5,7 @@
 \begin{itemize}
     \item Penelitian ini mengusulkan sebuah kerangka kerja untuk mengevaluasi kelayakan teknis dan finansial dari sistem ERP pada SBC.
     \item Metode evaluasi didasarkan pada dua pilar utama: \textit{benchmarking} performa aplikasi dan analisis \textit{Total Cost of Ownership} (TCO).
-    \item Objek yang dievaluasi adalah platform SBC (studi kasus: Orange Pi) yang akan dibandingkan dengan platform \textit{cloud} VPS sebagai \textit{baseline}.
+    \item Objek yang dievaluasi adalah platform SBC (studi kasus: Orange Pi 5 Pro) yang akan dibandingkan dengan platform \textit{cloud} VPS sebagai \textit{baseline}.
 \end{itemize}
 
 \section{Arsitektur Solusi}
@@ -18,14 +18,14 @@
 \section{Desain Implementasi}
 \subsection{Penyiapan Lingkungan Perangkat Keras}
 \begin{itemize}
-    \item \textbf{SBC:} Melakukan instalasi sistem operasi Linux (misal: Armbian) pada Orange Pi, serta melakukan konfigurasi jaringan dasar.
-    \item \textbf{VPS:} Melakukan provisi sebuah \textit{virtual machine} pada penyedia \textit{cloud} dengan spesifikasi sebanding (2-4 core CPU, 4-8 GB RAM). Kandidatnya fleksibel, antara \textit{free tier} (Oracle) atau berbayar (Hostinger).
+    \item \textbf{SBC:} Melakukan instalasi sistem operasi Linux (misal: Armbian) pada Orange Pi 5 Pro, serta melakukan konfigurasi jaringan dasar.
+    \item \textbf{VPS:} Melakukan provisi \textit{virtual machine} pada \textit{cloud provider} dengan spesifikasi yang memenuhi \textit{minimum requirement} ERPNext. Untuk fase penelitian, Oracle Cloud Free Tier akan digunakan untuk evaluasi performa guna mengurangi biaya operasional.
 \end{itemize}
 
 \subsection{Penyiapan Lingkungan Perangkat Lunak}
 \begin{itemize}
     \item \textbf{Dependensi:} Instalasi semua komponen yang dibutuhkan, termasuk Python, Nginx, Supervisor, dan server basis data yang sesuai (PostgreSQL/MariaDB).
-    \item \textbf{ERP:} Instalasi dan konfigurasi sistem ERP \textit{open-source} (kandidat: ERPNext atau Odoo) pada kedua platform dengan dataset demo.
+    \item \textbf{ERP:} Instalasi dan konfigurasi ERPNext pada kedua platform dengan dataset demo yang identik.
 \end{itemize}
 
 \section{Desain Pengujian dan Evaluasi}
@@ -61,6 +61,7 @@
 \begin{itemize}
     \item Menghitung dan membandingkan TCO untuk periode 3 dan 5 tahun.
     \item \textbf{Komponen Biaya SBC:} Meliputi biaya perangkat keras (CAPEX) dan estimasi biaya konsumsi listrik (OPEX).
-    \item \textbf{Komponen Biaya VPS:} Meliputi biaya sewa tahunan (OPEX), dengan analisis untuk skenario \textit{free tier} dan berbayar.
-    \item Membuat grafik perbandingan TCO untuk mengidentifikasi \textit{break-even point}.
+    \item \textbf{Komponen Biaya VPS Komersial:} Meliputi biaya sewa bulanan dari \textit{commercial} VPS (Hostinger, Biznet, atau DigitalOcean) yang diproyeksikan untuk periode 3 dan 5 tahun.
+    \item \textbf{Catatan Metodologis:} Platform dengan biaya Rp 0 (\textit{free tier}) tidak dimasukkan dalam analisis kuantitatif TCO karena tidak menghasilkan \textit{break-even point} yang bermakna. Evaluasi performa Oracle Cloud Free Tier akan digunakan untuk \textit{qualitative trade-off discussion}.
+    \item Membuat grafik perbandingan TCO untuk mengidentifikasi \textit{break-even point} antara investasi SBC dan biaya sewa VPS komersial.
 \end{itemize}

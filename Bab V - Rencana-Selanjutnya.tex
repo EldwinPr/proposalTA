@@ -4,4 +4,260 @@
 \chapter{RENCANA SELANJUTNYA}
 \label{chap:rencana-selanjutnya}
 
-[harus diisi]
+\section{Rencana Pelaksanaan Penelitian}
+
+Penelitian ini akan dilaksanakan dalam beberapa tahapan utama sebagai berikut:
+
+\begin{enumerate}
+    \item \textbf{Studi Literatur dan Persiapan Infrastruktur}
+    \begin{itemize}
+        \item Pengadaan Orange Pi 5 Pro dan aksesoris pendukung (power supply, storage, cooling)
+        \item Provisioning Oracle Cloud Free Tier dan verifikasi spesifikasi
+        \item Instalasi sistem operasi Linux (Armbian/Ubuntu) pada kedua platform
+        \item Konfigurasi jaringan dan \textit{security baseline}
+    \end{itemize}
+
+    \item \textbf{Instalasi dan Konfigurasi ERPNext}
+    \begin{itemize}
+        \item Instalasi Frappe Framework dan dependensi (Python, Node.js, MariaDB/PostgreSQL, Nginx, Redis)
+        \item Instalasi ERPNext dengan konfigurasi identik pada kedua platform
+        \item Setup modul esensial: Keuangan (\textit{Accounting}), Inventori (\textit{Stock}), dan CRM (\textit{Customer Relationship Management})
+        \item Persiapan dataset demo yang konsisten untuk pengujian
+    \end{itemize}
+
+    \item \textbf{Perancangan dan Implementasi Skenario Pengujian}
+    \begin{itemize}
+        \item Perancangan skenario beban kerja realistis berdasarkan \textit{business process} umum ERP
+        \item Implementasi \textit{script} \textit{load testing} menggunakan Locust atau alternatif yang sesuai
+        \item Definisi metrik evaluasi: \textit{response time}, \textit{throughput}, \textit{error rate}, dan \textit{resource utilization}
+        \item Validasi skenario dengan \textit{preliminary testing}
+    \end{itemize}
+
+    \item \textbf{Eksekusi Pengujian Performa}
+    \begin{itemize}
+        \item \textit{Load testing} dengan variasi beban: operasi baca, operasi tulis, dan operasi campuran
+        \item Simulasi \textit{concurrent users} dengan level yang bertahap (misal: 10, 25, 50 \textit{users})
+        \item Pengumpulan data metrik aplikasi (\textit{response time}, \textit{throughput}) dan metrik \textit{system} (CPU, RAM, I/O disk)
+        \item Dokumentasi observasi selama pengujian (anomali, bottleneck, error patterns)
+    \end{itemize}
+
+    \item \textbf{Analisis Data dan Perhitungan TCO}
+    \begin{itemize}
+        \item Analisis hasil pengujian performa: perbandingan metrik antara Orange Pi 5 Pro dan Oracle Cloud Free Tier
+        \item Identifikasi batasan \textit{deployment} ERP pada SBC (kapasitas \textit{user}, \textit{resource} \textit{bottleneck}, kompleksitas modul)
+        \item Perhitungan \textit{Total Cost of Ownership} (TCO) untuk Orange Pi 5 Pro dan \textit{commercial} VPS (Hostinger/Biznet/DigitalOcean) untuk horizon 3 dan 5 tahun
+        \item Pembuatan visualisasi: grafik performa, grafik TCO, dan \textit{break-even analysis}
+        \item \textit{Trade-off analysis} antara kelayakan teknis dan finansial
+    \end{itemize}
+
+    \item \textbf{Penulisan Laporan dan Finalisasi}
+    \begin{itemize}
+        \item Penyusunan laporan Tugas Akhir dengan struktur standar ITB
+        \item Revisi berdasarkan \textit{feedback} pembimbing
+        \item Persiapan presentasi untuk sidang Tugas Akhir
+    \end{itemize}
+\end{enumerate}
+
+\section{Analisis Risiko dan Mitigasi}
+
+\subsection{Risiko Teknis}
+
+\subsubsection{Keterbatasan \textit{Hardware} Orange Pi 5 Pro}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Orange Pi 5 Pro mungkin tidak mampu menjalankan ERPNext dengan performa yang \textit{acceptable} untuk beban kerja yang direncanakan, khususnya pada skenario \textit{concurrent users} tinggi atau operasi \textit{database-intensive}.
+
+    \item \textbf{Probabilitas:} Medium
+
+    \item \textbf{Dampak:} High (dapat mengancam validitas penelitian atau membatasi scope pengujian)
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item Melakukan \textit{preliminary testing} dengan dataset minimal untuk validasi kelayakan sebelum pengujian penuh
+        \item Menyediakan \textit{fallback option}: penyesuaian beban kerja (misal: menurunkan target \textit{concurrent users}) jika hardware terbukti tidak mencukupi
+        \item Mendokumentasikan batasan yang ditemukan sebagai kontribusi penelitian (identifikasi threshold kapasitas SBC untuk ERP)
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Ketidakstabilan Oracle Cloud Free Tier}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Oracle dapat mengubah kebijakan \textit{free tier}, membatasi \textit{resource allocation}, atau mengalami \textit{downtime} selama periode penelitian, mengganggu jadwal pengujian.
+
+    \item \textbf{Probabilitas:} Low-Medium
+
+    \item \textbf{Dampak:} Medium (dapat menunda timeline pengujian)
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item \textit{Backup} data konfigurasi dan dataset secara berkala untuk memungkinkan \textit{recovery} cepat
+        \item Menyiapkan alternatif \textit{commercial} VPS \textit{trial} (Hostinger/Biznet) jika Oracle tidak \textit{available} untuk periode yang diperlukan
+        \item Melakukan pengujian dalam \textit{window} waktu yang cukup panjang untuk memungkinkan \textit{retry} jika terjadi gangguan
+        \item Monitoring proaktif terhadap perubahan \textit{Terms of Service} Oracle Cloud selama periode penelitian
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Kompatibilitas ERPNext dengan Arsitektur ARM}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} ERPNext atau dependensinya (Frappe Framework, MariaDB, Python \textit{packages}) mungkin memiliki \textit{issue} kompatibilitas atau performa \textit{suboptimal} pada arsitektur ARM.
+
+    \item \textbf{Probabilitas:} Low (ERPNext memiliki dokumentasi untuk \textit{deployment} ARM)
+
+    \item \textbf{Dampak:} High (dapat menggagalkan eksekusi penelitian)
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item Verifikasi kompatibilitas melalui \textit{proof-of-concept installation} di tahap awal penelitian
+        \item Konsultasi dengan komunitas ERPNext/Frappe melalui forum atau GitHub \textit{issues} untuk \textit{ARM-specific problems}
+        \item Dokumentasi \textit{workaround} yang ditemukan sebagai kontribusi untuk komunitas dan penelitian lanjutan
+    \end{itemize}
+\end{itemize}
+
+\subsection{Risiko Metodologis}
+
+\subsubsection{Skenario \textit{Testing} Tidak Realistis}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Skenario \textit{load testing} yang dirancang mungkin tidak mencerminkan beban kerja ERP yang realistis, mengurangi relevansi dan \textit{generalizability} hasil penelitian.
+
+    \item \textbf{Probabilitas:} Medium
+
+    \item \textbf{Dampak:} Medium (mengurangi \textit{external validity} hasil)
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item Melakukan studi literatur mendalam tentang \textit{workload pattern} ERP dari penelitian sejenis \cite{maddodi2018generating}
+        \item Konsultasi dengan praktisi atau analisis studi kasus \textit{deployment} ERP nyata untuk validasi realisme skenario
+        \item Validasi skenario dengan pembimbing sebelum eksekusi pengujian penuh
+        \item Menggunakan kombinasi operasi yang representatif: operasi baca (laporan, \textit{query}), operasi tulis (transaksi, \textit{data entry}), dan operasi campuran
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Bias dalam Konfigurasi Platform}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Perbedaan konfigurasi antara Orange Pi 5 Pro dan Oracle Cloud Free Tier (OS \textit{tuning}, \textit{database parameters}, \textit{network settings}) dapat membiaskan hasil perbandingan performa.
+
+    \item \textbf{Probabilitas:} Medium
+
+    \item \textbf{Dampak:} High (\textit{internal validity threat})
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item Dokumentasi detail semua konfigurasi sistem (versi OS, \textit{kernel parameters}, \textit{database tuning}, ERPNext configuration)
+        \item Menggunakan konfigurasi yang identik sedapat mungkin: versi OS yang sama, versi ERPNext yang sama, dataset yang identik
+        \item Melakukan \textit{baseline benchmarking} (CPU \textit{stress test}, I/O \textit{throughput}, \textit{network latency}) untuk karakterisasi perbedaan intrinsik platform
+        \item Transparansi dalam pelaporan: perbedaan konfigurasi yang tidak dapat dihindari akan didokumentasikan dan dianalisis dampaknya
+    \end{itemize}
+\end{itemize}
+
+\subsection{Risiko Logistik}
+
+\subsubsection{Keterlambatan Pengadaan \textit{Hardware}}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Orange Pi 5 Pro mungkin tidak tersedia di pasar Indonesia atau proses pengadaan (\textit{shipping}, bea cukai) memakan waktu lama.
+
+    \item \textbf{Probabilitas:} Low-Medium
+
+    \item \textbf{Dampak:} High (dapat menunda seluruh \textit{timeline} penelitian)
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item \textit{Survey} ketersediaan dan harga dari \textit{multiple vendors} (lokal dan internasional) sebelum pembelian
+        \item Alokasi \textit{buffer} waktu di awal \textit{timeline} untuk proses \textit{procurement}
+        \item Mempertimbangkan alternatif SBC (Raspberry Pi 5) jika Orange Pi 5 Pro tidak \textit{available} dalam waktu yang wajar, dengan penyesuaian justifikasi pemilihan di laporan
+    \end{itemize}
+\end{itemize}
+
+\subsubsection{Gangguan Infrastruktur Pendukung}
+\begin{itemize}
+    \item \textbf{Deskripsi Risiko:} Masalah dengan koneksi internet, listrik, atau perangkat pendukung (router, switch) dapat mengganggu eksekusi pengujian atau menyebabkan data loss.
+
+    \item \textbf{Probabilitas:} Low
+
+    \item \textbf{Dampak:} Medium (dapat menunda \textit{testing window})
+
+    \item \textbf{Strategi Mitigasi:}
+    \begin{itemize}
+        \item Menggunakan UPS (\textit{Uninterruptible Power Supply}) untuk Orange Pi 5 Pro selama periode \textit{testing} intensif
+        \item \textit{Backup plan} untuk \textit{testing} di lokasi alternatif (laboratorium kampus) jika infrastruktur rumah tidak \textit{reliable}
+        \item \textit{Schedule testing window} dengan \textit{buffer} untuk \textit{retry} jika terjadi gangguan
+    \end{itemize}
+\end{itemize}
+
+\section{Rencana \textit{Deliverables}}
+
+Penelitian ini akan menghasilkan \textit{deliverables} berikut:
+
+\begin{enumerate}
+    \item \textbf{Laporan Tugas Akhir}
+    \begin{itemize}
+        \item Dokumen lengkap hasil penelitian dengan struktur standar ITB (Bab I-V, Lampiran, Daftar Pustaka)
+        \item Berisi analisis mendalam tentang kelayakan teknis dan finansial \textit{deployment} ERP pada SBC
+    \end{itemize}
+
+    \item \textbf{Dataset dan \textit{Script Testing}}
+    \begin{itemize}
+        \item Kode \textit{load testing} (Locust atau alternatif) untuk simulasi beban kerja ERP
+        \item Dataset demo ERPNext yang digunakan dalam pengujian
+        \item \textit{Script monitoring} dan \textit{data collection} yang dapat di-\textit{reuse} untuk penelitian lanjutan
+    \end{itemize}
+
+    \item \textbf{Dokumentasi \textit{Deployment}}
+    \begin{itemize}
+        \item \textit{Step-by-step guide} untuk \textit{deployment} ERPNext pada Orange Pi 5 Pro (arsitektur ARM)
+        \item Dokumentasi konfigurasi Oracle Cloud Free Tier untuk ERPNext
+        \item \textit{Troubleshooting guide} untuk \textit{issue} yang ditemukan selama penelitian
+        \item Kontribusi untuk komunitas ERPNext dan \textit{open-source} ERP
+    \end{itemize}
+
+    \item \textbf{Visualisasi Data}
+    \begin{itemize}
+        \item Grafik perbandingan performa: \textit{throughput} vs. jumlah \textit{users}, distribusi \textit{response time}, \textit{error rate}
+        \item Grafik \textit{resource utilization}: CPU, RAM, I/O disk untuk kedua platform
+        \item Grafik TCO \textit{comparison}: \textit{break-down} biaya, akumulasi biaya \textit{over time}, \textit{break-even point}
+    \end{itemize}
+
+    \item \textbf{Presentasi Sidang}
+    \begin{itemize}
+        \item \textit{Slide} presentasi untuk sidang Tugas Akhir
+        \item Ringkasan eksekutif hasil penelitian
+    \end{itemize}
+\end{enumerate}
+
+\section{Potensi Penelitian Lanjutan}
+
+Penelitian ini membuka peluang untuk eksplorasi lebih lanjut di beberapa arah:
+
+\begin{enumerate}
+    \item \textbf{\textit{Risk-Adjusted} TCO \textit{Analysis}}
+    \begin{itemize}
+        \item Eksplorasi \textit{trade-off} antara \textit{free tier cloud services} (seperti Oracle Cloud \textit{Always Free}) dengan \textit{on-premise alternatives}
+        \item Kuantifikasi risiko perubahan kebijakan \textit{provider} dan ketiadaan SLA formal
+        \item Pengembangan \textit{framework} untuk \textit{risk-adjusted} TCO yang memperhitungkan faktor \textit{sustainability} dan \textit{vendor lock-in}
+    \end{itemize}
+
+    \item \textbf{\textit{Multi-Node} SBC \textit{Clustering}}
+    \begin{itemize}
+        \item Evaluasi kelayakan teknis dan ekonomi dari \textit{cluster} SBC untuk \textit{high-availability deployment} ERP
+        \item Analisis \textit{horizontal scaling}: performa dan TCO dari 2-4 SBC dalam konfigurasi \textit{load-balanced}
+        \item Investigasi teknologi \textit{clustering}: Kubernetes, Docker Swarm, atau \textit{database replication} untuk ERP
+    \end{itemize}
+
+    \item \textbf{\textit{Industry-Specific Workload Patterns}}
+    \begin{itemize}
+        \item \textit{Benchmarking} dengan \textit{transaction patterns} yang spesifik untuk industri tertentu: retail, \textit{manufacturing}, \textit{services}
+        \item Peningkatan \textit{external validity} hasil penelitian dengan skenario yang lebih \textit{domain-specific}
+        \item Kolaborasi dengan UMKM untuk validasi realisme beban kerja
+    \end{itemize}
+
+    \item \textbf{\textit{Energy Efficiency Analysis}}
+    \begin{itemize}
+        \item Analisis mendalam tentang konsumsi daya SBC vs. VPS vs. \textit{traditional server} dengan \textit{power meter} yang akurat
+        \item Perhitungan \textit{environmental impact}: emisi karbon, \textit{carbon footprint} dari berbagai alternatif infrastruktur
+        \item Analisis \textit{performance-per-watt} untuk evaluasi efisiensi energi yang komprehensif
+    \end{itemize}
+
+    \item \textbf{Alternatif SBC \textit{Platforms}}
+    \begin{itemize}
+        \item \textit{Comparative study} dengan SBC lain: Raspberry Pi 5, Rock 5B, atau \textit{mini-PC undervolted}
+        \item Memperluas \textit{generalizability} temuan ke kategori \textit{low-power computing} yang lebih luas
+        \item Identifikasi \textit{sweet spot} antara performa, biaya, dan konsumsi daya untuk \textit{deployment} ERP
+    \end{itemize}
+\end{enumerate}

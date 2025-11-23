@@ -37,7 +37,8 @@ Kesenjangan ini menunjukkan bahwa belum ada bukti empiris yang memadai mengenai 
 \section{Batasan Masalah}
 \begin{enumerate}[1.]
     \item Penelitian ini berfokus pada \textit{deployment} ERP di \textit{single-board computer} dengan perbandingan terhadap \textit{Virtual Private Server} (VPS) \textit{cloud}.
-    \item Untuk \textit{cloud comparison}, penelitian menggunakan VPS dari \textit{provider} seperti DigitalOcean, Vultr, atau Linode dengan spesifikasi yang \textit{comparable} dengan SBC yang diuji (contoh: 2-4 vCPU, 4GB RAM). Penggunaan \textit{trial credit} atau \textit{free tier} dengan catatan terkait limitasi performa akan didokumentasikan untuk transparansi hasil.
+    \item Untuk evaluasi performa, penelitian menggunakan VPS dengan spesifikasi yang memenuhi atau melebihi \textit{minimum requirement} dari \textit{platform} ERP yang dipilih.
+    \item Untuk analisis \textit{Total Cost of Ownership} (TCO), penelitian menggunakan \textit{commercial} VPS yang \textit{representative} untuk \textit{use case deployment} ERP, dengan model \textit{pricing} yang \textit{transparent} dan \textit{measurable} untuk proyeksi jangka panjang. Platform dengan biaya Rp 0 (\textit{free tier}) tidak dimasukkan dalam analisis kuantitatif TCO.
     \item ERP yang digunakan untuk perbandingan bersifat \textit{open-source} (contoh: Odoo Community atau ERPNext) agar tidak menambah biaya lisensi penelitian.
     \item Pengujian dibatasi pada modul esensial ERP (keuangan, inventori, CRM) dengan simulasi beban kerja yang representatif untuk organisasi skala kecil-menengah (10-50 \textit{concurrent users}).
     \item Penelitian ini mengkaji kelayakan teknis (performa sistem dalam menangani beban kerja) dan finansial (\textit{Total Cost of Ownership} dibandingkan dengan alternatif VPS), tidak mencakup aspek \textit{organizational readiness}, \textit{change management}, atau \textit{user training}.

@@ -59,11 +59,23 @@
 \subsection{Pemilihan Perangkat Lunak}
 \begin{itemize}
     \item \textbf{Kriteria:} Dipilih berdasarkan kriteria \textit{open-source}, kematangan, arsitektur modular, dukungan komunitas, dan kompatibilitas dengan arsitektur ARM.
-    \item \textbf{Keputusan:} Odoo dan/atau ERPNext dipilih sebagai perangkat lunak studi kasus karena keduanya adalah pemimpin pasar yang paling memenuhi kriteria tersebut \cite{boza2015}.
+    \item \textbf{Keputusan:} ERPNext dipilih sebagai perangkat lunak untuk penelitian karena memenuhi semua kriteria dengan beberapa keunggulan dibandingkan Odoo: (1) \textit{fully open-source} tanpa model \textit{freemium} (seluruh fitur tersedia dalam versi \textit{open-source}, berbeda dengan Odoo yang memiliki versi Community dan Enterprise), (2) arsitektur yang lebih sederhana untuk \textit{deployment}, dan (3) dokumentasi yang komprehensif untuk instalasi pada platform ARM \cite{erpnext2024introduction}.
 \end{itemize}
 
 \subsection{Pemilihan Perangkat Keras}
+
+\subsubsection{Pemilihan Single-Board Computer}
 \begin{itemize}
-    \item \textbf{Kriteria:} Dipilih berdasarkan arsitektur (ARM 64-bit), performa (RAM min. 4GB), dukungan perangkat lunak, dan ketersediaan di pasar.
-    \item \textbf{Keputusan:} Raspberry Pi 5 dan Orange Pi 5 Pro dipilih untuk merepresentasikan alternatif SBC. Sebuah Cloud VPS dengan spesifikasi setara dipilih sebagai platform pembanding (\textit{baseline}) untuk objektivitas analisis.
+    \item \textbf{Kriteria:} Dipilih berdasarkan arsitektur ARM 64-bit, performa (RAM minimal 4GB), dukungan perangkat lunak, ketersediaan di pasar Indonesia, dan nilai performa per biaya.
+
+    \item \textbf{Keputusan:} Orange Pi 5 Pro dipilih sebagai \textit{representative} SBC untuk penelitian. Meskipun Raspberry Pi 5 lebih populer, Orange Pi 5 Pro menawarkan performa yang lebih baik secara signifikan dengan harga yang \textit{comparable} di pasar Indonesia \cite{orangepi2024pi5pro}.
+\end{itemize}
+
+\subsubsection{Pemilihan Platform Cloud}
+\begin{itemize}
+    \item \textbf{Untuk Evaluasi Performa:} \textit{Cloud} VPS dengan spesifikasi yang memenuhi atau melebihi \textit{minimum requirement} ERPNext, dipilih untuk menjadi \textit{baseline} performa yang \textit{acceptable}. Platform yang \textit{cost-effective} untuk fase penelitian akan digunakan untuk mengurangi biaya operasional.
+
+    \item \textbf{Untuk Analisis TCO:} \textit{Commercial} VPS yang \textit{representative} untuk \textit{use case deployment} ERP dengan model \textit{pricing} yang \textit{transparent} dan \textit{measurable}. Platform dengan biaya Rp 0 (\textit{free tier}) tidak dimasukkan dalam analisis kuantitatif TCO karena tidak menghasilkan \textit{break-even point} yang bermakna.
+
+    \item \textbf{Kriteria Pemilihan:} Spesifikasi yang memadai untuk menjalankan ERPNext, ketersediaan \textit{pricing} yang \textit{transparent}, dan aksesibilitas untuk penelitian.
 \end{itemize}

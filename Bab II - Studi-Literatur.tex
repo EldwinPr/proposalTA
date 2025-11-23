@@ -115,54 +115,74 @@ Namun, batasan pokok dari kedua penelitian adalah pada kompleksitas aplikasi yan
 
 \section{Metode Evaluasi}
 
+Kelayakan deployment ERP pada platform SBC memerlukan evaluasi komprehensif yang mencakup aspek teknis dan finansial \cite{iso25010}. Evaluasi teknis menilai kemampuan sistem memenuhi persyaratan performa, stabilitas, dan keandalan aplikasi enterprise. Evaluasi finansial menganalisis biaya operasional jangka panjang melalui konsep \textit{Total Cost of Ownership} (TCO). Kedua dimensi ini bersama-sama memberikan gambaran holistik tentang viabilitas deployment pada perangkat hemat daya.
+
 \subsection{Evaluasi Teknis dan Performa}
 
-\begin{enumerate}
-    \item Definisi Beban Kerja (Workload) Spesifik ERP \cite{maddodi2018generating}
-    \item Metrik Performa Aplikasi (Throughput \& Response Time) \cite{iso25010}
-    \item Metrik Utilisasi Sumber Daya (CPU, Memori, I/O) \cite{blem2013power}
-    \item Analisis Stabilitas dan Tingkat Kesalahan (Stability \& Error Rate)
-    \item Metode Pengujian Beban dan Stres (Load \& Stress Testing) \cite{maddodi2018generating}
-    \item Metodologi Benchmarking Komparatif (SBC vs. Cloud)
-\end{enumerate}
+Evaluasi teknis harus dimulai dari pemahaman karakteristik beban kerja ERP yang berbeda dari aplikasi web sederhana. ERP mencirikan operasi database intensif, pemrosesan logika bisnis kompleks, serta transaksi konkuren yang menuntut konsistensi dan integritas data tinggi \cite{maddodi2018generating}. Pendekatan evaluasi mencakup tiga tahap: mendefinisikan skenario beban kerja representatif, mengidentifikasi metrik performa relevan, dan menetapkan ambang batas penerimaan berdasarkan standar industri.
+
+Definisi beban kerja harus menangkap pola operasional ERP yang autentik. Beban kerja mencakup operasi baca seperti pembuatan laporan dan kueri data, operasi tulis seperti transaksi penjualan dan entri inventori, serta operasi campuran yang mensimulasikan aktivitas konkuren multi-pengguna \cite{maddodi2018generating}. Beban kerja yang tidak representatif akan menghasilkan evaluasi performa yang menyesatkan dan tidak mencerminkan kinerja sistem dalam lingkungan produksi sesungguhnya.
+
+Metrik performa utama mencakup throughput sistem (jumlah permintaan berhasil per detik atau RPS) dan waktu respons, baik rata-rata maupun pada persentil 95th dan 99th \cite{iso25010}. Throughput mengindikasikan kapasitas absolut, sedangkan respons time mencerminkan pengalaman pengguna. Standar ISO/IEC 25010 menetapkan target waktu respons kurang dari 3 detik untuk transaksi interaktif umum. Ambang batas ini bukan arbitrer melainkan didasarkan pada penelitian pengalaman pengguna: respons lebih lama mengurangi produktivitas dan kepuasan pengguna terhadap sistem.
+
+Paralel dengan metrik aplikasi, evaluasi harus memantau utilisasi sumber daya: penggunaan CPU, memori, dan I/O disk dalam bentuk IOPS dan throughput MB/s. Tools monitoring Linux standar seperti \textit{vmstat}, \textit{iostat}, dan \textit{htop} mengidentifikasi bottleneck—apakah sistem terbatas oleh CPU, memori, atau disk \cite{blem2013power}. Identifikasi bottleneck penting untuk memahami batasan inherent platform SBC dan peluang optimisasi.
+
+Stabilitas dan keandalan sistem merupakan dimensi kritis, terutama untuk aplikasi enterprise yang memerlukan ketersediaan tinggi. Standar ISO/IEC 25010 mendefinisikan keandalan melalui kematangan (kemampuan beroperasi tanpa kegagalan dalam kondisi normal) dan toleransi kesalahan (kemampuan bertahan dalam degradasi atau kegagalan parsial) \cite{iso25010}. Pengukuran praktis meliputi uptime target 99\% atau lebih, error rate di bawah 5\%, serta kemampuan sistem bertahan dalam beban berkelanjutan tanpa crash atau degradasi progresif.
+
+Metodologi pengujian menggunakan \textit{load testing} dan \textit{stress testing} yang bertahap untuk pemetaan perilaku sistem di berbagai tingkat beban. \textit{Load testing} mensimulasikan beban normal dengan pengguna konkuren target, sementara \textit{stress testing} menguji batas sistem melalui peningkatan beban gradual \cite{maddodi2018generating}. Skenario bertahap—10 pengguna, 25 pengguna, 50 pengguna—memungkinkan identifikasi titik jenuh dan pola degradasi. Tools seperti Locust yang berbasis Python memudahkan otomasi pengujian beban yang realistis dan konsisten.
+
+Penetapan \textit{baseline} performa berdasarkan VPS komersial memberikan standar evaluasi objektif. Pendekatan ini menghindari evaluasi absolut ambigu—apakah performa "cukup baik"—dengan membandingkan SBC terhadap platform referensi mapan (VPS entry-level). Hasil evaluasi menjadi konkret: "SBC mencapai 70\% performa VPS" atau "SBC menangani 30 pengguna dengan latensi <3 detik", bukan pernyataan vague tanpa konteks \cite{iso25010}.
 
 \subsection{Evaluasi Finansial}
 
-\begin{enumerate}
-    \item Kerangka Kerja Total Cost of Ownership (TCO) \cite{buijsse2024reference}
-    \item Identifikasi Komponen Biaya Cloud/VPS (OPEX) \cite{Younus2024}
-    \item Identifikasi Komponen Biaya On-Premise/SBC (CAPEX \& OPEX) \cite{Younus2024}
-    \item Model Perhitungan TCO untuk Periode 3 \& 5 Tahun
-    \item Analisis Titik Impas (\textit{Break-Even Point}) \cite{buijsse2024reference}
-\end{enumerate}
+Evaluasi finansial melengkapi analisis teknis dengan mengukur aspek ekonomi jangka panjang dari alternatif deployment \cite{Younus2024}. Solusi teknis unggul tidak selalu ekonomis, begitu pun sebaliknya—infrastruktur ekonomis harus tetap memenuhi ambang batas teknis untuk dianggap layak. Kerangka kerja menggunakan \textit{Total Cost of Ownership} (TCO), yang mengintegrasikan seluruh biaya infrastruktur sepanjang periode penggunaan untuk perbandingan ekonomi holistik.
 
-\section{Kriteria Kelayakan Development ERP}
+TCO adalah total biaya kepemilikan dan operasional infrastruktur selama periode evaluasi—umumnya 3-5 tahun untuk deployment IT enterprise \cite{buijsse2024reference}. Kerangka kerja TCO membedakan CAPEX (\textit{capital expenditure}) sebagai investasi awal satu kali untuk aset fisik, dan OPEX (\textit{operational expenditure}) sebagai biaya berkelanjutan operasional \cite{Younus2024}. Model cloud didominasi OPEX langganan bulanan, sementara on-premise didominasi CAPEX pembelian hardware yang diimbangi OPEX operasional lebih rendah.
+
+Komponen biaya VPS meliputi langganan bulanan atau tahunan yang mencakup penyediaan infrastruktur, pemeliharaan, dan dukungan teknis \cite{Younus2024}. Biaya tambahan mungkin mencakup bandwidth atau data transfer, backup premium, skalabilitas otomatis, dan support premium. Model pricing linear memudahkan proyeksi untuk 3-5 tahun: \textit{monthly cost} dikalikan jumlah bulan.
+
+Komponen biaya SBC lebih kompleks karena mencakup CAPEX dan OPEX berlainan. CAPEX mencakup unit SBC, perangkat pendukung (power supply, casing), penyimpanan eksternal (SSD/HDD), dan infrastruktur jaringan minimal. Untuk cluster, CAPEX dikalikan jumlah node. OPEX mencakup listrik operasional—Orange Pi 5 Pro dan Raspberry Pi 5 mengkonsumsi 6-12 watt dalam beban normal \cite{orangepi2024pi5pro}—serta pemeliharaan dan replacement komponen. Untuk periode 5 tahun, OPEX listrik umumnya minor dibanding CAPEX awal tetapi tetap perlu diperhitungkan.
+
+Model perhitungan TCO menggunakan formula sederhana \cite{buijsse2024reference}. SBC: $\text{TCO}_{\text{SBC}} = \text{CAPEX}_{\text{hardware}} + (\text{OPEX}_{\text{electrical}} + \text{OPEX}_{\text{maintenance}}) \times \text{bulan}$. VPS: $\text{TCO}_{\text{VPS}} = \text{monthly cost} \times \text{bulan}$. Grafik kumulatif biaya menunjukkan pola: VPS meningkat linear, SBC relatif datar setelah investasi awal. Perbandingan TCO memberikan wawasan konkret tentang pilihan ekonomis untuk berbagai horizon investasi.
+
+Analisis titik impas (\textit{break-even point}) menentukan waktu investasi SBC terbayar dan lebih ekonomis dari VPS berkelanjutan. Titik impas dihitung: $\text{break-even} = \frac{\text{CAPEX}_{\text{SBC}}}{\text{monthly cost}_{\text{VPS}} - \text{OPEX}_{\text{SBC}}}$, menghasilkan jumlah bulan kesetaraan biaya kumulatif \cite{buijsse2024reference}. Interpretasi praktis: jika titik impas 24 bulan dan organisasi memproyeksikan 5 tahun penggunaan, SBC lebih menguntungkan karena penghematan terakumulasi 3 tahun sisanya. Jika hanya 1 tahun, VPS lebih baik karena CAPEX SBC belum terbayar. Analisis ini memfasilitasi keputusan informed berdasarkan horizon investasi spesifik.
+
+\section{Kriteria Kelayakan Deployment ERP}
+
+Penetapan kriteria kelayakan mengintegrasikan hasil evaluasi teknis dan finansial menjadi keputusan kelayak/tidak layak yang objektif \cite{Younus2024}. Kriteria mencakup tiga dimensi: kelayakan teknis (performa dan keandalan), kelayakan finansial (ekonomis dalam horizon relevan), dan kelayakan operasional (trade-off dimensi teknis-finansial). Kriteria jelas memastikan evaluasi objektif dan bertanggung jawab.
 
 \subsection{Kelayakan Teknis}
 
-\begin{itemize}
-    \item Pemenuhan Syarat Sistem Minimum ERP \cite{odoo2025documentation, erpnext2024introduction}
-    \item Pencapaian Ambang Batas Performa (Waktu Respons \& Throughput) \cite{iso25010}
-    \item Stabilitas dan Keandalan Sistem (Uptime \& Error Rate)
-    \item Potensi Skalabilitas (Vertikal/Horizontal) \cite{Putra2019}
-    \item Pertimbangan Keamanan Infrastruktur Dasar
-\end{itemize}
+Kelayakan teknis didasarkan pada kriteria spesifik yang menggambarkan kemampuan platform memenuhi persyaratan enterprise. Kriteria pertama adalah pemenuhan \textit{minimum system requirements} yang didokumentasikan pengembang ERP—mencakup CPU, memori, storage, dan kompatibilitas OS \cite{odoo2025documentation, erpnext2024introduction}. Verifikasi awal ini adalah langkah dasar: jika platform tidak memenuhi minimum requirements, deployment tidak akan berhasil. Namun, memenuhi minimum adalah kondisi perlu bukan cukup; sistem harus juga menampilkan performa operasional dapat diterima.
+
+Pencapaian ambang batas performa adalah kriteria operasional substantif. Berdasarkan ISO/IEC 25010, ERP harus mencapai respons <3 detik untuk transaksi umum dan menangani 10-50 pengguna konkuren tergantung scale target \cite{iso25010}. Ambang batas didasarkan penelitian user experience: respons >3 detik mengurangi produktivitas dan kepuasan. Evaluasi SBC harus menunjukkan platform memenuhi atau mendekati ambang batas di bawah beban kerja target (misalnya, 20 pengguna dengan operasi campuran).
+
+Stabilitas dan keandalan sistem adalah kriteria penting sering diabaikan evaluasi preliminary. Sistem memenuhi performa nominal tetapi crash atau degradasi progresif selama stress test panjang tidak layak untuk produksi. Kriteria diukur uptime 99\%+, error rate <5\%, dan toleransi degradasi parsial tanpa total shutdown.
+
+Potensi skalabilitas mencerminkan kemampuan pertumbuhan seiring organisasi berkembang. Skalabilitas vertikal (upgrade RAM/storage SBC tunggal) dan horizontal (penambahan node cluster) membuka peluang pertumbuhan jangka panjang \cite{Putra2019}. SBC dapat dikonfigurasi cluster dengan load balancing, memberikan jalan skalabilitas horizontal untuk aplikasi ERP.
+
+Pertimbangan keamanan mencakup ketersediaan security patches OS, implementasi firewall dan kontrol akses network, serta keamanan fisik hardware on-premise. Ekosistem keamanan Linux yang mature menjamin security updates berkala. Keamanan level aplikasi dan database adalah tanggung jawab deployment, bukan karakteristik inherent platform.
 
 \subsection{Kelayakan Finansial}
 
-\begin{itemize}
-    \item Keunggulan TCO Dibandingkan Alternatif Cloud \cite{buijsse2024reference}
-    \item Periode Pengembalian Investasi (Payback Period) yang Wajar
-    \item Keterjangkauan Biaya untuk Skala UKM atau Eksperimental
-    \item Analisis Nilai Jangka Panjang (\textit{Value for Money})
-    \item Perbandingan Biaya dengan Solusi SaaS \textit{Entry-Level}
-\end{itemize}
+Kelayakan finansial mengevaluasi apakah solusi ERP pada SBC ekonomis untuk konteks organisasi. Kriteria pertama adalah keunggulan TCO dibanding cloud/VPS dalam horizon relevan \cite{buijsse2024reference}. Organisasi dengan horizon 5+ tahun cenderung menemukan SBC lebih ekonomis karena break-even umumnya tahun kedua-ketiga, lalu penghematan terakumulasi. Organisasi jangka pendek mungkin menemukan VPS lebih fleksibel karena tidak ada CAPEX awal.
 
-\subsection{Trade-off Analysis Framework}
+Periode pengembalian investasi (\textit{payback period}) mengukur berapa lama CAPEX SBC terbayar melalui penghematan OPEX. Payback period wajar untuk IT infrastructure adalah 2-3 tahun \cite{buijsse2024reference}. Payback 18-24 bulan mengindikasikan investasi SBC menarik. Payback >4 tahun berisiko karena horizon ketidakpastian bisnis panjang.
 
-\begin{itemize}
-    \item Model Penilaian Tertimbang (Performa vs. Biaya vs. Kontrol)
-    \item Identifikasi \textit{Trade-off} Kritis (misal: Biaya vs. Kemudahan Pemeliharaan)
-    \item Analisis Faktor Kualitatif (Kedaulatan Data, Fleksibilitas)
-    \item Matriks Keputusan untuk Rekomendasi Platform
-\end{itemize}
+Keterjangkauan untuk skala UMKM relevan konteks Indonesia. CAPEX SBC dasar umumnya Rp 2-4 juta (hardware, power supply, aksesoris), sementara VPS entry-level Rp 200-500k/bulan. Keterjangkauan ini membuat SBC khusus relevan UMKM atau organisasi yang ingin evaluasi/eksperimen tanpa komitmen jangka panjang.
+
+Analisis nilai (\textit{value for money}) membandingkan performa per unit biaya \cite{buijsse2024reference}. Metrik mencakup throughput RPS per juta rupiah tahunan atau kapasitas pengguna per biaya TCO tahunan. Analisis membantu organisasi memahami trade-off: apakah VPS 2x lebih baik dengan biaya 2x (value sama), atau ada perbedaan signifikan menguntungkan satu alternatif.
+
+Perbandingan biaya SaaS entry-level seperti Odoo Online atau ERPNext Cloud relevan organisasi yang cari alternatif sederhana \cite{Younus2024}. SaaS lebih mudah implementasi tetapi tanpa kontrol deployment dan cost per user lebih tinggi jangka panjang. Analisis TCO tiga alternatif (SBC, VPS, SaaS) memberikan gambaran komprehensif untuk berbagai scenario organisasi.
+
+\subsection{Kerangka Kerja Analisis Trade-off}
+
+Integrasi kriteria teknis dan finansial memerlukan analisis trade-off eksplisit karena dimensi tidak selalu sejalan \cite{Younus2024}. Sistem performa tertinggi mungkin tidak paling ekonomis, dan solusi termurah mungkin tidak memenuhi ambang batas teknis. Kerangka kerja ini membantu organisasi memahami trade-off sistematis dan membuat keputusan informed berdasarkan prioritas spesifik.
+
+Trade-off kritis mencakup tiga dimensi. Pertama, performa versus biaya: upgrade hardware SBC meningkatkan CAPEX, dan di titik tertentu VPS atau cloud lebih cost-effective untuk performa target. Kedua, biaya versus kontrol: cloud menawarkan manajemen minimal tetapi kontrol terbatas dan vendor lock-in, sementara on-premise SBC memerlukan keahlian operasional internal tetapi memberikan kontrol penuh. Ketiga, fleksibilitas versus komitmen: cloud fleksibel kapasitas tanpa komitmen jangka panjang, sementara SBC memerlukan komitmen CAPEX awal tetapi memberikan prediktabilitas biaya jangka panjang.
+
+Analisis faktor kualitatif melengkapi evaluasi kuantitatif dengan aspek non-finansial penting sustainability jangka panjang \cite{Younus2024}. Kedaulatan data (\textit{data sovereignty})—lokasi dan kontrol akses data—kritis organisasi dengan persyaratan regulasi ketat (fintech, healthcare). SBC on-premise memberikan kontrol penuh, cloud memerlukan kepercayaan vendor. Fleksibilitas sistem—modifikasi atau kustomisasi sesuai kebutuhan spesifik—berfavour on-premise dengan ERP open-source customizable penuh dibanding SaaS terbatas. Kemudahan pemeliharaan mencerminkan operational burden: cloud diminimalkan via managed services, on-premise memerlukan tim IT kompeten. Organisasi harus mengevaluasi kapabilitas tim mereka.
+
+Evaluasi kelebihan dan keterbatasan deployment ERP pada SBC menyajikan penilaian holistik untuk keputusan akhir. Kelebihan utama: TCO lebih rendah jangka panjang, kontrol penuh atas sistem dan data tanpa vendor lock-in, fleksibilitas unlimited kustomisasi bisnis unik, konsumsi energi minimal relevan sustainability dan lokasi power terbatas. Keterbatasan: performa lebih terbatas dibanding server enterprise, memerlukan keahlian teknis internal instalasi-konfigurasi-troubleshooting yang tidak semua organisasi punya, risiko \textit{single point of failure} tanpa redundancy cluster proper, komunitas support lebih kecil dibanding mainstream. Organisasi evaluasi kelayakan harus membandingkan kelebihan-keterbatasan terhadap prioritas dan constraint spesifik mereka.
+
+Rekomendasi skenario penggunaan memberikan guidance praktis konteks deployment ERP pada SBC paling sesuai. SBC layak untuk organisasi: skala UMKM <50 pengguna konkuren, infrastruktur stabil dengan pertumbuhan gradual, biaya listrik rendah atau keandalan power supply terbatas, tim IT dengan kapabilitas teknis adequate deployment-maintenance, horizon investasi 5+ tahun memungkinkan CAPEX terbayar. Sebaliknya, VPS atau cloud lebih sesuai: skalabilitas dinamis, tim IT minimal/nonexistent, uptime ekstrem dengan redundancy geografis, commitment jangka pendek tidak pasti. Rekomendasi membantu stakeholder keputusan aligned realitas organisasi, bukan premis teknologi idealis.
