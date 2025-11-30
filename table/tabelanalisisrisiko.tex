@@ -1,0 +1,61 @@
+\begin{table}[h]
+\centering
+\caption{Analisis Risiko Penelitian}
+\label{tab:risk-analysis}
+\small
+\begin{tabular}{|p{0.25\textwidth}|c|c|p{0.38\textwidth}|}
+\hline
+\textbf{Risiko} & \textbf{Frekuensi} & \textbf{Severity} & \textbf{Strategi Mitigasi} \\ \hline
+
+Keterbatasan hardware Orange Pi tidak mampu menjalankan ERPNext dengan performa acceptable & Sedang & Tinggi &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Preliminary testing dengan dataset minimal untuk validasi awal
+    \item Penyesuaian beban kerja jika hardware tidak mencukupi
+    \item Dokumentasi batasan sebagai kontribusi penelitian
+\end{itemize} \\ \hline
+
+Ketidakstabilan Oracle Cloud Free Tier (perubahan kebijakan, downtime) & Sedang & Sedang &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Backup data konfigurasi dan dataset secara berkala
+    \item Siapkan alternatif commercial VPS trial
+    \item Alokasi buffer waktu untuk retry
+\end{itemize} \\ \hline
+
+Kompatibilitas ERPNext dengan arsitektur ARM & Rendah & Tinggi &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Proof-of-concept installation di tahap awal
+    \item Konsultasi dengan komunitas ERPNext/Frappe
+    \item Dokumentasi workaround sebagai kontribusi
+\end{itemize} \\ \hline
+
+Skenario testing tidak realistis & Sedang & Sedang &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Studi literatur workload pattern ERP \cite{maddodi2018generating}
+    \item Validasi skenario dengan pembimbing
+    \item Kombinasi operasi representatif (baca, tulis, campuran)
+\end{itemize} \\ \hline
+
+Bias konfigurasi platform (OS tuning, database parameters) & Sedang & Tinggi &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Dokumentasi detail semua konfigurasi sistem
+    \item Konfigurasi identik sedapat mungkin (versi OS, ERPNext, dataset)
+    \item Baseline benchmarking untuk karakterisasi perbedaan intrinsik
+    \item Transparansi pelaporan perbedaan yang tidak dapat dihindari
+\end{itemize} \\ \hline
+
+Keterlambatan pengadaan hardware & Sedang & Tinggi &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Survey ketersediaan dari multiple vendors sebelum pembelian
+    \item Alokasi buffer waktu untuk procurement
+    \item Pertimbangkan alternatif SBC (Raspberry Pi 5) jika Orange Pi tidak available
+\end{itemize} \\ \hline
+
+Gangguan infrastruktur pendukung (internet, listrik) & Rendah & Sedang &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Gunakan UPS untuk SBC selama testing intensif
+    \item Backup plan: testing di laboratorium kampus
+    \item Schedule testing dengan buffer untuk retry
+\end{itemize} \\ \hline
+
+\end{tabular}
+\end{table}

@@ -77,11 +77,36 @@
 \usepackage[a4paper, left=4cm, right=3cm, top=3cm, bottom=3cm]{geometry} % set page margins
 \usepackage[indonesian]{babel} % untuk bahasa Indonesia
 \usepackage{csquotes} % for context-sensitive quotation facilities
+
+% ==========================================
+% KONFIGURASI HYPHENATION DAN LINE BREAKING
+% ==========================================
+% Atur toleransi untuk menghindari overfull/underfull hbox
+\tolerance=1000
+\emergencystretch=3em
+\hyphenpenalty=500
+\exhyphenpenalty=100
+
+% Definisikan hyphenation untuk kata-kata teknis yang sering muncul
+\hyphenation{
+  Enter-prise
+  Re-source
+  Plan-ning
+  infra-struk-tur
+  kom-pu-ta-si-onal
+  de-ploy-ment
+  per-forma
+  trans-ak-si-onal
+  di-ban-ding-kan
+  mem-ban-ding-kan
+  per-ban-ding-an
+}
 \usepackage{setspace} % for line spacing
 \onehalfspacing % spasi 1.5
 \usepackage{graphicx} % for images
 \usepackage{caption} % for customizing captions
 \usepackage{subcaption} % for sub-figures
+\usepackage{float} % for [H] placement specifier (HERE precisely)
 \usepackage{hyperref} % for hyperlinks
 \usepackage{titlesec} % for customizing titles
 \usepackage{tocloft} % for customizing table of contents
@@ -122,7 +147,7 @@
 \DeclareLanguageMapping{indonesian}{english}
 \DefineBibliographyStrings{indonesian}{
   and          = {dan},
-  andothers    = {et al.},
+  andothers    = {dkk.},
   editor       = {penyunting},
   editors      = {penyunting},
   translator   = {penerjemah},
@@ -143,6 +168,13 @@
 % ==========================================
 \let\oldcite\cite
 \renewcommand{\cite}{\parencite}
+
+% ==========================================
+% Tambahkan koma antara penulis dan tahun dalam sitasi: (Penulis, Tahun)
+% ==========================================
+\renewcommand{\postnotedelim}{\addcomma\space}
+\DeclareFieldFormat{postnote}{#1}
+\renewcommand{\nameyeardelim}{\addcomma\space}
 
 % ==========================================
 % Atur pemisah nama penulis agar lebih natural dalam Bahasa Indonesia
@@ -209,8 +241,8 @@
 
     
     \vspace*{2cm}
-    
-    {\Large\bfseries STUDI KELAYAKAN PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER SERTA BATASANNYA}\\
+
+    {\Large\bfseries PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER DENGAN ANALISIS PERFORMA DAN TOTAL COST OF OWNERSHIP}\\
      \vspace{4cm}
 
     {\Large \textbf{Proposal Tugas Akhir}}\\
@@ -256,8 +288,8 @@
 \begin{center}
   \textbf{\large LEMBAR PENGESAHAN}\\[1cm]
   \vspace*{1.5cm}
-    
-  {\large\bfseries STUDI KELAYAKAN PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER SERTA BATASANNYA}\\
+
+  {\large\bfseries PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER DENGAN ANALISIS PERFORMA DAN TOTAL COST OF OWNERSHIP}\\
      \vspace{2cm}
 
   {\Large \textbf{Proposal Tugas Akhir}}\\

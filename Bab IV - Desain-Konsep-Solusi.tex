@@ -2,66 +2,108 @@
 \label{chap:desain-konsep-solusi}
 
 \section{Gambaran Umum Solusi}
+
+Penelitian ini mengusulkan kerangka kerja evaluasi kelayakan teknis dan finansial sistem ERP pada infrastruktur alternatif berbasis \textit{Single-Board Computer} (SBC). Pendekatan evaluasi mencakup:
+
 \begin{itemize}
-    \item Penelitian ini mengusulkan sebuah kerangka kerja untuk mengevaluasi kelayakan teknis dan finansial dari sistem ERP pada SBC.
-    \item Metode evaluasi didasarkan pada dua pilar utama: \textit{benchmarking} performa aplikasi dan analisis \textit{Total Cost of Ownership} (TCO).
-    \item Objek yang dievaluasi adalah platform SBC (studi kasus: Orange Pi 5 Pro) yang akan dibandingkan dengan platform \textit{cloud} VPS sebagai \textit{baseline}.
+    \item \textbf{Evaluasi Performa:} \textit{Benchmarking} performa aplikasi ERP pada platform SBC dibandingkan dengan platform \textit{cloud} VPS sebagai \textit{baseline}.
+    \item \textbf{Analisis Ekonomi:} Perhitungan dan perbandingan \textit{Total Cost of Ownership} (TCO) untuk periode 3 dan 5 tahun antara investasi SBC (\textit{CAPEX}) dan biaya sewa VPS komersial (\textit{OPEX}).
+    \item \textbf{Studi Kasus:} Orange Pi 5 Pro sebagai representasi platform SBC, dan Oracle Cloud Free Tier sebagai platform evaluasi performa, dengan VPS komersial (Hostinger/Biznet/DigitalOcean) untuk analisis TCO.
 \end{itemize}
 
-\section{Arsitektur Solusi}
+\section{Perbedaan dengan Sistem Saat Ini}
+
+\subsection{Arsitektur Tradisional (\textit{Baseline})}
+
+Saat ini, \textit{deployment} sistem ERP untuk skala kecil hingga menengah umumnya menggunakan salah satu dari dua pendekatan berikut:
+
 \begin{itemize}
-    \item \textbf{Arsitektur A (On-Premise SBC):} Merepresentasikan model investasi CAPEX, di mana sistem ERP diinstalasi dan dijalankan secara lokal pada perangkat Orange Pi.
-    \item \textbf{Arsitektur B (Cloud VPS):} Merepresentasikan model investasi OPEX, di mana sistem ERP berjalan di server virtual yang disewa dari penyedia \textit{cloud}.
-    \item Kedua arsitektur akan menggunakan tumpukan perangkat lunak (OS, web server, basis data, ERP) yang identik untuk memastikan perbandingan yang adil.
+    \item \textbf{\textit{Cloud} VPS (Virtual Private Server):}
+    \begin{itemize}
+        \item Model investasi: OPEX (\textit{Operational Expenditure})
+        \item Biaya berulang bulanan (Rp 100.000 - Rp 500.000/bulan untuk VPS komersial)
+        \item Skalabilitas tinggi, namun biaya kumulatif tinggi untuk jangka panjang
+        \item Ketergantungan pada penyedia layanan dan koneksi internet
+    \end{itemize}
+
+    \item \textbf{\textit{On-Premise} Server Tradisional:}
+    \begin{itemize}
+        \item Model investasi: CAPEX (\textit{Capital Expenditure}) tinggi
+        \item Biaya awal signifikan (server \textit{entry-level}: Rp 10-30 juta)
+        \item Konsumsi daya tinggi (50-200W), biaya listrik Rp 200.000 - Rp 800.000/bulan
+        \item Memerlukan ruang fisik dan infrastruktur pendukung (pendingin, UPS)
+    \end{itemize}
 \end{itemize}
 
-\section{Desain Implementasi}
-\subsection{Penyiapan Lingkungan Perangkat Keras}
+Gambar \ref{fig:network-cloud} dan \ref{fig:network-onpremise} mengilustrasikan arsitektur tradisional yang saat ini umum digunakan untuk \textit{deployment} ERP.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{image/cloud.png}
+\caption{Arsitektur Cloud VPS untuk Deployment ERP}
+\label{fig:network-cloud}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{image/On-Premise(1).png}
+\caption{Arsitektur On-Premise Server Tradisional untuk Deployment ERP}
+\label{fig:network-onpremise}
+\end{figure}
+
+\subsection{Arsitektur yang Diusulkan (SBC-\textit{Based})}
+
+Solusi yang diusulkan dalam penelitian ini mengeksplorasi alternatif ketiga:
+
 \begin{itemize}
-    \item \textbf{SBC:} Melakukan instalasi sistem operasi Linux (misal: Armbian) pada Orange Pi 5 Pro, serta melakukan konfigurasi jaringan dasar.
-    \item \textbf{VPS:} Melakukan provisi \textit{virtual machine} pada \textit{cloud provider} dengan spesifikasi yang memenuhi \textit{minimum requirement} ERPNext. Untuk fase penelitian, Oracle Cloud Free Tier akan digunakan untuk evaluasi performa guna mengurangi biaya operasional.
+    \item \textbf{\textit{Single-Board Computer} (SBC):}
+    \begin{itemize}
+        \item Model investasi: CAPEX rendah (Orange Pi 5 Pro: ~Rp 2-3 juta)
+        \item Konsumsi daya sangat rendah (5-15W), biaya listrik ~Rp 20.000 - Rp 60.000/bulan
+        \item Kontrol penuh atas infrastruktur (\textit{on-premise}) tanpa biaya berulang tinggi
+        \item Portabilitas tinggi, footprint fisik minimal
+        \item \textit{Trade-off}: Keterbatasan performa dibandingkan server tradisional, namun berpotensi mencukupi untuk beban kerja ERP skala kecil-menengah
+    \end{itemize}
 \end{itemize}
 
-\subsection{Penyiapan Lingkungan Perangkat Lunak}
+Gambar \ref{fig:network-sbc} dan \ref{fig:network-sbc-edge} mengilustrasikan arsitektur alternatif berbasis SBC yang diusulkan dalam penelitian ini.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{image/SBC.png}
+\caption{Arsitektur SBC: Orange Pi 5 Pro untuk Deployment ERP}
+\label{fig:network-sbc}
+\end{figure}
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.8\textwidth]{image/SBC-edge.png}
+\caption{Arsitektur SBC Edge: Deployment ERP pada Edge Computing}
+\label{fig:network-sbc-edge}
+\end{figure}
+
+\subsection{Perbandingan Kunci}
+
+\input{table/tabelperbandinganarsitektur.tex}
+
+\textbf{Komponen yang Identik (untuk Evaluasi \textit{Fair}):}
 \begin{itemize}
-    \item \textbf{Dependensi:} Instalasi semua komponen yang dibutuhkan, termasuk Python, Nginx, Supervisor, dan server basis data yang sesuai (PostgreSQL/MariaDB).
-    \item \textbf{ERP:} Instalasi dan konfigurasi ERPNext pada kedua platform dengan dataset demo yang identik.
+    \item \textbf{Software Stack:} Linux OS (Ubuntu/Armbian), Nginx (web server), ERPNext (aplikasi ERP), MariaDB/PostgreSQL (database), Redis (caching)
+    \item \textbf{Dataset:} Dataset demo identik untuk memastikan beban kerja yang sama
+    \item \textbf{Konfigurasi:} Parameter database, setting ERPNext, dan optimasi OS disesuaikan agar setara
 \end{itemize}
 
-\section{Desain Pengujian dan Evaluasi}
-\subsection{Skenario Pengujian}
+\textbf{Komponen yang Berbeda (Objek Evaluasi):}
 \begin{itemize}
-    \item Skenario pengujian dirancang untuk mensimulasikan alur kerja bisnis yang realistis pada sistem ERP \cite{maddodi2018generating}.
-    \item \textbf{Operasi Baca:} Pengujian akses ke data master dan laporan (misal: membuka daftar produk, melihat riwayat penjualan).
-    \item \textbf{Operasi Tulis:} Pengujian pembuatan entitas data baru (misal: membuat \textit{sales order}, validasi faktur).
-    \item \textbf{Operasi Campuran:} Simulasi beban dari beberapa pengguna virtual yang melakukan operasi baca dan tulis secara bersamaan.
+    \item \textbf{Hardware Platform:} Orange Pi 5 Pro (ARM) vs. Oracle Cloud Free Tier (x86/ARM cloud)
+    \item \textbf{Lokasi:} On-premise (SBC) vs. Cloud (VPS)
+    \item \textbf{Model Biaya:} CAPEX rendah + OPEX minimal (SBC) vs. OPEX berulang (VPS)
 \end{itemize}
 
-\subsection{Alat Benchmarking}
+\textbf{Testing dan Monitoring:}
 \begin{itemize}
-    \item Simulasi beban akan dieksekusi menggunakan perangkat lunak \textit{load testing} (kandidat utama: Locust).
-    \item Skenario pengujian akan ditulis sebagai kode Python (dalam Locust) untuk memastikan akurasi dan kemudahan repetisi.
+    \item \textbf{Load Testing:} Aplikasi berbasis Go untuk simulasi beban kerja (API calls, concurrent users, transaction patterns)
+    \item \textbf{Monitoring:} \textit{System metrics} (CPU, RAM, I/O disk) dan \textit{application metrics} (response time, throughput, error rate)
 \end{itemize}
 
-\subsection{Pengumpulan Data Metrik}
-\begin{itemize}
-    \item \textbf{Metrik Kinerja Aplikasi:} Data \textit{throughput} (RPS) dan waktu respons (ms) akan dicatat secara otomatis oleh Locust.
-    \item \textbf{Metrik Sumber Daya:} Data utilisasi CPU, RAM, dan I/O disk pada sisi server akan dipantau menggunakan utilitas `vmstat` dan `iostat`.
-\end{itemize}
 
-\section{Desain Analisis}
-\subsection{Analisis Kinerja Teknis}
-\begin{itemize}
-    \item Membuat grafik perbandingan performa (misal: throughput vs. jumlah pengguna) antara platform SBC dan VPS.
-    \item Menganalisis grafik utilisasi sumber daya untuk mengidentifikasi potensi \textit{bottleneck} pada setiap platform.
-    \item Mengevaluasi stabilitas dan tingkat kesalahan (\textit{error rate}) pada kedua platform di bawah beban puncak.
-\end{itemize}
-
-\subsection{Analisis Biaya (TCO)}
-\begin{itemize}
-    \item Menghitung dan membandingkan TCO untuk periode 3 dan 5 tahun.
-    \item \textbf{Komponen Biaya SBC:} Meliputi biaya perangkat keras (CAPEX) dan estimasi biaya konsumsi listrik (OPEX).
-    \item \textbf{Komponen Biaya VPS Komersial:} Meliputi biaya sewa bulanan dari \textit{commercial} VPS (Hostinger, Biznet, atau DigitalOcean) yang diproyeksikan untuk periode 3 dan 5 tahun.
-    \item \textbf{Catatan Metodologis:} Platform dengan biaya Rp 0 (\textit{free tier}) tidak dimasukkan dalam analisis kuantitatif TCO karena tidak menghasilkan \textit{break-even point} yang bermakna. Evaluasi performa Oracle Cloud Free Tier akan digunakan untuk \textit{qualitative trade-off discussion}.
-    \item Membuat grafik perbandingan TCO untuk mengidentifikasi \textit{break-even point} antara investasi SBC dan biaya sewa VPS komersial.
-\end{itemize}

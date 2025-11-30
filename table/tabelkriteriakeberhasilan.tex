@@ -1,0 +1,26 @@
+\begin{table}[h]
+\centering
+\caption{Kriteria Keberhasilan Evaluasi}
+\label{tab:success-criteria}
+\small
+\begin{tabular}{|p{3.5cm}|p{9.5cm}|}
+\hline
+\textbf{Aspek} & \textbf{Kriteria} \\ \hline
+Kelayakan Fungsional &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Sistem menyelesaikan semua operasi fungsional tanpa error
+    \item Response time rata-rata $\leq$ 3 detik (sesuai ISO/IEC 25010 \cite{iso25010})
+    \item Stabilitas sistem selama periode pengujian (\textit{no crashes})
+\end{itemize} \\ \hline
+Performa Komparatif &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item Throughput SBC $\geq$ 50\% dari throughput VPS \textit{baseline} untuk beban normal
+    \item Identifikasi \textit{threshold} maksimum \textit{concurrent users} yang dapat ditangani SBC
+\end{itemize} \\ \hline
+Kelayakan Ekonomi &
+\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
+    \item \textit{Break-even point} TCO SBC vs. VPS komersial $\leq$ 24 bulan
+    \item TCO SBC untuk periode 5 tahun lebih rendah minimal 30\% dibandingkan VPS komersial
+\end{itemize} \\ \hline
+\end{tabular}
+\end{table}
