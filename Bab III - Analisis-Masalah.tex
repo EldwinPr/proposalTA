@@ -8,12 +8,15 @@
 \label{chap:analisis-masalah}
 
 \section{Analisis Kondisi Saat ini}
-\begin{itemize}
-    \item Saat ini solusi deployment ERP pada cloud tidak terlalu bermasalah selain biaya berulang yang agak tinggi.
-    \item Sedangkan CAPEX deployment ERP pada on premise sangat tinggi walaupun biaya berulang tidak setinggi cloud.
-    \item Studi pernah dilakukan untuk deployment web-server pada SBC
-    \item Deployment ERP pada SBC pernah dilakukan, namun sumber menunjukan hanya sebatas tutorial atau alat bantu ERP tidak ada dokumentasi yang jelas selain forum
-\end{itemize}
+
+Infrastruktur ERP saat ini menghadapi dilemma ekonomi yang tajam. Deployment \textit{cloud} berbasis *Virtual Private Server* (VPS) atau *Software-as-a-Service* (SaaS) menawarkan kemudahan implementasi dan skalabilitas, tetapi membebankan biaya operasional berulang (\textit{operational expenditure}/OPEX) yang berkelanjutan \cite{Younus2024}. Sebaliknya, model \textit{on-premise} dengan \textit{server} konvensional memerlukan investasi modal awal besar (\textit{capital expenditure}/CAPEX) untuk perangkat keras dan infrastruktur, meskipun biaya operasional lebih rendah \cite{Younus2024}. Trade-off ini meninggalkan organisasi kecil—terutama usaha mikro, kecil, dan menengah (UMKM)—tanpa alternatif ekonomis untuk adopsi ERP \cite{hasanah2024}.
+
+Penelitian terdahulu telah menunjukkan potensi \textit{single-board computer} (SBC) untuk aplikasi *server* yang menuntut. Studi Putra dkk. membuktikan bahwa SBC dapat membentuk \textit{cluster server} dengan peningkatan performa hingga 59\% \cite{Putra2019}. Sementara itu, Arief dkk. memvalidasi SBC beroperasi sebagai \textit{portable server} dengan efisiensi daya yang tinggi \cite{Arief2018}. Hasil-hasil ini menunjukkan bahwa perangkat berbiaya rendah ini mampu menjalankan beban kerja yang kompleks.
+
+Komunitas pengguna telah mulai menerapkan temuan akademis ini dalam praktik. Dokumentasi informal melalui tutorial dan forum komunitas menunjukkan bahwa ERP *open-source* (Odoo, ERPNext) telah berhasil di-deploy pada SBC \cite{cottafavi2023odoorpi,frappe2023erpnextpi}. Namun, terdapat gap kritis dalam penelitian: studi existing mengevaluasi SBC untuk workload ringan dan statis, bukan untuk beban transaksional ERP yang intensif dalam operasi berkelanjutan.
+
+Urgensi penelitian ini berasal dari ketiadaan evaluasi sistematis yang mencakup tiga dimensi kritis: performa transaksional ERP, keandalan operasional jangka panjang, dan analisis ekonomi melalui \textit{Total Cost of Ownership} (TCO) \cite{buijsse2024reference}. Tanpa data empiris ini, UMKM tetap terjebak dalam dilemma ekonomi antara OPEX \textit{cloud} yang tidak terjangkau atau CAPEX \textit{on-premise} konvensional yang prohibitif. Penelitian ini bertujuan mengisi gap tersebut melalui investigasi sistematis, membuka alternatif infrastruktur yang viable bagi segmen pasar UMKM.
+
 
 \section{Analisis Kebutuhan}
 

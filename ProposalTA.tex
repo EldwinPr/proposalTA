@@ -106,13 +106,13 @@
 \usepackage{graphicx} % for images
 \usepackage{caption} % for customizing captions
 \usepackage{subcaption} % for sub-figures
-\usepackage{float} % for [H] placement specifier (HERE precisely)
 \usepackage{hyperref} % for hyperlinks
 \usepackage{titlesec} % for customizing titles
 \usepackage{tocloft} % for customizing table of contents
 \usepackage{lipsum} % for dummy text (lorem ipsum text)
 \usepackage{floatrow} % for customizing float (figure and table) positions
 \usepackage{listings} % for code listing
+\usepackage{newfloat} % for creating custom float environments
 \usepackage{amsmath} % for math
 \usepackage{amssymb} % for math symbols
 \usepackage[shortlabels]{enumitem} % for customizing lists
@@ -177,6 +177,12 @@
 \renewcommand{\nameyeardelim}{\addcomma\space}
 
 % ==========================================
+% Hilangkan bulan dalam sitasi (hanya tampilkan tahun)
+% ==========================================
+\AtEveryCitekey{\clearfield{month}}
+\AtEveryCitekey{\clearfield{day}}
+
+% ==========================================
 % Atur pemisah nama penulis agar lebih natural dalam Bahasa Indonesia
 % ==========================================
 \renewcommand*{\finalandcomma}{} % hilangkan koma sebelum 'dan'
@@ -195,12 +201,14 @@
 % -- No Header dan No Footer ---
 \pagestyle{plain}
 
-% --- Ubah nama daftar listing ke "DAFTAR KODE" ---
+% --- Buat environment custom untuk rumus ---
 % --- Harus diletakkan sebelum \begin{document} ---
-\renewcommand{\lstlistlistingname}{\centering\normalsize DAFTAR KODE} 
-\renewcommand{\lstlistingname}{Kode}
-\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
-%\captionsetup[lstlisting]{justification=raggedright,singlelinecheck=false}
+\DeclareFloatingEnvironment[
+    fileext=loe,
+    listname={DAFTAR RUMUS},
+    name=Rumus,
+    placement=htbp,
+]{equation-float}
 
 
 \renewcommand \cftchapdotsep{4.5}
@@ -382,11 +390,17 @@
 \listoftables
 \addcontentsline{toc}{chapter}{DAFTAR TABEL}
 
-% --- DAFTAR LISTING (ALGORITMA, PSEUDOCODE, SOURCE CODE) ---
+% --- DAFTAR RUMUS ---
 \newpage
 
-\lstlistoflistings
-\addcontentsline{toc}{chapter}{\lstlistlistingname}
+% Format judul daftar rumus
+{\centering\large\bfseries DAFTAR RUMUS\par}
+\vspace{1em}
+
+\makeatletter
+\@starttoc{loe}%
+\makeatother
+\addcontentsline{toc}{chapter}{DAFTAR RUMUS}
 
 \mainmatter
 % --- FORMAT TAMPILAN JUDUL BAB, SUBBAB, JUDUL GAMBAR DAN TABEL ---
@@ -411,6 +425,8 @@
 \captionsetup[figure]{labelsep=space}
 \captionsetup[table]{labelsep=space}
 \floatsetup[table]{capposition=top}
+\captionsetup[equation-float]{labelsep=space}
+\floatsetup[equation-float]{capposition=bottom}
 \captionsetup[lstlisting]{labelsep=space}
 \floatsetup[lstlisting]{capposition=top}
 

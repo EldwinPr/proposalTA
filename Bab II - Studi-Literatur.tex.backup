@@ -186,40 +186,9 @@ Evaluasi finansial melengkapi analisis teknis mengukur aspek ekonomi jangka panj
 
 Komponen biaya VPS meliputi langganan bulanan atau tahunan mencakup infrastruktur, pemeliharaan, dan dukungan teknis, dengan biaya tambahan untuk bandwidth, backup, atau support premium \cite{Younus2024}. Model pricing linear memudahkan proyeksi jangka panjang dengan menggandakan biaya bulanan dengan jumlah bulan evaluasi. Komponen biaya SBC mencakup CAPEX (unit SBC, power supply, casing, penyimpanan eksternal) dan OPEX (listrik operasional—Orange Pi 5 Pro dan Raspberry Pi 5 mengkonsumsi 6-12 watt—serta pemeliharaan) \cite{orangepi2024pi5pro}. Untuk periode 5 tahun, OPEX listrik umumnya minor dibanding CAPEX awal tetapi tetap diperhitungkan.
 
-Model perhitungan TCO menggunakan formula sederhana \cite{buijsse2024reference}. Untuk infrastruktur SBC, perhitungan TCO ditunjukkan pada Rumus \ref{eq:tco-sbc}, sementara untuk VPS ditunjukkan pada Rumus \ref{eq:tco-vps}.
+Model perhitungan TCO menggunakan formula sederhana \cite{buijsse2024reference}. SBC: $\text{TCO}_{\text{SBC}} = \text{CAPEX}_{\text{hardware}} + (\text{OPEX}_{\text{electrical}} + \text{OPEX}_{\text{maintenance}}) \times \text{bulan}$. VPS: $\text{TCO}_{\text{VPS}} = \text{monthly cost} \times \text{bulan}$. Grafik kumulatif biaya menunjukkan pola berbeda: VPS meningkat linear, SBC relatif datar setelah investasi awal, memberikan wawasan konkret tentang pilihan ekonomis untuk berbagai horizon investasi.
 
-\begin{equation-float}[htbp]
-\centering
-\begin{equation}
-\text{TCO}_{\text{SBC}} = \text{CAPEX}_{\text{hardware}} + (\text{OPEX}_{\text{electrical}} + \text{OPEX}_{\text{maintenance}}) \times \text{bulan}
-\label{eq:tco-sbc}
-\end{equation}
-\caption{Formula perhitungan TCO untuk infrastruktur SBC}
-\end{equation-float}
-
-\begin{equation-float}[htbp]
-\centering
-\begin{equation}
-\text{TCO}_{\text{VPS}} = \text{monthly cost} \times \text{bulan}
-\label{eq:tco-vps}
-\end{equation}
-\caption{Formula perhitungan TCO untuk infrastruktur VPS}
-\end{equation-float}
-
-Grafik kumulatif biaya menunjukkan pola berbeda: VPS meningkat linear, SBC relatif datar setelah investasi awal, memberikan wawasan konkret tentang pilihan ekonomis untuk berbagai horizon investasi.
-
-Analisis titik impas (\textit{break-even point}) menentukan waktu investasi SBC terbayar lebih ekonomis dari VPS berkelanjutan, seperti ditunjukkan pada Rumus \ref{eq:breakeven}.
-
-\begin{equation-float}[htbp]
-\centering
-\begin{equation}
-\text{break-even} = \frac{\text{CAPEX}_{\text{SBC}}}{\text{monthly cost}_{\text{VPS}} - \text{OPEX}_{\text{SBC}}}
-\label{eq:breakeven}
-\end{equation}
-\caption{Formula perhitungan titik impas (break-even point) antara SBC dan VPS}
-\end{equation-float}
-
-Rumus ini menghasilkan jumlah bulan kesetaraan biaya kumulatif \cite{buijsse2024reference}. Jika titik impas 24 bulan dan organisasi memproyeksikan 5 tahun penggunaan, SBC lebih menguntungkan karena penghematan terakumulasi 3 tahun sisanya. Sebaliknya, jika horizon hanya 1 tahun, VPS lebih baik karena CAPEX SBC belum terbayar. Analisis ini memfasilitasi keputusan informed berdasarkan horizon investasi spesifik organisasi.
+Analisis titik impas (\textit{break-even point}) menentukan waktu investasi SBC terbayar lebih ekonomis dari VPS berkelanjutan. Dihitung: $\text{break-even} = \frac{\text{CAPEX}_{\text{SBC}}}{\text{monthly cost}_{\text{VPS}} - \text{OPEX}_{\text{SBC}}}$, menghasilkan jumlah bulan kesetaraan biaya kumulatif \cite{buijsse2024reference}. Jika titik impas 24 bulan dan organisasi memproyeksikan 5 tahun penggunaan, SBC lebih menguntungkan karena penghematan terakumulasi 3 tahun sisanya. Sebaliknya, jika horizon hanya 1 tahun, VPS lebih baik karena CAPEX SBC belum terbayar. Analisis ini memfasilitasi keputusan informed berdasarkan horizon investasi spesifik organisasi.
 
 \section{Kriteria Kelayakan Deployment ERP}
 
