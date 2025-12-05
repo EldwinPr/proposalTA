@@ -9,75 +9,126 @@
 
 \section{Analisis Kondisi Saat ini}
 
-Infrastruktur ERP saat ini menghadapi dilemma ekonomi yang tajam. Deployment \textit{cloud} berbasis *Virtual Private Server* (VPS) atau *Software-as-a-Service* (SaaS) menawarkan kemudahan implementasi dan skalabilitas, tetapi membebankan biaya operasional berulang (\textit{operational expenditure}/OPEX) yang berkelanjutan \cite{Younus2024}. Sebaliknya, model \textit{on-premise} dengan \textit{server} konvensional memerlukan investasi modal awal besar (\textit{capital expenditure}/CAPEX) untuk perangkat keras dan infrastruktur, meskipun biaya operasional lebih rendah \cite{Younus2024}. Trade-off ini meninggalkan organisasi kecil—terutama usaha mikro, kecil, dan menengah (UMKM)—tanpa alternatif ekonomis untuk adopsi ERP \cite{hasanah2024}.
+Deployment ERP saat ini umumnya menggunakan dua model infrastruktur utama: \textit{cloud} berbasis \textit{Virtual Private Server} (VPS) atau \textit{Software-as-a-Service} (SaaS), dan model \textit{on-premise} dengan \textit{server} konvensional. Model \textit{cloud} menawarkan kemudahan implementasi dan skalabilitas dengan biaya operasional berulang (OPEX), sementara model \textit{on-premise} memerlukan investasi modal awal yang lebih besar (CAPEX) namun memiliki biaya operasional yang lebih rendah dalam jangka panjang \cite{Younus2024}.
 
-Penelitian terdahulu telah menunjukkan potensi \textit{single-board computer} (SBC) untuk aplikasi *server* yang menuntut. Studi Putra dkk. membuktikan bahwa SBC dapat membentuk \textit{cluster server} dengan peningkatan performa hingga 59\% \cite{Putra2019}. Sementara itu, Arief dkk. memvalidasi SBC beroperasi sebagai \textit{portable server} dengan efisiensi daya yang tinggi \cite{Arief2018}. Hasil-hasil ini menunjukkan bahwa perangkat berbiaya rendah ini mampu menjalankan beban kerja yang kompleks.
+Perangkat berbasis prosesor ARM seperti \textit{single-board computer} (SBC) menawarkan potensi alternatif dengan karakteristik CAPEX yang rendah dan konsumsi daya yang minimal. Penelitian terdahulu menunjukkan bahwa SBC mampu menjalankan aplikasi server dengan kinerja yang memadai—Putra dkk. membuktikan SBC dapat membentuk \textit{cluster server} dengan peningkatan kinerja signifikan \cite{Putra2019}, sementara Arief dkk. memvalidasi efisiensi daya SBC sebagai \textit{portable server} \cite{Arief2018}. Dokumentasi komunitas juga menunjukkan bahwa ERP \textit{open-source} seperti \textit{Odoo} dan \textit{ERPNext} telah berhasil di-\textit{deploy} pada SBC secara informal \cite{cottafavi2023odoorpi,frappe2023erpnextpi}. Namun, studi-studi tersebut fokus pada \textit{workload} yang relatif ringan dan tidak mengevaluasi kelayakan untuk beban transaksional ERP yang intensif dengan operasi \textit{multi-user concurrent} dalam jangka panjang.
 
-Komunitas pengguna telah mulai menerapkan temuan akademis ini dalam praktik. Dokumentasi informal melalui tutorial dan forum komunitas menunjukkan bahwa ERP *open-source* (Odoo, ERPNext) telah berhasil di-deploy pada SBC \cite{cottafavi2023odoorpi,frappe2023erpnextpi}. Namun, terdapat gap kritis dalam penelitian: studi existing mengevaluasi SBC untuk workload ringan dan statis, bukan untuk beban transaksional ERP yang intensif dalam operasi berkelanjutan.
-
-Urgensi penelitian ini berasal dari ketiadaan evaluasi sistematis yang mencakup tiga dimensi kritis: performa transaksional ERP, keandalan operasional jangka panjang, dan analisis ekonomi melalui \textit{Total Cost of Ownership} (TCO) \cite{buijsse2024reference}. Tanpa data empiris ini, UMKM tetap terjebak dalam dilemma ekonomi antara OPEX \textit{cloud} yang tidak terjangkau atau CAPEX \textit{on-premise} konvensional yang prohibitif. Penelitian ini bertujuan mengisi gap tersebut melalui investigasi sistematis, membuka alternatif infrastruktur yang viable bagi segmen pasar UMKM.
+Gap penelitian ini terletak pada ketiadaan data empiris yang sistematis mengenai tiga aspek kritis: kinerja transaksional ERP pada SBC, stabilitas operasional jangka panjang, dan analisis ekonomi komprehensif melalui \textit{Total Cost of Ownership} (TCO). Penelitian ini bertujuan mengisi gap tersebut dengan melakukan studi kelayakan yang mengevaluasi apakah SBC dapat menjadi alternatif infrastruktur ERP yang layak dan lebih ekonomis dibandingkan solusi \textit{mainstream}.
 
 
 \section{Analisis Kebutuhan}
 
-\subsection{Identifikasi Masalah}
-\begin{itemize}
-    \item Tidak ada studi mengenai deployment ERP pada SBC yang jelas
-    \item Ketiadaan data empiris mengenai kelayakan SBC untuk beban kerja ERP transaksional \cite{Arief2018}.
-\end{itemize}
+Untuk melakukan studi kelayakan deployment ERP pada infrastruktur alternatif, diperlukan identifikasi kebutuhan penelitian yang mencakup aspek fungsional dan non-fungsional platform. Dari kebutuhan ini akan diturunkan kriteria pemilihan platform software (ERP) dan platform hardware (SBC) yang sesuai.
 
-\subsection{Analisis Kebutuhan Fungsional}
-\begin{itemize}
-    \item Platform harus mampu menjalankan fungsionalitas penuh dari sebuah sistem ERP.
-    \item Kemampuan mengeksekusi modul-modul inti: Keuangan, Penjualan, Gudang, dan SDM.
-    \item Mendukung operasi bisnis standar (misal: pembuatan Sales Order, Invoice).
-    \item Menyediakan akses multi-pengguna melalui antarmuka web.
-\end{itemize}
+\subsection{Kebutuhan Fungsional}
 
-\subsection{Analisis Kebutuhan Non-Fungsional}
-\begin{itemize}
-    \item \textbf{Kinerja:} Waktu respons transaksi di bawah ambang batas wajar (<3 detik) untuk 5-10 pengguna \cite{iso25010}.
-    \item \textbf{Efisiensi Biaya:} TCO lebih rendah dari alternatif cloud dalam horizon 3-5 tahun \cite{buijsse2024reference}.
-    \item \textbf{Keandalan:} Stabilitas untuk operasi 24/7 dengan tingkat kesalahan minimal.
-    \item \textbf{Skalabilitas:} Adanya jalur untuk peningkatan kapasitas di masa depan \cite{Putra2019}.
-\end{itemize}
+Platform yang dipilih untuk studi kelayakan ini harus memenuhi kebutuhan fungsional berikut:
 
-\section{Analisis Alternatif Solusi}
+\begin{enumerate}[a)]
+    \item \textbf{KF-01:} Platform ERP harus memiliki modul-modul transaksional esensial (\textit{Accounting/Finance, Sales/CRM, Inventory Management}) untuk mensimulasikan beban kerja yang representatif terhadap operasi bisnis nyata.
 
-\subsection{Alternatif Perangkat Lunak}
-\begin{itemize}
-    \item \textbf{Odoo:} ERP \textit{open-source} populer dengan ekosistem aplikasi yang luas, arsitektur modular, dan komunitas global yang besar. Ditulis dengan Python dan menggunakan PostgreSQL sebagai basis data \cite{odoo2025documentation}.
-    \item \textbf{ERPNext:} Alternatif ERP \textit{open-source} yang dibangun di atas Frappe Framework (Python/MariaDB). Dikenal dengan antarmuka yang modern dan kesederhanaan implementasi \cite{erpnext2024introduction}.
-\end{itemize}
+    \item \textbf{KF-02:} Platform ERP harus mendukung akses \textit{multi-user concurrent} dengan kapasitas minimal 5--10 pengguna untuk menguji kemampuan sistem menangani beban konkuren.
 
-\subsection{Alternatif Perangkat Keras}
-\begin{itemize}
-    \item \textbf{Single-Board Computer (SBC):} Komputer papan tunggal berbiaya rendah dengan konsumsi daya minimal. Model modern seperti Raspberry Pi 5 dan Orange Pi 5 Pro menawarkan performa CPU dan kapasitas RAM yang setara dengan server \textit{entry-level} \cite{raspberrypi2024pi5, orangepi2024pi5pro}.
-    \item \textbf{Cloud Virtual Private Server (VPS):} Server virtual yang disewakan oleh penyedia layanan \textit{cloud}. Menawarkan kemudahan \textit{setup} dan skalabilitas, namun dengan model biaya operasional (OPEX) bulanan/tahunan \cite{Younus2024}.
-\end{itemize}
+    \item \textbf{KF-03:} Platform ERP harus menggunakan \textit{database} relasional standar (PostgreSQL atau MariaDB) untuk memastikan komparabilitas dengan deployment \textit{mainstream} dan validitas hasil pengujian.
 
-\section{Analisis Pemilihan Solusi}
+    \item \textbf{KF-04:} Platform \textit{hardware} harus mampu menjalankan \textit{stack} teknologi ERP secara penuh, mencakup \textit{web server, application server}, dan \textit{database server}.
+\end{enumerate}
 
-\subsection{Pemilihan Perangkat Lunak}
-\begin{itemize}
-    \item \textbf{Kriteria:} Dipilih berdasarkan kriteria \textit{open-source}, kematangan, arsitektur modular, dukungan komunitas, dan kompatibilitas dengan arsitektur ARM.
-    \item \textbf{Keputusan:} ERPNext dipilih sebagai perangkat lunak untuk penelitian karena memenuhi semua kriteria dengan beberapa keunggulan dibandingkan Odoo: (1) \textit{fully open-source} tanpa model \textit{freemium} (seluruh fitur tersedia dalam versi \textit{open-source}, berbeda dengan Odoo yang memiliki versi Community dan Enterprise), (2) arsitektur yang lebih sederhana untuk \textit{deployment}, dan (3) dokumentasi yang komprehensif untuk instalasi pada platform ARM \cite{erpnext2024introduction}.
-\end{itemize}
+\subsection{Kebutuhan Non-Fungsional}
 
-\subsection{Pemilihan Perangkat Keras}
+Selain kebutuhan fungsional, platform yang dipilih harus memenuhi kebutuhan non-fungsional berikut:
 
-\subsubsection{Pemilihan Single-Board Computer}
-\begin{itemize}
-    \item \textbf{Kriteria:} Dipilih berdasarkan arsitektur ARM 64-bit, performa (RAM minimal 4GB), dukungan perangkat lunak, ketersediaan di pasar Indonesia, dan nilai performa per biaya.
+\begin{enumerate}[a)]
+    \item \textbf{KNF-01:} Platform ERP harus berlisensi \textit{open-source} penuh untuk menghindari biaya lisensi sebagai variabel pengganggu dalam analisis \textit{Total Cost of Ownership} (TCO).
 
-    \item \textbf{Keputusan:} Orange Pi 5 Pro dipilih sebagai \textit{representative} SBC untuk penelitian. Meskipun Raspberry Pi 5 lebih populer, Orange Pi 5 Pro menawarkan performa yang lebih baik secara signifikan dengan harga yang \textit{comparable} di pasar Indonesia \cite{orangepi2024pi5pro}.
-\end{itemize}
+    \item \textbf{KNF-02:} Platform ERP harus \textit{mature} dan memiliki dokumentasi lengkap untuk memastikan reliabilitas penelitian dan kemudahan \textit{troubleshooting} selama eksperimen.
 
-\subsubsection{Pemilihan Platform Cloud}
-\begin{itemize}
-    \item \textbf{Untuk Evaluasi Performa:} \textit{Cloud} VPS dengan spesifikasi yang memenuhi atau melebihi \textit{minimum requirement} ERPNext, dipilih untuk menjadi \textit{baseline} performa yang \textit{acceptable}. Platform yang \textit{cost-effective} untuk fase penelitian akan digunakan untuk mengurangi biaya operasional.
+    \item \textbf{KNF-03:} Platform ERP harus kompatibel dengan arsitektur ARM untuk memungkinkan deployment pada \textit{Single-Board Computer}.
 
-    \item \textbf{Untuk Analisis TCO:} \textit{Commercial} VPS yang \textit{representative} untuk \textit{use case deployment} ERP dengan model \textit{pricing} yang \textit{transparent} dan \textit{measurable}. Platform dengan biaya Rp 0 (\textit{free tier}) tidak dimasukkan dalam analisis kuantitatif TCO karena tidak menghasilkan \textit{break-even point} yang bermakna.
+    \item \textbf{KNF-04:} Platform \textit{hardware} harus memenuhi spesifikasi minimum yang dipersyaratkan oleh platform ERP yang dipilih untuk memastikan kelayakan teknis deployment.
 
-    \item \textbf{Kriteria Pemilihan:} Spesifikasi yang memadai untuk menjalankan ERPNext, ketersediaan \textit{pricing} yang \textit{transparent}, dan aksesibilitas untuk penelitian.
-\end{itemize}
+    \item \textbf{KNF-05:} Platform \textit{hardware} harus memiliki konsumsi daya rendah (maksimal 15W) untuk memungkinkan analisis efisiensi energi sebagai bagian dari evaluasi kelayakan.
+
+    \item \textbf{KNF-06:} Platform \textit{hardware} harus tersedia di pasar lokal Indonesia untuk memastikan replikabilitas penelitian dan relevansi konteks lokal.
+\end{enumerate}
+
+Kebutuhan fungsional dan non-fungsional di atas menjadi dasar untuk pemilihan platform \textit{software} dan \textit{hardware} yang akan digunakan dalam penelitian. Platform yang dipilih harus memenuhi seluruh kebutuhan fungsional (KF-01 hingga KF-04) dan sebagian besar kebutuhan non-fungsional (KNF-01 hingga KNF-06) untuk memastikan validitas dan reliabilitas studi kelayakan yang dilakukan.
+
+
+\section{Pemilihan Platform Software}
+
+\subsection{Alternatif Platform ERP}
+
+Dua platform ERP \textit{open-source} yang paling populer dan telah terbukti \textit{production-ready} adalah \textit{Odoo} dan \textit{ERPNext}. Keduanya menawarkan solusi ERP modular dengan komunitas global yang besar, namun dengan karakteristik teknis dan model lisensi yang berbeda.
+
+\subsubsection{Alternatif 1: \textit{Odoo}}
+
+\textit{Odoo} merupakan platform ERP \textit{open-source} yang sangat populer dengan lebih dari 7 juta pengguna global, ditulis menggunakan Python dan PostgreSQL sebagai \textit{database backend} \cite{odoo2025documentation}. Arsitektur modular \textit{Odoo} memungkinkan instalasi selektif modul sesuai kebutuhan spesifik organisasi. Platform ini memenuhi kebutuhan fungsional penelitian (KF-01, KF-02, KF-03) dengan modul-modul lengkap dan dukungan \textit{multi-user} yang baik, serta memenuhi kebutuhan non-fungsional terkait dokumentasi lengkap (KNF-02) dan kompatibilitas ARM (KNF-03). Namun, model bisnis \textit{freemium} dengan pembedaan Community Edition dan Enterprise Edition berpotensi mempengaruhi analisis TCO—beberapa fitur lanjutan hanya tersedia pada versi Enterprise, sehingga pemenuhan KNF-01 bersifat parsial. \textit{Odoo} telah terbukti dapat berjalan pada SBC berbasis ARM, meskipun dokumentasi resmi untuk deployment ARM tidak sekomprehensif dokumentasi arsitektur \textit{x86} \cite{cottafavi2023odoorpi}.
+
+\subsubsection{Alternatif 2: \textit{ERPNext}}
+
+\textit{ERPNext} adalah platform ERP \textit{open-source} yang dibangun di atas \textit{Frappe Framework} berbasis Python dan MariaDB, menyediakan modul-modul ERP inti yang komprehensif dengan arsitektur modular \cite{erpnext2024introduction}. Platform ini memenuhi seluruh kebutuhan fungsional penelitian (KF-01, KF-02, KF-03, KF-04) dan seluruh kebutuhan non-fungsional yang relevan: \textit{fully open-source} tanpa model \textit{freemium} (KNF-01 terpenuhi penuh), dokumentasi komprehensif termasuk untuk deployment ARM (KNF-02, KNF-03), dan adopsi luas sebagai platform \textit{mature}. \textit{Frappe Framework} yang menjadi fondasi \textit{ERPNext} memiliki arsitektur yang lebih sederhana dibandingkan \textit{Odoo}, sehingga mempermudah proses deployment dan \textit{troubleshooting} dalam konteks eksperimental. Dokumentasi \textit{ERPNext} untuk deployment pada arsitektur ARM sangat komprehensif dengan panduan resmi dan dukungan komunitas aktif untuk instalasi pada SBC seperti \textit{Raspberry Pi} dan \textit{Orange Pi} \cite{frappe2023erpnextpi}.
+
+\subsection{Justifikasi Pemilihan \textit{ERPNext}}
+
+Evaluasi kedua alternatif terhadap kebutuhan penelitian dilakukan secara sistematis untuk memilih platform ERP yang paling sesuai. Tabel \ref{tab:software-evaluation} menunjukkan hasil evaluasi terhadap seluruh kebutuhan fungsional dan non-fungsional.
+
+\begin{table}[h]
+\centering
+\caption{Evaluasi Alternatif Platform ERP terhadap Kebutuhan Penelitian}
+\label{tab:software-evaluation}
+\begin{tabular}{|l|p{0.35\textwidth}|c|c|}
+\hline
+\textbf{Kode} & \textbf{Kebutuhan} & \textbf{\textit{Odoo}} & \textbf{\textit{ERPNext}} \\ \hline
+KF-01 & Modul transaksional esensial & \checkmark & \checkmark \\ \hline
+KF-02 & Multi-user concurrent & \checkmark & \checkmark \\ \hline
+KF-03 & Database relasional standar & \checkmark & \checkmark \\ \hline
+KF-04 & Stack teknologi lengkap & \checkmark & \checkmark \\ \hline
+KNF-01 & Fully open-source & Parsial & \checkmark \\ \hline
+KNF-02 & Mature \& documented & \checkmark & \checkmark \\ \hline
+KNF-03 & ARM compatible & \checkmark & \checkmark \\ \hline
+\end{tabular}
+\end{table}
+
+Berdasarkan evaluasi terhadap kebutuhan penelitian, \textbf{\textit{ERPNext} dipilih} sebagai platform ERP untuk studi kelayakan ini. Meskipun kedua platform memenuhi seluruh kebutuhan fungsional (KF-01 hingga KF-04), \textit{ERPNext} memiliki keunggulan signifikan pada aspek lisensi (KNF-01). Sebagai platform \textit{fully open-source} tanpa model \textit{freemium}, \textit{ERPNext} memastikan bahwa analisis \textit{Total Cost of Ownership} (TCO) tidak terdistorsi oleh biaya lisensi atau keterbatasan fitur pada versi Community Edition. Selain itu, \textit{ERPNext} memiliki dokumentasi komprehensif untuk deployment pada arsitektur ARM (KNF-03), yang krusial untuk keberhasilan instalasi pada \textit{Single-Board Computer}. Arsitektur \textit{ERPNext} yang dibangun di atas \textit{Frappe Framework} juga lebih sederhana untuk deployment eksperimental dibandingkan ekosistem \textit{Odoo} yang lebih kompleks \cite{erpnext2024introduction}.
+
+
+\section{Pemilihan Platform Hardware}
+
+\subsection{Alternatif Single-Board Computer}
+
+Setelah \textit{ERPNext} dipilih sebagai platform ERP, langkah berikutnya adalah memilih platform \textit{hardware Single-Board Computer} yang memenuhi kebutuhan penelitian. Pemilihan SBC didasarkan pada kemampuan memenuhi spesifikasi minimum \textit{ERPNext} (KNF-04), efisiensi daya (KNF-05), dan ketersediaan di pasar lokal (KNF-06).
+
+\subsubsection{Alternatif 1: \textit{Raspberry Pi} 5}
+
+\textit{Raspberry Pi} 5 merupakan generasi terbaru dari platform SBC paling populer di dunia dengan komunitas pengguna terbesar dan ekosistem \textit{software} yang paling \textit{mature} \cite{raspberrypi2024pi5}. Platform ini menggunakan prosesor \textit{quad-core} ARM Cortex-A76 dengan kecepatan hingga 2.4GHz dan tersedia dalam varian RAM 4GB dan 8GB. \textit{Raspberry Pi} 5 mendukung sistem operasi \textit{Raspberry Pi} OS (berbasis Debian) dan distribusi Linux lainnya seperti Ubuntu.
+
+\textit{Raspberry Pi} 5 memenuhi spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{quad-core} ARM Cortex-A76 2.4GHz dan RAM hingga 8GB (KNF-04). Konsumsi daya perangkat ini berkisar 8--12W, memenuhi batasan 15W (KNF-05). \textit{Raspberry Pi} 5 juga tersedia secara luas di Indonesia dan memiliki dokumentasi serta dukungan komunitas yang sangat \textit{mature} (KNF-06). Keunggulan utama \textit{Raspberry Pi} 5 adalah komunitas global yang sangat besar, dokumentasi yang sangat lengkap, dan ekosistem \textit{software} yang \textit{mature} dengan dukungan luas dari vendor dan pengembang \cite{raspberrypi2024pi5}.
+
+\subsubsection{Alternatif 2: \textit{Orange Pi} 5 Pro}
+
+\textit{Orange Pi} 5 Pro merupakan SBC berbasis prosesor Rockchip RK3588S dengan arsitektur \textit{octa-core} (8 core) yang terdiri dari 4 core ARM Cortex-A76 (2.4GHz) dan 4 core ARM Cortex-A55 (1.8GHz) dalam konfigurasi \textit{big.LITTLE} \cite{orangepi2024pi5pro}. Platform ini tersedia dalam varian RAM 4GB, 8GB, dan 16GB, sehingga menawarkan kapasitas memori yang lebih tinggi dibandingkan \textit{Raspberry Pi} 5. \textit{Orange Pi} 5 Pro mendukung berbagai distribusi Linux termasuk Ubuntu, Debian, dan Armbian.
+
+\textit{Orange Pi} 5 Pro memenuhi dan melampaui spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{octa-core} Rockchip RK3588S hingga 2.4GHz dan RAM hingga 16GB (KNF-04). Konsumsi daya perangkat ini berkisar 10--15W, memenuhi batasan yang ditetapkan (KNF-05). \textit{Orange Pi} 5 Pro juga tersedia di pasar Indonesia melalui berbagai distributor lokal (KNF-06). Keunggulan utama \textit{Orange Pi} 5 Pro adalah kinerja yang lebih tinggi dengan 8 core dan kapasitas RAM hingga 16GB, sehingga lebih mampu menangani beban kerja ERP yang lebih intensif. Harga \textit{Orange Pi} 5 Pro di pasar Indonesia juga \textit{comparable} dengan \textit{Raspberry Pi} 5 untuk varian RAM yang setara \cite{orangepi2024pi5pro}.
+
+\subsection{Justifikasi Pemilihan \textit{Orange Pi} 5 Pro}
+
+Evaluasi kedua alternatif SBC terhadap kebutuhan \textit{hardware} dilakukan secara sistematis untuk memilih platform yang paling sesuai. Tabel \ref{tab:hardware-evaluation} menunjukkan hasil evaluasi terhadap kebutuhan yang relevan.
+
+\begin{table}[h]
+\centering
+\caption{Evaluasi Alternatif SBC terhadap Kebutuhan Hardware}
+\label{tab:hardware-evaluation}
+\begin{tabular}{|l|p{0.38\textwidth}|c|c|}
+\hline
+\textbf{Kode} & \textbf{Kebutuhan} & \textbf{\textit{Raspberry Pi} 5} & \textbf{\textit{Orange Pi} 5 Pro} \\ \hline
+KF-04 & Stack teknologi ERP & \checkmark & \checkmark \\ \hline
+KNF-04 & Memenuhi spek minimum \textit{ERPNext} & \checkmark (4 core, 8GB) & \checkmark (8 core, 16GB) \\ \hline
+KNF-05 & Konsumsi daya $\leq$ 15W & \checkmark (8--12W) & \checkmark (10--15W) \\ \hline
+KNF-06 & Tersedia di pasar Indonesia & \checkmark & \checkmark \\ \hline
+\end{tabular}
+\end{table}
+
+Berdasarkan evaluasi terhadap kebutuhan \textit{hardware}, \textbf{\textit{Orange Pi} 5 Pro dipilih} sebagai platform \textit{Single-Board Computer} untuk penelitian ini. \textit{Orange Pi} 5 Pro menawarkan spesifikasi superior dengan prosesor \textit{octa-core} dan RAM hingga 16GB yang melampaui persyaratan minimum (KNF-04), memberikan margin lebih besar untuk menguji batas kemampuan SBC dalam menangani beban kerja ERP, sambil tetap memenuhi batasan konsumsi daya 15W (KNF-05) dan ketersediaan di pasar lokal (KNF-06) \cite{orangepi2024pi5pro}.
+
+Untuk keperluan perbandingan, penelitian ini juga menggunakan \textit{Virtual Private Server} (VPS) sebagai platform \textit{baseline}. VPS dengan spesifikasi \textit{comparable} (2--4 vCPU, 4--8GB RAM) akan digunakan untuk evaluasi kinerja guna memastikan \textit{fair comparison}. Untuk analisis \textit{Total Cost of Ownership}, \textit{commercial} VPS dengan \textit{pricing} transparan akan dipilih sebagai representasi alternatif infrastruktur \textit{mainstream}. Pemilihan VPS tidak melalui proses evaluasi kebutuhan yang sama karena VPS berfungsi sebagai \textit{baseline} pembanding, bukan sebagai variabel penelitian yang dievaluasi kelayakannya.

@@ -111,6 +111,7 @@
 \usepackage{tocloft} % for customizing table of contents
 \usepackage{lipsum} % for dummy text (lorem ipsum text)
 \usepackage{floatrow} % for customizing float (figure and table) positions
+\usepackage{float} % for precise float placement control (H option)
 \usepackage{listings} % for code listing
 \usepackage{newfloat} % for creating custom float environments
 \usepackage{amsmath} % for math
@@ -250,7 +251,7 @@
     
     \vspace*{2cm}
 
-    {\Large\bfseries PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER DENGAN ANALISIS PERFORMA DAN TOTAL COST OF OWNERSHIP}\\
+    {\Large\bfseries PENERAPAN \textit{ENTERPRISE RESOURCE PLANNING} PADA SINGLE BOARD COMPUTER DENGAN ANALISIS KINERJA DAN \textit{TOTAL COST OF OWNERSHIP}}\\
      \vspace{4cm}
 
     {\Large \textbf{Proposal Tugas Akhir}}\\
@@ -297,7 +298,7 @@
   \textbf{\large LEMBAR PENGESAHAN}\\[1cm]
   \vspace*{1.5cm}
 
-  {\large\bfseries PENERAPAN ENTERPRISE RESOURCE PLANNING PADA SINGLE BOARD COMPUTER DENGAN ANALISIS PERFORMA DAN TOTAL COST OF OWNERSHIP}\\
+  {\large\bfseries PENERAPAN \textit{ENTERPRISE RESOURCE PLANNING} PADA SINGLE BOARD COMPUTER DENGAN ANALISIS KINERJA DAN \textit{TOTAL COST OF OWNERSHIP}}\\
      \vspace{2cm}
 
   {\Large \textbf{Proposal Tugas Akhir}}\\
@@ -327,8 +328,8 @@
 % Versi 1 pembimbing (default)
 % ==========================================
 	Pembimbing  \\[3cm]
-	Dr. Ir. John Doe, M.T.   \\[0.2cm]
-	NIP. 123456789 
+  Dr. Ir. Rinaldi Munir, M.T.   \\[0.2cm]
+  NIP. 196512101994021001
 % ==========================================
 
 \end{center}
@@ -389,18 +390,6 @@
 \renewcommand{\cftafterlottitle}{\hfill}
 \listoftables
 \addcontentsline{toc}{chapter}{DAFTAR TABEL}
-
-% --- DAFTAR RUMUS ---
-\newpage
-
-% Format judul daftar rumus
-{\centering\large\bfseries DAFTAR RUMUS\par}
-\vspace{1em}
-
-\makeatletter
-\@starttoc{loe}%
-\makeatother
-\addcontentsline{toc}{chapter}{DAFTAR RUMUS}
 
 \mainmatter
 % --- FORMAT TAMPILAN JUDUL BAB, SUBBAB, JUDUL GAMBAR DAN TABEL ---

@@ -4,6 +4,7 @@
 *.bbl-SAVE-ERROR
 *.bcf
 *.blg
+*.loe
 *.lof
 *.log
 *.lol
@@ -33,6 +34,6 @@ Thumbs.db
 
 *.txt
 .claude
-sources
+# sources
 CLAUDE.md
 GEMINI.md

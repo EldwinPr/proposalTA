@@ -1,61 +1,26 @@
-\begin{table}[h]
-\centering
+\begin{longtable}{|p{0.22\textwidth}|c|c|p{0.42\textwidth}|}
 \caption{Analisis Risiko Penelitian}
-\label{tab:risk-analysis}
-\small
-\begin{tabular}{|p{0.25\textwidth}|c|c|p{0.38\textwidth}|}
+\label{tab:risk-analysis} \\
 \hline
-\textbf{Risiko} & \textbf{Frekuensi} & \textbf{Severity} & \textbf{Strategi Mitigasi} \\ \hline
+\textbf{Risiko} & \textbf{Frekuensi} & \textbf{Dampak} & \textbf{Strategi Mitigasi} \\ \hline
+\endfirsthead
 
-Keterbatasan hardware Orange Pi tidak mampu menjalankan ERPNext dengan performa acceptable & Sedang & Tinggi &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Preliminary testing dengan dataset minimal untuk validasi awal
-    \item Penyesuaian beban kerja jika hardware tidak mencukupi
-    \item Dokumentasi batasan sebagai kontribusi penelitian
-\end{itemize} \\ \hline
+\multicolumn{4}{c}%
+{\tablename\ \thetable\ -- \textit{Lanjutan dari halaman sebelumnya}} \\
+\hline
+\textbf{Risiko} & \textbf{Frekuensi} & \textbf{Dampak} & \textbf{Strategi Mitigasi} \\ \hline
+\endhead
 
-Ketidakstabilan Oracle Cloud Free Tier (perubahan kebijakan, downtime) & Sedang & Sedang &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Backup data konfigurasi dan dataset secara berkala
-    \item Siapkan alternatif commercial VPS trial
-    \item Alokasi buffer waktu untuk retry
-\end{itemize} \\ \hline
+\hline \multicolumn{4}{r}{\textit{Bersambung ke halaman berikutnya}} \\
+\endfoot
 
-Kompatibilitas ERPNext dengan arsitektur ARM & Rendah & Tinggi &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Proof-of-concept installation di tahap awal
-    \item Konsultasi dengan komunitas ERPNext/Frappe
-    \item Dokumentasi workaround sebagai kontribusi
-\end{itemize} \\ \hline
+\hline
+\endlastfoot
 
-Skenario testing tidak realistis & Sedang & Sedang &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Studi literatur workload pattern ERP \cite{maddodi2018generating}
-    \item Validasi skenario dengan pembimbing
-    \item Kombinasi operasi representatif (baca, tulis, campuran)
-\end{itemize} \\ \hline
+Tidak mene\-mu\-kan perangkat \textit{Orange Pi 5 Pro} & Sedang & Sedang & Gunakan alternatif SBC dengan spesifikasi setara (\textit{Raspberry Pi 5} atau \textit{Raspberry Pi 4}); penyesuaian minor pada konfigurasi \\ \hline
 
-Bias konfigurasi platform (OS tuning, database parameters) & Sedang & Tinggi &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Dokumentasi detail semua konfigurasi sistem
-    \item Konfigurasi identik sedapat mungkin (versi OS, ERPNext, dataset)
-    \item Baseline benchmarking untuk karakterisasi perbedaan intrinsik
-    \item Transparansi pelaporan perbedaan yang tidak dapat dihindari
-\end{itemize} \\ \hline
+Kerusakan pada SBC saat pengujian & Rendah & Tinggi & Penanganan perangkat dengan hati-hati; backup konfigurasi dan data secara berkala; siapkan dana cadangan untuk penggantian komponen \\ \hline
 
-Keterlambatan pengadaan hardware & Sedang & Tinggi &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Survey ketersediaan dari multiple vendors sebelum pembelian
-    \item Alokasi buffer waktu untuk procurement
-    \item Pertimbangkan alternatif SBC (Raspberry Pi 5) jika Orange Pi tidak available
-\end{itemize} \\ \hline
+Gangguan internet saat pengujian & Sedang & Sedang & Pengujian pada waktu dengan koneksi stabil; caching dependencies lokal; dokumentasi dan retry untuk pengujian yang gagal \\ \hline
 
-Gangguan infrastruktur pendukung (internet, listrik) & Rendah & Sedang &
-\begin{itemize}[leftmargin=*, nosep, after=\vspace{-\baselineskip}]
-    \item Gunakan UPS untuk SBC selama testing intensif
-    \item Backup plan: testing di laboratorium kampus
-    \item Schedule testing dengan buffer untuk retry
-\end{itemize} \\ \hline
-
-\end{tabular}
-\end{table}
+\end{longtable}

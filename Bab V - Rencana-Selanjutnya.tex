@@ -10,40 +10,23 @@ Implementasi penelitian ini akan dilakukan melalui tahapan berikut:
 
 \subsection{Penyiapan Infrastruktur}
 
+Tahap pertama dalam implementasi penelitian adalah penyiapan infrastruktur yang mencakup perangkat keras dan perangkat lunak yang diperlukan untuk melakukan evaluasi komparatif. Infrastruktur ini harus dikonfigurasi dengan identik pada kedua platform (SBC dan VPS) untuk memastikan validitas perbandingan kinerja dan analisis TCO.
+
 \subsubsection{Perangkat Keras}
-\begin{itemize}
-    \item \textbf{SBC Platform:} Pengadaan Orange Pi 5 Pro beserta aksesoris pendukung (power supply, storage microSD/eMMC, cooling system)
-    \item \textbf{VPS Platform:} Provisioning Oracle Cloud Free Tier (4 OCPU Ampere ARM, 24GB RAM) untuk evaluasi performa
-    \item \textbf{Testing Infrastructure:} Laptop/PC untuk menjalankan aplikasi \textit{load testing} (untuk menghindari \textit{bottleneck} pada mesin penguji)
-\end{itemize}
+
+Penyiapan perangkat keras untuk penelitian ini mencakup tiga komponen utama. Pertama, \textbf{SBC Platform} yang akan digunakan adalah \textit{Orange Pi} 5 Pro beserta aksesoris pendukungnya, meliputi \textit{power supply}, \textit{storage} microSD/eMMC, dan \textit{cooling system}. Kedua, \textbf{VPS Platform} akan menggunakan Oracle Cloud Free Tier dengan spesifikasi 4 OCPU Ampere ARM dan 24GB RAM sebagai platform untuk evaluasi kinerja. Ketiga, \textbf{Testing Infrastructure} berupa laptop atau PC yang akan digunakan untuk menjalankan aplikasi \textit{load testing}, yang diperlukan untuk menghindari \textit{bottleneck} pada mesin penguji.
 
 \subsubsection{Perangkat Lunak}
-\begin{itemize}
-    \item \textbf{Sistem Operasi:} Instalasi Linux (Armbian untuk Orange Pi, Ubuntu/Oracle Linux untuk VPS) pada kedua platform
-    \item \textbf{Dependensi ERP:} Instalasi \textit{stack} perangkat lunak yang dibutuhkan ERPNext:
-    \begin{itemize}
-        \item Python 3.10+
-        \item Node.js dan npm
-        \item MariaDB/PostgreSQL
-        \item Nginx (web server dan reverse proxy)
-        \item Redis (caching dan session management)
-        \item Supervisor (process management)
-    \end{itemize}
-    \item \textbf{Aplikasi ERP:} Instalasi Frappe Framework dan ERPNext dengan konfigurasi identik pada kedua platform
-    \item \textbf{Dataset Demo:} Persiapan dataset demo yang konsisten untuk memastikan perbandingan yang adil
-    \item \textbf{Aplikasi Pengujian:} Pengembangan aplikasi \textit{load testing} berbasis Go untuk simulasi beban kerja ERP (API calls, concurrent users, transaction patterns)
-\end{itemize}
+
+Penyiapan perangkat lunak mencakup lima komponen utama. Pertama, \textbf{Sistem Operasi} Linux akan diinstalasi pada kedua platform, dengan Armbian untuk \textit{Orange Pi} dan Ubuntu/Oracle Linux untuk VPS. Kedua, \textbf{Dependensi ERP} berupa instalasi \textit{stack} perangkat lunak yang dibutuhkan \textit{ERPNext}, meliputi Python 3.10+, Node.js dan npm, MariaDB/PostgreSQL sebagai sistem basis data, Nginx sebagai \textit{web server} dan \textit{reverse proxy}, Redis untuk \textit{caching} dan \textit{session management}, serta Supervisor untuk \textit{process management}. Ketiga, \textbf{Aplikasi ERP} berupa Frappe Framework dan \textit{ERPNext} akan diinstalasi dengan konfigurasi yang identik pada kedua platform. Keempat, \textbf{Dataset Demo} yang konsisten akan dipersiapkan untuk memastikan perbandingan yang adil antara kedua platform. Kelima, \textbf{Aplikasi Pengujian} berbasis Go akan dikembangkan untuk simulasi beban kerja ERP, mencakup \textit{API calls}, \textit{concurrent users}, dan \textit{transaction patterns}.
 
 \subsection{Konfigurasi dan Validasi}
 
-\begin{itemize}
-    \item Konfigurasi jaringan dan keamanan dasar pada kedua platform (firewall, SSH access, SSL/TLS)
-    \item Verifikasi instalasi ERPNext melalui akses web interface dan pengujian fungsional dasar
-    \item Validasi kompatibilitas ERPNext pada arsitektur ARM (Orange Pi)
-    \item \textit{Baseline benchmarking} untuk karakterisasi perbedaan intrinsik platform (CPU performance, I/O throughput, network latency)
-\end{itemize}
+Tahap konfigurasi dan validasi mencakup empat aktivitas utama. Pertama, akan dilakukan konfigurasi jaringan dan keamanan dasar pada kedua platform, meliputi pengaturan \textit{firewall}, akses SSH, dan SSL/TLS. Kedua, instalasi \textit{ERPNext} akan diverifikasi melalui akses \textit{web interface} dan pengujian fungsional dasar untuk memastikan sistem berjalan dengan baik. Ketiga, akan dilakukan validasi kompatibilitas \textit{ERPNext} pada arsitektur ARM, khususnya pada \textit{Orange Pi}, mengingat perbedaan arsitektur prosesor dengan platform x86. Keempat, \textit{baseline benchmarking} akan dilakukan untuk karakterisasi perbedaan intrinsik antara kedua platform, mencakup \textit{CPU kinerjance}, \textit{I/O throughput}, dan \textit{network latency}, yang akan menjadi acuan untuk analisis kinerja selanjutnya.
 
 \section{Rencana Evaluasi}
+
+Setelah infrastruktur disiapkan dan dikonfigurasi, tahap selanjutnya adalah melakukan evaluasi komprehensif terhadap kelayakan \textit{deployment} ERP pada platform SBC dibandingkan dengan VPS. Evaluasi ini dirancang untuk menjawab pertanyaan penelitian melalui pengujian sistematis yang mencakup aspek kinerja fungsional, batasan kinerja, serta analisis ekonomi. Bagian ini menjelaskan metode pengujian yang akan digunakan, alat dan metrik yang akan diukur, kriteria keberhasilan penelitian, serta rencana analisis data hasil pengujian.
 
 \subsection{Metode Pengujian}
 
@@ -51,71 +34,37 @@ Evaluasi akan dilakukan melalui dua tahap pengujian utama:
 
 \subsubsection{Pengujian Kelayakan Fungsional}
 
-\textbf{Tujuan:} Memastikan platform SBC mampu menjalankan fungsionalitas inti ERP dengan performa yang dapat diterima.
+Pengujian kelayakan fungsional bertujuan untuk memastikan platform SBC mampu menjalankan fungsionalitas inti ERP dengan kinerja yang dapat diterima. Skenario pengujian akan mencakup simulasi alur kerja bisnis umum, meliputi pembuatan \textit{sales order}, validasi faktur (operasi tulis), penarikan laporan, dan pencarian data produk (operasi baca) \cite{maddodi2018generating}. Pengujian akan dilakukan dengan beban kerja normal sekitar 5-10 \textit{concurrent users} untuk periode waktu tertentu, misalnya selama 1 minggu, guna mengevaluasi stabilitas sistem dalam jangka panjang.
 
-\textbf{Skenario Pengujian:}
-\begin{itemize}
-    \item Simulasi alur kerja bisnis umum: pembuatan \textit{sales order}, validasi faktur (operasi tulis), penarikan laporan, pencarian data produk (operasi baca) \cite{maddodi2018generating}
-    \item Pengujian dilakukan dengan beban kerja normal (5-10 \textit{concurrent users}) untuk periode waktu tertentu (misal: 1 minggu) guna mengevaluasi stabilitas jangka panjang
-\end{itemize}
-
-\textbf{Metode Eksekusi:}
-\begin{itemize}
-    \item Konfigurasi A: ERP di SBC, aplikasi \textit{testing} di VPS (simulasi akses jarak jauh)
-    \item Konfigurasi B: ERP di VPS, aplikasi \textit{testing} di SBC (untuk perbandingan)
-    \item Pencatatan metrik: \textit{response time}, \textit{error rate}, \textit{resource utilization}
-\end{itemize}
+Metode eksekusi pengujian akan dilakukan dalam dua konfigurasi. Konfigurasi A menempatkan ERP di SBC dengan aplikasi \textit{testing} di VPS untuk mensimulasikan akses jarak jauh, sementara Konfigurasi B menempatkan ERP di VPS dengan aplikasi \textit{testing} di SBC sebagai pembanding. Selama pengujian, akan dilakukan pencatatan metrik kinerja yang mencakup \textit{response time}, \textit{error rate}, dan \textit{resource utilization} pada kedua platform.
 
 \subsubsection{Pengujian Batasan Kinerja (\textit{Stress Test})}
 
-\textbf{Tujuan:} Mengidentifikasi titik batas (\textit{breaking point}) platform SBC dalam menangani beban kerja ERP.
+Pengujian batasan kinerja bertujuan untuk mengidentifikasi titik batas (\textit{breaking point}) platform SBC dalam menangani beban kerja ERP. Skenario pengujian akan mencakup simulasi lalu lintas tinggi dengan peningkatan bertahap jumlah \textit{concurrent users}, dimulai dari 10, kemudian 25, 50, hingga 100 pengguna. Selain itu, akan dilakukan peningkatan frekuensi pemanggilan API secara bertahap hingga sistem menunjukkan degradasi kinerja yang signifikan atau mulai menghasilkan \textit{error}.
 
-\textbf{Skenario Pengujian:}
-\begin{itemize}
-    \item Simulasi lalu lintas tinggi dengan peningkatan bertahap jumlah \textit{concurrent users} (10, 25, 50, 100 users)
-    \item Peningkatan frekuensi pemanggilan API hingga sistem menunjukkan degradasi performa signifikan atau mulai menghasilkan error
-\end{itemize}
-
-\textbf{Metode Eksekusi:}
-\begin{itemize}
-    \item Aplikasi \textit{load testing} Go dijalankan dari laptop terdedikasi untuk menghindari \textit{bottleneck} pada mesin penguji
-    \item Pengujian diarahkan secara terpisah ke SBC dan VPS untuk mendapatkan data performa puncak masing-masing platform
-\end{itemize}
+Metode eksekusi pengujian akan menggunakan aplikasi \textit{load testing} berbasis Go yang dijalankan dari laptop terdedikasi, hal ini dilakukan untuk menghindari \textit{bottleneck} pada mesin penguji. Pengujian akan diarahkan secara terpisah ke SBC dan VPS untuk mendapatkan data kinerja puncak dari masing-masing platform, sehingga dapat dibandingkan kapasitas maksimal keduanya.
 
 \subsection{Alat dan Metrik Evaluasi}
 
-\textbf{Alat Pengujian:}
-\begin{itemize}
-    \item Aplikasi \textit{load testing} berbasis Go (untuk konkurensi tinggi dan kontrol granular atas beban kerja)
-    \item Utilitas monitoring Linux: \texttt{vmstat}, \texttt{iostat}, \texttt{htop} untuk monitoring resource utilization
-\end{itemize}
+Evaluasi kinerja akan menggunakan dua jenis alat pengujian utama. Pertama, aplikasi \textit{load testing} berbasis Go yang dipilih karena kemampuannya dalam menangani konkurensi tinggi dan memberikan kontrol granular atas beban kerja yang disimulasikan. Kedua, utilitas \textit{monitoring} Linux standar seperti \texttt{vmstat}, \texttt{iostat}, dan \texttt{htop} yang akan digunakan untuk \textit{monitoring resource utilization} secara real-time selama pengujian berlangsung.
 
-\textbf{Metrik Kinerja:}
-\begin{itemize}
-    \item \textbf{Application Metrics:} Response time (ms), throughput (requests/second), error rate (\%)
-    \item \textbf{System Metrics:} CPU utilization (\%), RAM usage (MB/\%), disk I/O (MB/s), network latency (ms)
-\end{itemize}
+Metrik kinerja yang akan dikumpulkan terbagi dalam dua kategori. Kategori pertama adalah \textbf{Application Metrics} yang mencakup \textit{response time} (dalam milidetik), \textit{throughput} (diukur dalam \textit{requests/second}), dan \textit{error rate} (dalam persentase). Kategori kedua adalah \textbf{System Metrics} yang meliputi \textit{CPU utilization} (dalam persentase), penggunaan RAM (dalam MB dan persentase), \textit{disk I/O} (dalam MB/s), dan \textit{network latency} (dalam milidetik).
 
 \subsection{Kriteria Keberhasilan}
+
+Keberhasilan penelitian ini akan dievaluasi berdasarkan tiga aspek utama: kelayakan fungsional, kinerja komparatif, dan kelayakan ekonomi. Tabel \ref{tab:success-criteria} menunjukkan kriteria keberhasilan untuk masing-masing aspek yang akan menjadi acuan dalam menentukan apakah platform SBC layak digunakan sebagai alternatif infrastruktur ERP.
 
 \input{table/tabelkriteriakeberhasilan.tex}
 
 \subsection{Rencana Analisis Data}
 
-\begin{itemize}
-    \item \textbf{Analisis Performa:} Pembuatan grafik perbandingan (throughput vs. concurrent users, response time distribution) untuk visualisasi perbedaan performa antar platform
-    \item \textbf{Identifikasi Bottleneck:} Analisis korelasi antara resource utilization dan degradasi performa untuk mengidentifikasi komponen yang menjadi bottleneck (CPU, RAM, I/O)
-    \item \textbf{Perhitungan TCO:} Perhitungan Total Cost of Ownership untuk periode 3 dan 5 tahun dengan komponen:
-    \begin{itemize}
-        \item SBC: CAPEX (hardware) + OPEX (listrik)
-        \item VPS Komersial: OPEX (biaya sewa bulanan dari Hostinger/Biznet/DigitalOcean)
-    \end{itemize}
-    \item \textbf{Trade-off Analysis:} Analisis kualitatif trade-off antara kelayakan teknis (performa, kapasitas) dan finansial (TCO, break-even point)
-\end{itemize}
+Analisis data hasil pengujian akan dilakukan melalui empat pendekatan utama. Pertama, \textbf{Analisis Kinerja} akan dilakukan dengan membuat grafik perbandingan, seperti grafik \textit{throughput} terhadap jumlah \textit{concurrent users} dan distribusi \textit{response time}, untuk memvisualisasikan perbedaan kinerja antar platform secara jelas. Kedua, \textbf{Identifikasi Bottleneck} akan dilakukan melalui analisis korelasi antara \textit{resource utilization} dan degradasi kinerja untuk mengidentifikasi komponen mana yang menjadi \textit{bottleneck}, baik itu CPU, RAM, maupun I/O.
 
-\section{Jadwal Pelaksanaan Penelitian}
+Ketiga, \textbf{Perhitungan TCO} akan dilakukan untuk periode 3 dan 5 tahun dengan mempertimbangkan komponen biaya yang berbeda untuk masing-masing platform. Untuk SBC, perhitungan mencakup CAPEX (biaya \textit{hardware}) dan OPEX (biaya listrik), sedangkan untuk VPS komersial, perhitungan berfokus pada OPEX berupa biaya sewa bulanan dari penyedia layanan seperti Hostinger, Biznet, atau DigitalOcean. Keempat, \textbf{Trade-off Analysis} akan dilakukan secara kualitatif untuk menganalisis \textit{trade-off} antara kelayakan teknis (kinerja dan kapasitas) dengan kelayakan finansial (TCO dan \textit{break-even point}), sehingga dapat memberikan rekomendasi yang komprehensif mengenai pemilihan platform yang sesuai untuk berbagai skenario penggunaan.
 
-Penelitian ini direncanakan akan dilaksanakan dalam periode Desember 2025 hingga Maret 2026 dengan target penyelesaian pada 29 Maret 2026. Tabel \ref{tab:gantt-chart} menunjukkan rincian jadwal pelaksanaan untuk setiap tahapan penelitian.
+\subsection{Jadwal Pelaksanaan Penelitian}
+
+Penelitian ini direncanakan akan dilaksanakan dalam periode Oktober 2025 hingga Maret 2026 dengan target penyelesaian pada 29 Maret 2026. Tabel \ref{tab:gantt-chart} menunjukkan rincian jadwal pelaksanaan untuk setiap tahapan penelitian.
 
 \begin{table}[htbp]
 \centering
@@ -124,18 +73,7 @@ Penelitian ini direncanakan akan dilaksanakan dalam periode Desember 2025 hingga
 \label{tab:gantt-chart}
 \end{table}
 
-\textbf{Catatan Jadwal:}
-\begin{itemize}
-    \item Jadwal di atas bersifat estimasi dan dapat berubah sesuai kondisi pelaksanaan penelitian
-    \item Beberapa faktor yang dapat mempengaruhi jadwal:
-    \begin{itemize}
-        \item Keterlambatan pengadaan perangkat keras atau infrastruktur pendukung
-        \item Kompleksitas instalasi dan konfigurasi yang melebihi perkiraan
-        \item Temuan hasil pengujian yang memerlukan investigasi mendalam
-        \item Kebutuhan pengujian tambahan untuk validasi hasil
-    \end{itemize}
-    \item Jika terjadi pergeseran jadwal, prioritas akan diberikan pada kualitas dan kedalaman analisis daripada kecepatan penyelesaian
-\end{itemize}
+\textbf{Catatan Jadwal:} Jadwal di atas bersifat estimasi dan dapat berubah sesuai kondisi pelaksanaan penelitian. Beberapa faktor yang dapat mempengaruhi jadwal antara lain keterlambatan pengadaan perangkat keras atau infrastruktur pendukung, kompleksitas instalasi dan konfigurasi yang melebihi perkiraan, temuan hasil pengujian yang memerlukan investigasi mendalam, serta kebutuhan pengujian tambahan untuk validasi hasil. Apabila terjadi pergeseran jadwal, prioritas akan diberikan pada kualitas dan kedalaman analisis daripada kecepatan penyelesaian.
 
 \section{Analisis Risiko}
 
@@ -143,9 +81,4 @@ Tabel \ref{tab:risk-analysis} menunjukkan identifikasi risiko utama yang mungkin
 
 \input{table/tabelanalisisrisiko.tex}
 
-\textbf{Catatan:}
-\begin{itemize}
-    \item \textbf{Frekuensi:} Estimasi kemungkinan terjadinya risiko (Rendah/Sedang/Tinggi)
-    \item \textbf{Severity:} Estimasi dampak terhadap pelaksanaan penelitian jika risiko terjadi (Rendah/Sedang/Tinggi)
-    \item Risiko dengan kombinasi Frekuensi dan Severity tinggi akan mendapat prioritas monitoring dan mitigasi proaktif
-\end{itemize}
+\textbf{Catatan:} \textbf{Frekuensi} mengacu pada estimasi kemungkinan terjadinya risiko, sedangkan \textbf{Dampak} mengacu pada estimasi dampak terhadap pelaksanaan penelitian jika risiko tersebut terjadi (Rendah/Sedang/Tinggi).
