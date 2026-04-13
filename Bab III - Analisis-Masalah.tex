@@ -107,28 +107,32 @@ Setelah \textit{ERPNext} dipilih sebagai platform ERP, langkah berikutnya adalah
 
 \subsubsection{Alternatif 2: \textit{Orange Pi} 5 Pro}
 
-\textit{Orange Pi} 5 Pro merupakan SBC berbasis prosesor Rockchip RK3588S dengan arsitektur \textit{octa-core} (8 core) yang terdiri dari 4 core ARM Cortex-A76 (2.4GHz) dan 4 core ARM Cortex-A55 (1.8GHz) dalam konfigurasi \textit{big.LITTLE} \cite{orangepi2024pi5pro}. Platform ini tersedia dalam varian RAM 4GB, 8GB, dan 16GB, sehingga menawarkan kapasitas memori yang lebih tinggi dibandingkan \textit{Raspberry Pi} 5. \textit{Orange Pi} 5 Pro mendukung berbagai distribusi Linux termasuk Ubuntu, Debian, dan Armbian.
+\textit{Orange Pi} 5 Pro merupakan SBC berbasis prosesor Rockchip RK3588S dengan arsitektur \textit{octa-core} (8 core) yang terdiri dari 4 core ARM Cortex-A76 (2.4GHz) and 4 core ARM Cortex-A55 (1.8GHz) dalam konfigurasi \textit{big.LITTLE} \cite{orangepi2024pi5pro}. Platform ini tersedia dalam varian RAM 4GB, 8GB, and 16GB, sehingga menawarkan kapasitas memori yang lebih tinggi dibandingkan \textit{Raspberry Pi} 5. \textit{Orange Pi} 5 Pro mendukung berbagai distribusi Linux termasuk Ubuntu, Debian, and Armbian.
 
-\textit{Orange Pi} 5 Pro memenuhi dan melampaui spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{octa-core} Rockchip RK3588S hingga 2.4GHz dan RAM hingga 16GB (KNF-04). Konsumsi daya perangkat ini berkisar 10--15W, memenuhi batasan yang ditetapkan (KNF-05). \textit{Orange Pi} 5 Pro juga tersedia di pasar Indonesia melalui berbagai distributor lokal (KNF-06). Keunggulan utama \textit{Orange Pi} 5 Pro adalah kinerja yang lebih tinggi dengan 8 core dan kapasitas RAM hingga 16GB, sehingga lebih mampu menangani beban kerja ERP yang lebih intensif. Harga \textit{Orange Pi} 5 Pro di pasar Indonesia juga \textit{comparable} dengan \textit{Raspberry Pi} 5 untuk varian RAM yang setara \cite{orangepi2024pi5pro}.
+\textit{Orange Pi} 5 Pro memenuhi dan melampaui spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{octa-core} Rockchip RK3588S hingga 2.4GHz and RAM hingga 16GB (KNF-04). Konsumsi daya perangkat ini berkisar 10--15W, memenuhi batasan yang ditetapkan (KNF-05). \textit{Orange Pi} 5 Pro juga tersedia di pasar Indonesia melalui berbagai distributor lokal (KNF-06). Keunggulan utama \textit{Orange Pi} 5 Pro adalah kinerja yang lebih tinggi dengan 8 core dan kapasitas RAM hingga 16GB, sehingga lebih mampu menangani beban kerja ERP yang lebih intensif. Harga \textit{Orange Pi} 5 Pro di pasar Indonesia juga \textit{comparable} dengan \textit{Raspberry Pi} 5 untuk varian RAM yang setara \cite{orangepi2024pi5pro}.
+
+\subsubsection{Alternatif 3: Mini PC Intel N100}
+
+Mini PC berbasis prosesor Intel N100 sering kali dianggap sebagai alternatif \textit{low-power} untuk \textit{server} skala kecil. Meskipun secara teoritis memiliki TDP sebesar 6W, dalam implementasi praktis prosesor ini sering mengalami lonjakan daya (\textit{power burst}) hingga 25W pada level SoC untuk menangani beban komputasi transaksional. Dari aspek arsitektur, penggunaan instruksi \textit{Complex Instruction Set Computing} (CISC) pada x86 cenderung kurang efisien dibandingkan arsitektur RISC pada ARM untuk rasio \textit{performance-per-watt} dalam operasional 24/7 \cite{blem2013power}. Selain itu, Mini PC N100 umumnya dijual dalam kondisi \textit{barebone} (tanpa RAM), sehingga total biaya pengadaan menjadi lebih tinggi dibandingkan SBC dengan memori terintegrasi, menjadikannya kurang ekonomis untuk konteks penelitian ini.
 
 \subsection{Justifikasi Pemilihan \textit{Orange Pi} 5 Pro}
 
-Evaluasi kedua alternatif SBC terhadap kebutuhan \textit{hardware} dilakukan secara sistematis untuk memilih platform yang paling sesuai. Tabel \ref{tab:hardware-evaluation} menunjukkan hasil evaluasi terhadap kebutuhan yang relevan.
+Evaluasi ketiga alternatif SBC dan \textit{low-power hardware} terhadap kebutuhan penelitian dilakukan secara sistematis. Tabel \ref{tab:hardware-evaluation} menunjukkan hasil perbandingan terhadap kriteria utama.
 
 \begin{table}[h]
 \centering
-\caption{Evaluasi Alternatif SBC terhadap Kebutuhan Hardware}
+\caption{Evaluasi Alternatif Hardware terhadap Kebutuhan Penelitian}
 \label{tab:hardware-evaluation}
-\begin{tabular}{|l|p{0.38\textwidth}|c|c|}
+\begin{tabular}{|l|p{0.38\textwidth}|c|c|c|}
 \hline
-\textbf{Kode} & \textbf{Kebutuhan} & \textbf{\textit{Raspberry Pi} 5} & \textbf{\textit{Orange Pi} 5 Pro} \\ \hline
-KF-04 & Stack teknologi ERP & \checkmark & \checkmark \\ \hline
-KNF-04 & Memenuhi spek minimum \textit{ERPNext} & \checkmark (4 core, 8GB) & \checkmark (8 core, 16GB) \\ \hline
-KNF-05 & Konsumsi daya $\leq$ 15W & \checkmark (8--12W) & \checkmark (10--15W) \\ \hline
-KNF-06 & Tersedia di pasar Indonesia & \checkmark & \checkmark \\ \hline
+\textbf{Kode} & \textbf{Kebutuhan} & \textbf{RPi 5} & \textbf{OPi 5 Pro} & \textbf{Mini PC N100} \\ \hline
+KF-04 & Stack teknologi ERP & \checkmark & \checkmark & \checkmark \\ \hline
+KNF-04 & Memenuhi spek minimum & \checkmark (4 core) & \checkmark (8 core) & \checkmark (4 core) \\ \hline
+KNF-05 & Konsumsi daya $\leq$ 15W & \checkmark & \checkmark & \texttimes \\ \hline
+KNF-06 & Budget Friendly & \checkmark & \checkmark & \texttimes \\ \hline
 \end{tabular}
 \end{table}
 
-Berdasarkan evaluasi terhadap kebutuhan \textit{hardware}, \textbf{\textit{Orange Pi} 5 Pro dipilih} sebagai platform \textit{Single-Board Computer} untuk penelitian ini. \textit{Orange Pi} 5 Pro menawarkan spesifikasi superior dengan prosesor \textit{octa-core} dan RAM hingga 16GB yang melampaui persyaratan minimum (KNF-04), memberikan margin lebih besar untuk menguji batas kemampuan SBC dalam menangani beban kerja ERP, sambil tetap memenuhi batasan konsumsi daya 15W (KNF-05) dan ketersediaan di pasar lokal (KNF-06) \cite{orangepi2024pi5pro}.
+Berdasarkan evaluasi tersebut, \textbf{\textit{Orange Pi} 5 Pro dipilih} sebagai platform utama. Dibandingkan dengan \textit{Raspberry Pi} 5, \textit{Orange Pi} 5 Pro menawarkan keunggulan komputasi yang signifikan melalui konfigurasi \textit{octa-core} RK3588S yang lebih tangguh untuk beban kerja \textit{database} intensif. Sementara itu, dibandingkan dengan Mini PC Intel N100, \textit{Orange Pi} 5 Pro lebih unggul dari aspek efisiensi energi sistem total (maksimal 15W) dan biaya investasi awal karena memori yang sudah terintegrasi (\textit{on-board}), sesuai dengan batasan anggaran organisasi skala kecil \cite{orangepi2024pi5pro}.
 
 Untuk keperluan perbandingan, penelitian ini juga menggunakan \textit{Virtual Private Server} (VPS) sebagai platform \textit{baseline}. VPS dengan spesifikasi \textit{comparable} (2--4 vCPU, 4--8GB RAM) akan digunakan untuk evaluasi kinerja guna memastikan \textit{fair comparison}. Untuk analisis \textit{Total Cost of Ownership}, \textit{commercial} VPS dengan \textit{pricing} transparan akan dipilih sebagai representasi alternatif infrastruktur \textit{mainstream}. Pemilihan VPS tidak melalui proses evaluasi kebutuhan yang sama karena VPS berfungsi sebagai \textit{baseline} pembanding, bukan sebagai variabel penelitian yang dievaluasi kelayakannya.

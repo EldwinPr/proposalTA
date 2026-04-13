@@ -1,0 +1,288 @@
+================================================================================
+QUICK REFERENCE GUIDE: SOURCES FOR THESIS TOPICS
+Modular ERP on Low-Cost Device Clusters for UMKM
+================================================================================
+
+INSTRUCTIONS: During drafting, refer to this guide when you need to cite a topic.
+Find the topic in the relevant category, then use the suggested source.
+Multiple sources for a topic = choose the most relevant one for your context.
+
+================================================================================
+1. ERP SYSTEMS & FUNDAMENTALS
+================================================================================
+
+TOPIC: ERP definition, characteristics, purpose
+CITE: goldston2020evolution
+KEY: "The Evolution of ERP Systems: A Literature Review"
+FOR: General ERP concepts, history, features, evolution over time
+
+TOPIC: ERP value chain & integration
+CITE: boza2015
+KEY: "The interoperability force in the ERP field"
+FOR: ERP integration challenges, interoperability, value chain design
+
+TOPIC: ERP modules & functionality
+CITE: hasanah2024
+KEY: "Enterprise Resource Planning Based Management Information System..."
+FOR: ERP features, modules, MIS components for MSMEs
+
+TOPIC: Enterprise systems management
+CITE: odoo2025documentation, OdooCommWeb
+KEY: "Odoo Documentation / Odoo: Open Source ERP and CRM"
+FOR: Practical ERP platform features, modules, implementation examples
+
+================================================================================
+2. UMKM/SME CONTEXT & ERP ADOPTION
+================================================================================
+
+TOPIC: UMKM definition, scale, characteristics
+CITE: uuumkm2008
+KEY: "Undang-Undang Republik Indonesia Nomor 20 Tahun 2008"
+FOR: Official Indonesian UMKM definition, classification criteria
+
+TOPIC: UMKM digitalization challenges
+CITE: faturrahman2025
+KEY: "Pengembangan UMKM Berbasis Transformasi Digital..."
+FOR: Digital transformation barriers, needs, success factors for SMEs
+
+TOPIC: UMKM ERP readiness & adoption
+CITE: firdaus2024
+KEY: "SMEs ERP Readiness Success Factor Framework..."
+FOR: SME ERP implementation success factors, readiness assessment, barriers
+
+TOPIC: UMKM labor & employment
+CITE: aprionis2025
+KEY: "Kementerian UMKM sebut 65,5 juta UMKM serap 119 juta tenaga kerja"
+FOR: UMKM statistics, economic impact, workforce data in Indonesia
+
+TOPIC: UMKM failures and risk factors
+CITE: rismawati2025
+KEY: "Analisis Faktor-Faktor Kegagalan UMKM di Sektor Fashion..."
+FOR: UMKM failure factors, change management, sustainability challenges
+
+================================================================================
+3. ERP WORKLOADS & PERFORMANCE CHARACTERIZATION
+================================================================================
+
+TOPIC: ERP workload modeling & characterization
+CITE: maddodi2018generating
+KEY: "Generating Workload for ERP Applications through End-User..."
+FOR: How to model/simulate ERP workloads, business operation data patterns
+
+TOPIC: ERP performance testing & benchmarking
+CITE: maddodi2018generating
+KEY: "Generating Workload for ERP Applications through End-User..."
+FOR: ERP performance metrics, load testing methodology
+
+================================================================================
+4. HARDWARE ARCHITECTURE & PROCESSORS
+================================================================================
+
+TOPIC: ARM vs x86 architecture comparison
+CITE: blem2013power
+KEY: "Power struggles: Revisiting the RISC vs. CISC debate..."
+FOR: ARM vs x86 power consumption, performance tradeoffs
+
+TOPIC: ARM processor efficiency (low-power systems)
+CITE: aroca2012towards
+KEY: "Towards green data centers: A comparison of x86 and ARM..."
+FOR: ARM architecture power efficiency, performance per watt
+
+TOPIC: SBC evolution & capabilities (microcontroller → computer → server)
+CITE: Ariza2022
+KEY: "Understanding the role of single-board computers in engineering..."
+FOR: SBC evolution, computational capabilities advancement, educational/practical use
+
+TOPIC: Raspberry Pi & single-board computers (SBC clustering)
+CITE: Putra2019
+KEY: "Implementasi Cluster Server Pada Raspberry Pi..."
+FOR: Practical Raspberry Pi clustering, load balancing implementation
+
+TOPIC: Low-power processor design & energy efficiency
+CITE: aroca2012towards
+KEY: "Towards green data centers: A comparison of x86 and ARM..."
+FOR: Power efficiency metrics, green computing principles
+
+================================================================================
+5. CLUSTERING & DISTRIBUTED SYSTEMS
+================================================================================
+
+TOPIC: Server clustering & load balancing
+CITE: Putra2019
+KEY: "Implementasi Cluster Server Pada Raspberry Pi..."
+FOR: Clustering techniques, load balancing methods, practical implementation
+
+TOPIC: Distributed system architecture
+CITE: newman2015building
+KEY: "Building Microservices: Designing Fine-Grained Systems"
+FOR: Distributed system design principles, architecture patterns
+
+TOPIC: Edge computing platforms
+CITE: qu2020experimental
+KEY: "An Experimental Study on Microservices based Edge Computing..."
+FOR: Edge computing architecture, microservices in edge environments
+
+================================================================================
+6. MICROSERVICES ARCHITECTURE
+================================================================================
+
+TOPIC: Microservices design patterns & principles
+CITE: newman2015building
+KEY: "Building Microservices: Designing Fine-Grained Systems"
+FOR: Core microservices concepts, design, decomposition strategies
+
+TOPIC: Microservices on edge computing
+CITE: qu2020experimental
+KEY: "An Experimental Study on Microservices based Edge Computing..."
+FOR: Microservices performance on edge hardware, deployment patterns
+
+TOPIC: Modular system design
+CITE: newman2015building
+KEY: "Building Microservices: Designing Fine-Grained Systems"
+FOR: Modularity principles, service boundaries, scalability
+
+================================================================================
+7. CLOUD & INFRASTRUCTURE ALTERNATIVES
+================================================================================
+
+TOPIC: Cloud computing models (SaaS, PaaS, IaaS)
+CITE: AzureSaaS, AzurePaaS, AWSCloud
+KEY: Microsoft/AWS cloud definitions
+FOR: Definitions and characteristics of cloud service models
+
+TOPIC: VPS infrastructure costs
+CITE: AWSVPS
+KEY: "What is VPS? - Virtual Private Server Explained"
+FOR: VPS definition, use cases, cloud infrastructure alternatives
+
+TOPIC: Cloud architecture & design
+CITE: odunayo2018cloud
+KEY: "Cloud Computing Architecture: A Critical Analysis"
+FOR: Cloud system architecture, design patterns, trade-offs
+
+TOPIC: On-premise vs Cloud systematic comparison
+CITE: Younus2024
+KEY: "Systematic Analysis of On Premise and Cloud Services"
+FOR: Systematic comparison, upfront cost vs recurring cost, investment models
+
+TOPIC: On-premises vs Cloud economics (TCO framework)
+CITE: buijsse2024reference
+KEY: "A Reference Model for the Identification of Cost Components..."
+FOR: Cost component identification, TCO calculation methodology
+
+================================================================================
+8. TOTAL COST OF OWNERSHIP (TCO) ANALYSIS
+================================================================================
+
+TOPIC: TCO calculation methodology
+CITE: buijsse2024reference
+KEY: "A Reference Model for the Identification of Cost Components..."
+FOR: Cost component breakdown, TCO modeling framework
+
+TOPIC: Infrastructure cost comparison
+CITE: buijsse2024reference
+KEY: "A Reference Model for the Identification of Cost Components..."
+FOR: Cost structure analysis, component identification
+
+TOPIC: Power consumption & operational costs
+CITE: aroca2012towards
+KEY: "Towards green data centers: A comparison of x86 and ARM..."
+FOR: Energy cost calculations, power efficiency metrics
+
+TOPIC: Green data center economics
+CITE: aroca2012towards
+KEY: "Towards green data centers: A comparison of x86 and ARM..."
+FOR: Sustainable computing, power cost reduction strategies
+
+================================================================================
+QUICK LOOKUP TABLE
+================================================================================
+
+Need to cite...                              | USE THIS SOURCE
+---------------------------------------------|---------------------------------------------------
+ERP basics & evolution                       | goldston2020evolution
+ERP interoperability                         | boza2015
+ERP for MSMEs                                | hasanah2024, firdaus2024
+SME ERP readiness/adoption barriers          | firdaus2024
+UMKM definition (Indonesian context)         | uuumkm2008
+UMKM digitalization/transformation           | faturrahman2025
+UMKM statistics/employment                   | aprionis2025
+ERP workload modeling                        | maddodi2018generating
+ARM vs x86 power efficiency                  | blem2013power, aroca2012towards
+SBC evolution (microcontroller → server)     | Ariza2022
+Raspberry Pi clustering                      | Putra2019
+Microservices architecture                   | newman2015building
+Edge computing with microservices            | qu2020experimental
+Cloud architecture analysis                  | odunayo2018cloud
+Cloud service models (SaaS/PaaS/IaaS)       | AzureSaaS, AzurePaaS, AWSCloud
+VPS infrastructure                           | AWSVPS
+On-premise vs Cloud comparison               | Younus2024
+TCO calculation framework                    | buijsse2024reference
+Green/sustainable computing                  | aroca2012towards
+Practical ERP platforms/features             | odoo2025documentation, OdooCommWeb
+
+================================================================================
+CITATION KEYS REFERENCE
+================================================================================
+
+Academic Sources (full citations):
+  goldston2020evolution       - "The Evolution of ERP Systems: A Literature Review"
+  boza2015                    - "The interoperability force in the ERP field"
+  hasanah2024                 - "Enterprise Resource Planning Based Management..."
+  firdaus2024                 - "SMEs ERP Readiness Success Factor Framework..."
+  Putra2019                   - "Implementasi Cluster Server Pada Raspberry Pi..."
+  maddodi2018generating       - "Generating Workload for ERP Applications..."
+  blem2013power               - "Power struggles: Revisiting the RISC vs. CISC debate..."
+  aroca2012towards            - "Towards green data centers: A comparison of x86..."
+  Ariza2022                   - "Understanding the role of single-board computers..." [NEW]
+  newman2015building          - "Building Microservices: Designing Fine-Grained..."
+  qu2020experimental          - "An Experimental Study on Microservices based..."
+  odunayo2018cloud            - "Cloud Computing Architecture: A Critical Analysis"
+  Younus2024                  - "Systematic Analysis of On Premise and Cloud Services" [NEW]
+  buijsse2024reference        - "A Reference Model for the Identification of Cost..."
+
+Indonesian/UMKM Context:
+  uuumkm2008                  - Indonesian Law No. 20/2008 (UMKM definition)
+  faturrahman2025             - "Pengembangan UMKM Berbasis Transformasi Digital..."
+  aprionis2025                - "Kementerian UMKM sebut 65,5 juta UMKM..."
+  rismawati2025               - "Analisis Faktor-Faktor Kegagalan UMKM..."
+
+Web/Vendor Sources:
+  odoo2025documentation       - Odoo official documentation
+  OdooCommWeb                 - Odoo website
+  AzureSaaS, AzurePaaS        - Microsoft Azure cloud definitions
+  AWSVPS, AWSCloud            - Amazon AWS definitions
+  erpnext2024introduction      - Frappe/ERPNext documentation
+
+================================================================================
+USAGE TIPS
+================================================================================
+
+1. When citing a topic, check this guide FIRST
+2. Use the suggested source unless you have a specific reason to use another
+3. If topic needs multiple citations: goldston + firdaus + maddodi
+4. For UMKM/Indonesian context: Always prioritize Indonesian sources
+   (firdaus2024, uuumkm2008, faturrahman2025)
+5. For technical architecture: Newman (microservices) or Putra (clustering)
+6. For TCO/costs: buijsse2024reference + aroca2012towards
+7. For hardware decisions: blem2013power + aroca2012towards
+8. Cross-reference: If citing Putra (Raspberry Pi), consider also aroca2012towards
+   (ARM power efficiency)
+
+================================================================================
+GAPS & FOLLOW-UP SOURCES TO CONSIDER
+================================================================================
+
+If you need to expand coverage:
+- Software licensing models for open-source ERP (Odoo, ERPNext, Frappe)
+- UMKM digitalization roadmap/strategy papers
+- Database optimization for low-memory systems
+- Network architecture for distributed ERP
+- Case studies of ERP deployment in developing countries
+- IoT/edge device security considerations
+- Containerization (Docker) performance on ARM
+- Cost analysis of specific ERP platforms (Odoo vs SAP B1 vs others)
+
+================================================================================
+END OF GUIDE
+================================================================================

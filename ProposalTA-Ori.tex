@@ -1,6 +1,8 @@
 %! TEX program = xelatex
 % 
-% Template Proposal Tugas Akhir
+% Versi 1.1
+%
+% Template Proposal Tugas Akhir 
 % Program Studi Sistem dan Teknologi Informasi
 % Sekolah Teknik Elektro dan Informatika
 % Institut Teknologi Bandung
@@ -77,30 +79,6 @@
 \usepackage[a4paper, left=4cm, right=3cm, top=3cm, bottom=3cm]{geometry} % set page margins
 \usepackage[indonesian]{babel} % untuk bahasa Indonesia
 \usepackage{csquotes} % for context-sensitive quotation facilities
-
-% ==========================================
-% KONFIGURASI HYPHENATION DAN LINE BREAKING
-% ==========================================
-% Atur toleransi untuk menghindari overfull/underfull hbox
-\tolerance=1000
-\emergencystretch=3em
-\hyphenpenalty=500
-\exhyphenpenalty=100
-
-% Definisikan hyphenation untuk kata-kata teknis yang sering muncul
-\hyphenation{
-  Enter-prise
-  Re-source
-  Plan-ning
-  infra-struk-tur
-  kom-pu-ta-si-onal
-  de-ploy-ment
-  per-forma
-  trans-ak-si-onal
-  di-ban-ding-kan
-  mem-ban-ding-kan
-  per-ban-ding-an
-}
 \usepackage{setspace} % for line spacing
 \onehalfspacing % spasi 1.5
 \usepackage{graphicx} % for images
@@ -111,12 +89,13 @@
 \usepackage{tocloft} % for customizing table of contents
 \usepackage{lipsum} % for dummy text (lorem ipsum text)
 \usepackage{floatrow} % for customizing float (figure and table) positions
-\usepackage{float} % for precise float placement control (H option)
 \usepackage{listings} % for code listing
-\usepackage{newfloat} % for creating custom float environments
 \usepackage{amsmath} % for math
 \usepackage{amssymb} % for math symbols
 \usepackage[shortlabels]{enumitem} % for customizing lists
+\setlist[enumerate]{nosep, topsep=-10pt} % mengurangi spasi antar item dan atas bawah daftar
+\setlist[itemize]{nosep, topsep=-10pt} % mengurangi spasi antar item dan atas bawah daftar
+\usepackage[skip=12pt]{parskip}
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage[bahasai]{datetime2}
@@ -184,14 +163,12 @@
 % -- No Header dan No Footer ---
 \pagestyle{plain}
 
-% --- Buat environment custom untuk rumus ---
+% --- Ubah nama daftar listing ke "DAFTAR KODE" ---
 % --- Harus diletakkan sebelum \begin{document} ---
-\DeclareFloatingEnvironment[
-    fileext=loe,
-    listname={DAFTAR RUMUS},
-    name=Rumus,
-    placement=htbp,
-]{equation-float}
+\renewcommand{\lstlistlistingname}{\centering\normalsize DAFTAR KODE} 
+\renewcommand{\lstlistingname}{Kode}
+\lstset{basicstyle=\ttfamily\footnotesize,breaklines=true}
+%\captionsetup[lstlisting]{justification=raggedright,singlelinecheck=false}
 
 
 \renewcommand \cftchapdotsep{4.5}
@@ -228,111 +205,14 @@
 % ==========================================
 % HALAMAN JUDUL
 % ==========================================
-\begin{titlepage}
-\begin{center}
-
-    
-    \vspace*{2cm}
-
-    {\Large\bfseries PENERAPAN \textit{ENTERPRISE RESOURCE PLANNING} PADA \textit{SINGLE BOARD COMPUTER} DENGAN ANALISIS KINERJA DAN \textit{TOTAL COST OF OWNERSHIP}}\\
-     \vspace{4cm}
-
-    {\Large \textbf{Proposal Tugas Akhir}}\\
-
-
-    \vspace{2cm}
-    
-    
-    {\large Oleh}\\[0.3cm]
-    \textbf{
-    {\large Eldwin Pradipta}\\
-    {\large 18222042}
-    }\\
-
-    \vspace{2cm}
-    
-    \begin{figure}[h]
-    \centering
-    \includegraphics[width=0.2\textwidth]{image/ganesha.jpg}
-    \end{figure}
-    
-    
-    % \vspace{1cm}
-    \vfill
-
-    \textbf{
-    {\large PROGRAM STUDI SISTEM DAN TEKNOLOGI INFORMASI}\\
-    {\large SEKOLAH TEKNIK ELEKTRO DAN INFORMATIKA}\\
-    {\large INSTITUT TEKNOLOGI BANDUNG}\\
-    {\large \DTMlangsetup{showdayofmonth=false,showmonthname=true,showyear=true}\today}
-    }
-\end{center}
-\end{titlepage}
+\input{Halaman Judul.tex}
 
 
 
 % ==========================================
 % LEMBAR PENGESAHAN 
 % ==========================================
-\newpage
-\thispagestyle{empty}
-\pagenumbering{gobble}
-\begin{center}
-  \textbf{\large LEMBAR PENGESAHAN}\\[1cm]
-  \vspace*{1.5cm}
-
-  {\large\bfseries PENERAPAN \textit{ENTERPRISE RESOURCE PLANNING} PADA \textit{SINGLE BOARD COMPUTER} DENGAN ANALISIS KINERJA DAN \textit{TOTAL COST OF OWNERSHIP}}\\
-     \vspace{2cm}
-
-  {\Large \textbf{Proposal Tugas Akhir}}\\
-
-
-  \vspace{1.5cm}
-    
-    
-  {\large Oleh}\\[0.3cm]
-    \textbf{
-    {\large Eldwin Pradipta}\\
-    {\large 18222042}
-  }\\
-    
-  \vspace{0.5cm}
- 
-  {\large Program Studi Sistem dan Teknologi Informasi}\\
-  {\large Sekolah Teknik Elektro dan Informatika}\\
-  {\large Institut Teknologi Bandung}\\
-
-  \vspace{1.5cm}
-
-  Proposal Tugas Akhir ini telah disetujui dan disahkan\\ 
-  di Bandung, pada tanggal \today\\[1cm]
-
-% ==========================================
-% Versi 1 pembimbing (default)
-% ==========================================
-	Pembimbing  \\[3cm]
-  Dr. Ir. Rinaldi, M.T.   \\[0.2cm]
-  NIP. 196512101994021001
-% ==========================================
-
-\end{center}
-
-\vspace{1cm}
-\noindent
-
-% ==========================================
-% Jika ada 2 pembimbing TA, uncomment dan edit 
-% tabular di bawah ini. Kemudian, comment out atau hapus
-% bagian versi 1 pembimbing di atas.
-% ==========================================
-
-%\begin{tabular}{p{1cm}p{7cm}p{7cm}}
-%   & Pembimbing 1 & Pembimbing 2 \\[3cm]
-%   & Dr. Ir. John Doe, M.T. & Dr. Mary Doe, M.Sc. \\[0.2cm]
-%   &  NIP. 123456789 & NIP. 987654321
-%\end{tabular}
-
-
+\input{Halaman Pengesahan.tex}
 
 % -- Change page number style to roman ---
 \pagenumbering{roman} 
@@ -342,37 +222,16 @@
 % DAFTAR ISI, TABEL, GAMBAR
 % ==========================================
 % --- DAFTAR ISI ---
-\makeatletter
-\renewcommand{\tableofcontents}{%
-  \clearpage
-  \thispagestyle{plain}% no header
-  \begin{center}
-    {\large\bfseries\MakeUppercase{\contentsname}\par}
-  \end{center}
-  \vskip 1em
-  \@starttoc{toc}%
-}
-\makeatother
-
-\newpage
-\renewcommand{\cfttoctitlefont}{\hfill\large\bfseries\MakeUppercase}
-\renewcommand{\cftaftertoctitle}{\hfill}
-\tableofcontents
-%\addcontentsline{toc}{chapter}{DAFTAR ISI}
+\input{Daftar Isi.tex}
 
 % --- DAFTAR GAMBAR ---
-\newpage
-\renewcommand{\cftloftitlefont}{\hfill\large\bfseries\MakeUppercase}
-\renewcommand{\cftafterloftitle}{\hfill}
-\listoffigures
-\addcontentsline{toc}{chapter}{DAFTAR GAMBAR}
+\input{Daftar Gambar.tex}
 
 % --- DAFTAR TABEL ---
-\newpage
-\renewcommand{\cftlottitlefont}{\hfill\large\bfseries\MakeUppercase}
-\renewcommand{\cftafterlottitle}{\hfill}
-\listoftables
-\addcontentsline{toc}{chapter}{DAFTAR TABEL}
+\input{Daftar Tabel.tex}
+
+% --- DAFTAR LISTING (ALGORITMA, PSEUDOCODE, SOURCE CODE) ---
+\input{Daftar Listing.tex}
 
 \mainmatter
 % --- FORMAT TAMPILAN JUDUL BAB, SUBBAB, JUDUL GAMBAR DAN TABEL ---
@@ -397,13 +256,11 @@
 \captionsetup[figure]{labelsep=space}
 \captionsetup[table]{labelsep=space}
 \floatsetup[table]{capposition=top}
-\captionsetup[equation-float]{labelsep=space}
-\floatsetup[equation-float]{capposition=bottom}
 \captionsetup[lstlisting]{labelsep=space}
 \floatsetup[lstlisting]{capposition=top}
 
 % --- Atur indentasi paragraf ---
-\setlength{\parindent}{1cm}
+\setlength{\parindent}{0pt}
 % -- Change page number style to arabic ---
 \pagenumbering{arabic} 
 

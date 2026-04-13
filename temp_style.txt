@@ -1,0 +1,368 @@
+# DESKRIPSI GAYA PENULISAN PROPOSAL TA
+
+KARAKTERISTIK UMUM
+
+1. Bahasa Akademik Formal yang Accessible dan Natural
+- Menggunakan bahasa Indonesia baku dengan struktur kalimat akademik yang matang
+- Menghindari kekakuan formal yang berlebihan dengan menggunakan variasi struktur kalimat
+- Mempertahankan flow natural seperti membaca artikel ilmiah populer, bukan textbook kering
+- Menjelaskan konsep abstrak dengan contoh konkret untuk meningkatkan accessibility
+- Menggunakan frasa transisi yang smooth dan bervariasi (bukan repetitif)
+
+2. Penggunaan Istilah Bilingual yang Konsisten
+- Istilah Inggris dalam *italic* dengan terjemahan/penjelasan dalam bahasa Indonesia
+- Contoh: "*Enterprise Resource Planning* (ERP)", "*cloud computing*", "*on-premise*"
+- Akronim dijelaskan saat pertama kali muncul, kemudian digunakan konsisten
+- Tidak mengasumsikan pembaca mengetahui semua istilah teknis—selalu berikan konteks
+
+3. Sitasi Terintegrasi Secara Natural dalam Narasi
+- Sitasi ditempatkan langsung setelah klaim/fakta yang dikutip
+- Tidak mengganggu alur bacaan, mengalir natural dalam kalimat
+- Format: \cite{key} atau \textcite{key} sesuai konteks
+- Tidak over-cite: hanya pada klaim faktual dan konsep penting
+
+4. Konsistensi Format yang Tidak Kaku
+- Tanda kurung untuk akronim: (ERP), (MRP), (UMKM)
+- *Italic* untuk istilah asing
+- **Bold** untuk penekanan pertanyaan penelitian dan poin krusial (jarang digunakan)
+- Penggunaan enumerate untuk daftar terstruktur di bagian formal (Rumusan Masalah, Tujuan)
+- Dalam narasi, hindari bullet points—gunakan enumerasi implisit dengan koma
+
+5. Efisiensi Informasi dengan Variasi Gaya
+- Setiap kalimat membawa informasi baru, tidak ada redundansi
+- Kohesi tinggi: setiap paragraf terhubung logis dengan paragraf sebelum/sesudahnya
+- Variasi panjang kalimat: pendek untuk emphasis, panjang untuk elaborasi
+- Menggunakan rhythm dalam penulisan: bergantian antara kalimat kompleks dan sederhana
+
+---
+
+GAYA BERDASARKAN FUNGSI BAGIAN
+
+GAYA A: Naratif-Historis (Latar Belakang & 2.1.1)
+Fungsi: Membangun konteks, motivasi, dan gap penelitian**
+
+Karakteristik Positif:
+
+1. **Pendekatan Storytelling yang Engaging**
+   - Menggunakan alur kronologis untuk membangun pemahaman bertahap
+   - Membawa pembaca melalui perjalanan dari konsep sederhana ke kompleks
+   - Menyebutkan peristiwa historis dan tokoh (vendor, teknologi) untuk konkretisasi
+   - Contoh: "Sejak pertama kali komputer dikenalkan pada tahun 1960, banyak kelompok yang membuat aplikasi untuk mencatat sumber daya..."
+
+2. **Struktur Argumentatif Berlapis**
+   - Konteks historis umum → perkembangan relevan → detail teknis → gap penelitian
+   - Membangun argumen secara incremental, tidak langsung ke kesimpulan
+   - Diakhiri dengan pertanyaan penelitian yang eksplisit dan bold
+
+3. **Transisi Temporal yang Jelas**
+   - "Sejak pertama kali...", "Pada tahun...", "Kemudian...", "Hingga saat ini..."
+   - Menunjukkan perkembangan waktu dan evolusi konsep
+   - Variasikan frasa temporal untuk menghindari repetisi
+
+4. **Kontekstualisasi Lokal**
+   - Menghubungkan topik global dengan konteks Indonesia (UMKM, kondisi lokal)
+   - Memberikan relevansi langsung ke pembaca/stakeholder lokal
+
+5. **Pembangunan Gap Analysis yang Sistematis**
+   - State-of-the-art → keterbatasan penelitian sebelumnya → gap spesifik
+   - Menggunakan kontras untuk menunjukkan kesenjangan
+   - Pertanyaan penelitian yang measurable dan specific
+
+Karakteristik yang Dapat Direplikasi (Trade-offs yang Perlu Dipertimbangkan):
+
+1. **Paragraf yang Cenderung Panjang**
+   - Gaya asli: 6-8 kalimat dalam satu paragraf
+   - Trade-off: Menyampaikan banyak informasi vs risiko cognitive overload
+   - Bila direplikasi: Pastikan ada logical flow yang jelas dalam paragraf panjang
+   - Alternatif: 4-5 kalimat per paragraf untuk balance antara kepadatan dan readability
+
+2. **Kalimat Kompleks dengan Multiple Clauses**
+   - Gaya asli: Kalimat dengan 3-4 subordinate clauses untuk mengemas informasi padat
+   - Trade-off: Efisiensi penyampaian informasi vs kemudahan pemahaman
+   - Bila direplikasi: Gunakan untuk kalimat transisi atau yang menyatukan konsep terkait
+   - Contoh: "Perkembangan teknologi ARM yang berkelanjutan telah meningkatkan kemampuan komputasional SBC secara signifikan, yang awalnya hanya digunakan sebagai *microcontroller* telah berubah menjadi komputer bahkan *server*."
+   - Alternatif lebih accessible: "Perkembangan teknologi ARM yang berkelanjutan telah meningkatkan kemampuan komputasional SBC secara signifikan. SBC yang awalnya hanya digunakan sebagai *microcontroller* kini telah berubah menjadi komputer bahkan *server*."
+
+3. **Transisi Implisit Antar Topik**
+   - Gaya asli: Perpindahan topik tanpa frasa penghubung eksplisit, mengandalkan logical connection
+   - Trade-off: Flow natural vs risiko pembaca kehilangan thread
+   - Bila direplikasi: Hanya untuk topik yang sangat erat hubungannya
+   - Rekomendasi: Tambahkan frasa transisi halus untuk clarity
+   - Contoh transisi: "Ketertarikan UMKM ini didorong oleh keunggulan fundamental ERP, yaitu..."
+   - Variasi: "Hal ini disebabkan oleh...", "Perkembangan ini memungkinkan...", "Sebagai konsekuensinya..."
+
+4. **Detail Historis yang Kaya**
+   - Gaya asli: Menyebutkan banyak nama vendor, detail akuisisi, dan peristiwa spesifik
+   - Trade-off: Konteks historis yang kaya vs informasi yang tidak langsung relevan
+   - Bila direplikasi: Pastikan detail mendukung narasi dan argumen penelitian
+   - Filter: "Apakah informasi ini penting untuk memahami gap penelitian atau evolusi konsep?"
+
+5. **Asumsi Konteks Pengetahuan Tertentu**
+   - Gaya asli: Menyebut istilah/peristiwa dengan asumsi pembaca familiar (e.g., "dotcom bubble", "Y2K")
+   - Trade-off: Efisiensi penulisan vs accessibility untuk pembaca luar bidang
+   - Bila direplikasi: Untuk audience akademik di bidang yang sama
+   - Rekomendasi: Berikan konteks singkat dalam kurung atau dash
+   - Contoh: "gelembung *dotcom* (2001)—krisis ekonomi yang menyebabkan penurunan drastis valuasi perusahaan teknologi—mengakibatkan..."
+
+6. **Gap Research yang Ringkas**
+   - Gaya asli: 1 paragraf untuk gap analysis
+   - Trade-off: Conciseness vs thoroughness dalam literature review
+   - Bila direplikasi: Hanya jika gap sudah sangat jelas dan tidak perlu elaborasi panjang
+   - Rekomendasi untuk proposal/thesis: 2 paragraf dengan struktur:
+     - Para 1: Review penelitian terkait + keterbatasannya (2-3 penelitian)
+     - Para 2: Identifikasi gap spesifik + pertanyaan penelitian bold
+   - Struktur: "Penelitian X menunjukkan A, namun terbatas pada B. Penelitian Y mengeksplorasi C, tetapi belum mencakup D. Gap yang teridentifikasi adalah E dan F..."
+
+7. **Proporsi Konten yang Berat ke Konteks**
+   - Gaya asli: ~60-70% konteks/sejarah, ~30-40% gap dan implikasi
+   - Trade-off: Pemahaman konteks yang mendalam vs space untuk argumen penelitian
+   - Bila direplikasi: Untuk bagian yang memang fokus pada literature review/background
+   - Rekomendasi untuk Latar Belakang: 50% konteks/sejarah, 50% gap dan relevance
+   - Prioritaskan space untuk argumen mengapa penelitian ini penting
+
+CATATAN PENTING:
+Karakteristik di atas mencerminkan gaya penulisan asli yang sudah ada. Untuk bagian-bagian baru atau revisi, pertimbangkan trade-off dan sesuaikan dengan kebutuhan: apakah lebih penting kepadatan informasi (replikasi gaya asli) atau accessibility (alternatif yang disarankan)?
+
+#### Pedoman Penulisan:
+
+**Panjang Paragraf:**
+- 3-4 kalimat untuk paragraf standar
+- 5 kalimat maksimal untuk paragraf yang kompleks
+- 2 kalimat OK untuk transisi atau emphasis
+
+**Panjang Kalimat:**
+- Variasi: 15-25 kata (pendek), 25-35 kata (medium), 35-45 kata (panjang)
+- Ratio ideal: 40% pendek, 40% medium, 20% panjang
+- Jangan 3 kalimat panjang berturut-turut
+
+**Signposting:**
+- Berikan preview di awal bagian panjang (opsional, jangan berlebihan)
+- Gunakan frasa: "Bagian ini akan menjelaskan...", "Berikut akan dibahas..."
+- Atau langsung masuk narasi tanpa preview jika flow sudah jelas
+
+---
+
+### GAYA B: Teknis-Deskriptif (2.1.2 - Arsitektur)
+**Fungsi: Menjelaskan komponen sistem dan struktur teknis**
+
+#### Karakteristik:
+
+1. **Pendekatan Struktural Sistematis**
+   - Menjelaskan komponen dari overview → detail → implikasi
+   - Fokus pada hubungan dan integrasi antar komponen
+   - Tidak ada alur waktu, lebih ke struktur konseptual
+
+2. **Paragraf Medium dengan Kepadatan Informasi Tinggi**
+   - 3-5 kalimat per paragraf
+   - Setiap kalimat membawa informasi teknis baru
+   - Langsung ke substansi tanpa "warm-up" panjang
+
+3. **Enumerasi Implisit dalam Narasi**
+   - Gunakan koma untuk mendaftar komponen: "...terdiri dari A, B, dan C"
+   - Hindari bullet points dalam narasi utama
+   - Contoh: "Komponen utama ERP terdiri dari berbagai modul fungsional yang mencakup modul keuangan dan akuntansi, modul manajemen inventori, modul sumber daya manusia..."
+
+4. **Penekanan pada Relasi dan Integrasi**
+   - Jelaskan bagaimana komponen saling berhubungan
+   - Gunakan frasa: "terdiri dari...", "mencakup...", "yang memungkinkan...", "melalui..."
+   - Contoh: "Modul-modul ini saling terintegrasi melalui basis data terpusat dan mekanisme pertukaran data yang memungkinkan informasi mengalir secara otomatis antar fungsi bisnis."
+
+5. **Perbandingan untuk Klarifikasi**
+   - Gunakan kontras untuk memperjelas konsep
+   - "Berbeda dengan aplikasi web sederhana, ERP memiliki kompleksitas..."
+   - "Sementara sistem konvensional..., ERP modern..."
+
+6. **Terminologi Teknis dengan Penjelasan**
+   - Selalu beri konteks/penjelasan dalam kurung atau klausa
+   - Contoh: "arsitektur berlapis (*multi-tier architecture*) yang terdiri dari..."
+   - Jangan asumsikan: jelaskan *kenapa* komponen ini penting
+
+#### Pedoman:
+
+- **Panjang paragraf:** 3-5 kalimat
+- **Panjang kalimat:** 20-35 kata (medium-panjang), hindari terlalu pendek yang terkesan choppy
+- **Transisi:** Relasional ("terdiri dari", "mencakup", "yang memungkinkan")
+- **Detail:** Teknis tapi selalu dengan penjelasan fungsi/tujuan
+
+---
+
+### GAYA C: Komparatif-Argumentatif (2.1.3 - Contoh)
+**Fungsi: Membandingkan opsi dan membangun justifikasi pemilihan**
+
+#### Karakteristik:
+
+1. **Struktur Dikotomis Paralel**
+   - Paragraf 1: Opsi A → kelebihan → kelemahan
+   - Paragraf 2: Opsi B (alternatif) → kelebihan → keuntungan
+   - Paragraf 3: Contoh spesifik → relevansi penelitian
+
+2. **Transisi Kontrastif yang Jelas**
+   - "Namun, keuntungan tersebut datang dengan..."
+   - "Sebagai alternatif yang lebih terjangkau..."
+   - "Di sisi lain...", "Sebaliknya...", "Berbeda dengan..."
+
+3. **Enumerasi Langsung untuk Efisiensi**
+   - Daftar keuntungan/kelemahan dalam satu kalimat dengan koma
+   - Contoh: "Tidak ada biaya lisensi, *source code* tersedia untuk modifikasi, komunitas pengguna yang aktif menyediakan dukungan, dan arsitektur yang modular..."
+
+4. **Justifikasi yang Explicit**
+   - Akhiri dengan menghubungkan ke konteks penelitian
+   - Contoh: "Odoo dan ERPNext relevan untuk penelitian ini karena kombinasi antara maturitas, dokumentasi yang baik, arsitektur modular, dan kemampuan *deployment* pada infrastruktur beragam—menjadikan keduanya kandidat ideal untuk eksplorasi pada perangkat hemat daya..."
+
+5. **Menjelaskan Trade-off**
+   - Setiap opsi dijelaskan secara balanced (kelebihan DAN kelemahan)
+   - Hindari bias yang terlalu obvious
+   - Biarkan data/fakta membentuk kesimpulan
+
+#### Pedoman:
+
+- **Panjang paragraf:** 4-6 kalimat
+- **Struktur:** Setiap paragraf harus paralel (mirroring structure)
+- **Transisi:** Kontrastif dan eksplisit
+- **Ending:** Selalu hubungkan ke relevansi penelitian
+
+---
+
+## PRINSIP PENULISAN UNTUK MENGHINDARI KEKAKUAN AI
+
+### 1. Variasi Struktur Kalimat
+- **Jangan monoton:** Hindari semua kalimat dimulai dengan subjek-predikat
+- **Variasikan opening:**
+  - Dengan frasa keterangan: "Pada tahun 1990-an, integrasi MRP..."
+  - Dengan subordinate clause: "Setelah meledaknya popularitas *cloud computing*, UMKM..."
+  - Dengan participial phrase: "Berkembang dari kontrol inventori sederhana, MRP kemudian..."
+
+### 2. Rhythm dan Flow Natural
+- **Alternatif panjang kalimat:** pendek → panjang → medium → pendek → panjang
+- **Gunakan kalimat pendek untuk emphasis:**
+  - "Hal ini menjadi tantangan besar." (setelah paragraf panjang)
+  - "ERP menjadi solusi utama." (sebagai transisi)
+- **Kalimat panjang untuk elaborasi kompleks**
+
+### 3. Gunakan Konstruksi yang Bervariasi
+- **Aktif dan pasif (bervariasi, bukan semua pasif):**
+  - Aktif: "Gartner Group menciptakan istilah..."
+  - Pasif: "Istilah ERP pertama kali diciptakan oleh..."
+- **Nominal dan verbal:**
+  - Nominal: "Implementasi ERP membutuhkan..."
+  - Verbal: "Untuk mengimplementasikan ERP, organisasi membutuhkan..."
+
+### 4. Gunakan Bahasa yang Konkret
+- **Jangan terlalu abstrak sepanjang waktu**
+- **Selingi dengan contoh spesifik:**
+  - Abstrak: "Vendor besar mendominasi pasar."
+  - Konkret: "Oracle, SAP, dan Infor menguasai lebih dari 60% pasar ERP global."
+
+### 5. Tunjukkan "Personality" Akademik
+- **Gunakan frasa yang menunjukkan evaluasi (hati-hati, jangan berlebihan):**
+  - "Menariknya, perkembangan ini..."
+  - "Perlu dicatat bahwa..."
+  - "Yang patut diperhatikan adalah..."
+- **Gunakan frasa transisi yang natural, bukan robotic:**
+  - ❌ Robotic: "Selanjutnya akan dibahas..."
+  - ✅ Natural: "Perkembangan ini membawa kita pada..."
+
+### 6. Hindari Over-precision yang Tidak Natural
+- **Jangan:** "terdapat sejumlah besar organisasi yang..."
+- **Gunakan:** "banyak organisasi yang..."
+- **Jangan:** "mengalami peningkatan yang signifikan"
+- **Gunakan (kadang):** "meningkat pesat" atau "meningkat signifikan"
+
+### 7. Variasi Frasa Transisi
+- **Jangan gunakan "Pada tahun..." 5 kali berturut-turut**
+- **Variasikan:**
+  - "Pada 1970-an..."
+  - "Dekade 1980 menandai..."
+  - "Memasuki tahun 1990..."
+  - "Era 2000-an membawa..."
+  - "Belakangan ini..."
+
+### 8. Sesekali Gunakan Rhetorical Device (Hati-hati)
+- **Pertanyaan retoris (jarang, hanya untuk transisi penting):**
+  - "Lalu, apa yang mendorong perubahan ini?"
+- **Paralelisme (untuk emphasis):**
+  - "ERP tidak hanya mengintegrasikan data, tetapi juga mengintegrasikan proses, mengintegrasikan keputusan, dan mengintegrasikan organisasi."
+
+---
+
+## CHECKLIST SEBELUM FINALISASI
+
+### Untuk Setiap Paragraf:
+- [ ] Maksimal 4-5 kalimat (3 ideal untuk paragraf standar)
+- [ ] Satu ide utama yang jelas
+- [ ] Transisi smooth dari paragraf sebelumnya
+- [ ] Tidak ada kalimat dengan lebih dari 2 subordinate clauses
+
+### Untuk Setiap Bagian:
+- [ ] Variasi panjang kalimat (tidak semua panjang/pendek)
+- [ ] Variasi struktur kalimat (tidak semua subjek-predikat)
+- [ ] Frasa transisi yang bervariasi (tidak repetitif)
+- [ ] Istilah teknis semua dijelaskan atau diberi konteks
+- [ ] Tidak ada asumsi pengetahuan yang tidak reasonable
+
+### Untuk Latar Belakang:
+- [ ] 50% konteks + 50% gap (proporsi seimbang)
+- [ ] Gap research dijelaskan dalam 2 paragraf terstruktur
+- [ ] Pertanyaan penelitian bold dan standalone (atau di akhir paragraf dengan emphasis)
+- [ ] Semua detail historis relevan untuk argumen
+
+### Untuk Studi Literatur:
+- [ ] Setiap subsection: overview → detail → relevance
+- [ ] Perbandingan menggunakan struktur paralel
+- [ ] Selalu hubungkan kembali ke konteks penelitian di akhir
+
+---
+
+## CONTOH SEBELUM-SESUDAH
+
+### SEBELUM (Terlalu Panjang dan Kompleks):
+> "Perkembangan teknologi ARM yang berkelanjutan telah meningkatkan kemampuan komputasional SBC secara signifikan, yang awalnya hanya digunakan sebagai *microcontroller* telah berubah menjadi komputer bahkan *server*, dan pada penelitian berjudul "Implementasi *Cluster Server* Pada Raspberry Pi Dengan Menggunakan Metode *Load Balancing*" peneliti berhasil menjalankan *web server* menggunakan Raspberry Pi 4, walaupun berhasil menjalankan *web server*, penelitian tersebut hanya menguji skenario *deployment* yang relatif sederhana—spesifiknya *web server* dengan *traffic* HTTP—yang tidak representative terhadap kompleksitas aplikasi ERP."
+
+**Masalah:** 1 kalimat sangat panjang (80+ kata), 4+ clauses, terlalu banyak informasi
+
+### SESUDAH (Dipecah dan Disederhanakan):
+> "Perkembangan teknologi ARM yang berkelanjutan telah meningkatkan kemampuan komputasional SBC secara signifikan. SBC yang awalnya hanya digunakan sebagai *microcontroller* kini telah berubah menjadi komputer bahkan *server*.
+>
+> Beberapa penelitian telah mengeksplorasi penggunaan SBC untuk aplikasi *server*. Pada penelitian "Implementasi *Cluster Server* Pada Raspberry Pi Dengan Menggunakan Metode *Load Balancing*", peneliti berhasil menjalankan *web server* menggunakan Raspberry Pi 4 \cite{Putra2019}. Namun, penelitian tersebut hanya menguji skenario yang relatif sederhana—spesifiknya *web server* dengan *traffic* HTTP. Skenario ini tidak representative terhadap kompleksitas aplikasi ERP yang melibatkan operasi *database* intensif, manajemen *state* kompleks, dan interaksi *multi-user concurrent* simultan."
+
+**Perbaikan:**
+- Dipecah menjadi 2 paragraf (3 + 4 kalimat)
+- Kalimat pendek (12-25 kata) diselingi medium (30 kata)
+- Transisi jelas dengan "Beberapa penelitian..."
+- Istilah teknis diberi elaborasi di kalimat terpisah
+
+---
+
+## TONE DAN VOICE
+
+### Tone: Formal Akademik yang Tidak Kaku
+- Objektif tapi tidak dingin
+- Authoritative tapi tidak arogan
+- Presisi tapi tidak overly technical tanpa perlu
+- Accessible untuk akademisi dan praktisi
+
+### Voice: Third-person dengan Occasional "penelitian ini"
+- Hindari "saya", "kami", "kita" (umumnya)
+- Gunakan: "penelitian ini", "studi ini", "proposal ini"
+- Passive voice OK untuk methodology, tapi variasikan dengan active
+
+### Contoh Tone yang Baik:
+> "Kesenjangan ini menunjukkan bahwa belum ada bukti empiris yang memadai mengenai kelayakan *deployment* ERP pada SBC."
+
+**Bukan:**
+> "Kami menemukan bahwa tidak ada penelitian yang membuktikan kelayakan ini."
+
+**Bukan juga:**
+> "Dapat disimpulkan bahwasanya terdapat ketiadaan bukti empiris yang memadai terkait dengan kelayakan implementasi sistem ERP pada perangkat SBC."
+
+---
+
+## KESIMPULAN
+
+Gaya penulisan ini mengombinasikan:
+1. **Rigor akademik** dengan **accessibility**
+2. **Kedalaman teknis** dengan **clarity**
+3. **Struktur formal** dengan **flow natural**
+4. **Presisi** dengan **variasi**
+
+Kunci utama: **Flexibility**—adaptasi gaya sesuai fungsi bagian, tapi pertahankan konsistensi tone akademik formal yang natural dan tidak kaku seperti AI-generated text.
