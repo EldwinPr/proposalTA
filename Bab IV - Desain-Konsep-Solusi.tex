@@ -1,54 +1,197 @@
 \chapter{DESAIN KONSEP SOLUSI}
 \label{chap:desain-konsep-solusi}
 
-\section{Gambaran Umum Solusi}
+% ============================================================
+% T-12: Gambaran Umum Arsitektur — PLACEHOLDER
+% ============================================================
+\section{Gambaran Umum Arsitektur Sistem}
 
-Penelitian ini mengusulkan kerangka kerja evaluasi kelayakan teknis dan finansial sistem ERP pada infrastruktur berbasis \textit{Single-Board Computer} (SBC). Kerangka kerja mencakup dua aspek saling melengkapi: (1) evaluasi kinerja melalui \textit{benchmarking} aplikasi ERP pada platform SBC terhadap \textit{cloud} VPS yang berfungsi sebagai acuan, dengan pengukuran metrik kinerja seperti waktu respons, \textit{throughput}, dan penggunaan sumber daya sistem, dan (2) analisis \textit{Total Cost of Ownership} (TCO) untuk periode 3 dan 5 tahun, membandingkan model CAPEX berbasis SBC dengan OPEX komersial VPS untuk menilai kelayakan finansial jangka menengah-panjang. Alur kerja penelitian divisualisasikan pada Gambar \ref{fig:alur-kerja}, yang menunjukkan tahapan evaluasi dari persiapan infrastruktur hingga analisis komparatif.
+Senling adalah sistem ERP \textit{custom} yang dirancang khusus untuk proses bisnis SSLab, dibangun dari awal menggunakan pendekatan \textit{modular monolith}. Satu basis kode dan satu \textit{deployment} mencakup seluruh fungsionalitas sistem — dari pengelolaan klien dan penawaran hingga operasional pengujian dan pelaporan hasil uji. Domain bisnis dipisahkan secara eksplisit dalam struktur kode maupun skema basis data, membentuk batas tanggung jawab yang jelas antar modul tanpa memerlukan layanan terpisah.
+
+Permintaan dari pengguna masuk melalui Nginx sebagai \textit{web server} dan \textit{reverse proxy}, yang meneruskannya ke PHP-FPM sebagai \textit{application server}. PHP-FPM menjalankan aplikasi Laravel 12 + Filament 5 (PHP 8.4) yang menangani seluruh logika bisnis dan antarmuka pengguna berbasis panel admin. Data disimpan di PostgreSQL sebagai basis data utama, sementara Redis menangani \textit{caching} sesi dan data yang membutuhkan akses berulang dengan latensi rendah. Pengendalian akses diimplementasikan melalui Spatie Permission dan Filament Shield, yang mengatur \textit{role-based access control} (RBAC) sesuai peran pengguna — Sales, Planning, Petugas Sampling, Laboran, Penyelia, dan Administrator.
+
+Seluruh komponen berjalan dalam satu \textit{deployment} di Orange Pi 5 Pro, sebuah \textit{single board computer} yang ditempatkan secara fisik di SSLab. Tidak ada komponen operasional inti yang bergantung pada layanan eksternal; koneksi internet hanya digunakan untuk fitur pengiriman dokumen opsional ke klien. Pendekatan ini memenuhi kebutuhan SSLab untuk \textit{self-hosting} penuh — mengelola data dan infrastruktur sendiri tanpa ketergantungan pada pihak ketiga.
+
+Pemilihan arsitektur \textit{modular monolith} didasarkan pada skala operasional SSLab yang kecil. Pengguna aktif terbatas pada tim internal lab dengan volume transaksi yang tidak memerlukan distribusi pemrosesan. Arsitektur terdistribusi membawa \textit{overhead} koordinasi — \textit{network calls} antar layanan, \textit{service discovery}, dan kerumitan operasional — yang tidak sebanding dengan manfaatnya pada skala ini. \textit{Modular monolith} memberikan keuntungan pemisahan domain secara logis sekaligus kesederhanaan \textit{deployment} yang sesuai untuk lingkungan \textit{on-premise} di Orange Pi.
+
+Domain bisnis Senling terbagi menjadi lima klaster: Customer, Product Knowledge, Sales, Operations, dan Finance. Setiap domain memiliki gugus entitas yang terisolasi dalam skema basis data, dengan interaksi antar domain hanya melalui relasi yang terdefinisi secara eksplisit. Pemisahan ini tampak pada ERD sistem (Gambar~\ref{fig:erd-senling}) dan menentukan batas tanggung jawab tiap modul fungsional yang dijabarkan pada bagian-bagian berikutnya.
+
+
+% ============================================================
+% T-13: Alur Proses Bisnis To-Be (BPMN)
+% ============================================================
+\section{Alur Proses Bisnis Sistem (\textit{To-Be})}
+
+Bagian ini menggambarkan alur proses bisnis SSLab setelah sistem Senling diimplementasikan, mencakup enam alur utama dari penerimaan \textit{order} hingga manajemen jadwal pengujian.
+
+\subsection{Gambaran Umum Alur Operasional}
+
+Gambar \ref{fig:bpmn-to-be-lv0} menggambarkan keseluruhan alur operasional Senling pada level 0, dari penerimaan \textit{order} klien hingga penerbitan sertifikat hasil uji.
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.8\textwidth]{image/alur kerja.png}
-\caption{Alur kerja evaluasi kelayakan ERP pada infrastruktur SBC}
-\label{fig:alur-kerja}
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-lv0}
+    \caption{BPMN sistem Senling level 0 (\textit{to-be})}
+    \label{fig:bpmn-to-be-lv0}
 \end{figure}
 
-Implementasi konkret penelitian menggunakan \textit{Orange Pi} 5 Pro sebagai platform SBC yang dievaluasi, Oracle Cloud Free Tier sebagai pembanding kinerja, dan layanan VPS komersial (Hostinger, Biznet, DigitalOcean) untuk analisis TCO yang representatif terhadap pasar Indonesia. Pendekatan ini memungkinkan penelitian memberikan jawaban menyeluruh: apakah SBC dapat menjadi alternatif yang \textit{viable} secara teknis dan ekonomis untuk infrastruktur ERP skala kecil-menengah.
+Senling mengintegrasikan enam alur utama yang membentuk siklus operasional SSLab dari awal hingga akhir: penerimaan permintaan klien, perencanaan sampling, pelaksanaan sampling, penerimaan sampel di laboratorium, pengujian parameter, serta penyeliaan dan penerbitan sertifikat hasil uji (\textit{Certificate of Analysis}). Setiap alur ditangani oleh modul yang berbeda, namun seluruhnya terhubung dalam satu basis data PostgreSQL. Status dan hasil dari satu tahap diteruskan ke tahap berikutnya melalui relasi entitas yang terdefinisi — tidak ada transfer data manual antar tahap.
 
-\section{Perbedaan dengan Sistem Saat Ini}
+\subsection{Alur \textit{Sales} ke \textit{Order}}
 
-Saat ini, \textit{deployment} ERP untuk organisasi skala kecil hingga menengah umumnya menggunakan dua pendekatan utama. Pendekatan pertama adalah \textit{cloud} VPS (\textit{Virtual Private Server}) dengan model OPEX (\textit{Operational Expenditure}) berupa biaya berulang bulanan. Model ini menawarkan skalabilitas tinggi dan kemudahan manajemen, namun menciptakan ketergantungan pada konektivitas internet dan mengakumulasi biaya signifikan dalam jangka panjang (Gambar \ref{fig:cloud}). Pendekatan kedua adalah \textit{on-premise server} tradisional dengan CAPEX (\textit{Capital Expenditure}) tinggi dan konsumsi daya 50-200W. Model ini memberikan kontrol penuh dan independensi dari koneksi internet, namun memerlukan ruang fisik khusus dan sumber daya untuk pemeliharaan (Gambar \ref{fig:on-premise}).
-
-Penelitian ini mengusulkan alternatif ketiga: infrastruktur berbasis \textit{Single-Board Computer} (SBC) yang menggabungkan CAPEX rendah dengan konsumsi daya sangat rendah (5-15W). Model ini mempertahankan kontrol penuh layaknya \textit{on-premise} tradisional tanpa biaya berulang tinggi seperti VPS, sekaligus menawarkan portabilitas tinggi dengan \textit{footprint} fisik minimal (Gambar \ref{fig:sbc-deployment}). \textit{Trade-off} utama terletak pada keterbatasan kinerja dibandingkan \textit{server} tradisional, namun hipotesis penelitian ini adalah bahwa kinerja tersebut berpotensi mencukupi untuk beban kerja ERP skala kecil-menengah.
+Gambar \ref{fig:bpmn-to-be-sales-to-order} menggambarkan alur dari penerimaan permintaan klien hingga konfirmasi \textit{order} pengujian dalam sistem Senling.
 
 \begin{figure}[h]
-\centering
-\includegraphics[width=0.5\textwidth]{image/SBC-edge.png}
-\caption{Arsitektur SBC Edge: Deployment ERP pada Edge Computing}
-\label{fig:network-sbc-edge}
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-sales-to-order}
+    \caption{BPMN alur \textit{sales} ke \textit{order} (\textit{to-be})}
+    \label{fig:bpmn-to-be-sales-to-order}
 \end{figure}
 
-\subsection{Perbandingan Kunci}
+Alur ini dikelola oleh aktor Sales. Proses dimulai dengan verifikasi identitas klien di basis data — jika belum terdaftar, Sales memasukkan data klien baru (UC-03). Sales kemudian menyusun \textit{draft} penawaran (UC-04) dan menerbitkan penawaran final (UC-05) yang memuat produk uji, parameter pengujian, dan biaya. Jika klien meminta penyesuaian, sistem menyimpan versi revisi sebagai baris baru tanpa menghapus versi sebelumnya (UC-06), sehingga riwayat negosiasi tetap terlacak. Setelah klien menyetujui penawaran dan mengunggah \textit{Purchase Order} (UC-07), sistem secara otomatis membuat \textit{Sales Order} beserta seluruh detail, daftar sampel, dan parameter pengujian melalui \textit{QuotationService} dalam satu operasi atomik.
 
-\input{table/tabelperbandinganarsitektur.tex}
+\subsection{Alur \textit{Order} ke Pengambilan Sampel}
 
-\textbf{Komponen yang Identik (untuk Evaluasi \textit{Fair}):}
-\begin{enumerate}[a)]
-    \item \textbf{Software Stack:} Linux OS (Ubuntu/Armbian), Nginx (web server), ERPNext (aplikasi ERP), MariaDB/PostgreSQL (database), Redis (caching)
-    \item \textbf{Dataset:} Dataset demo identik untuk memastikan beban kerja yang sama
-    \item \textbf{Konfigurasi:} Parameter database, setting ERPNext, dan optimasi OS disesuaikan agar setara
-\end{enumerate}
+Gambar \ref{fig:bpmn-to-be-order-to-acquisition} menggambarkan alur dari \textit{order} yang telah dikonfirmasi hingga proses pengambilan atau penerimaan sampel di laboratorium.
 
-\textbf{Komponen yang Berbeda (Objek Evaluasi):}
-\begin{enumerate}[a)]
-    \item \textbf{Hardware Platform:} \textit{Orange Pi} 5 Pro (ARM) vs. Oracle Cloud Free Tier (x86/ARM cloud)
-    \item \textbf{Lokasi:} On-premise (SBC) vs. Cloud (VPS)
-    \item \textbf{Model Biaya:} CAPEX rendah + OPEX minimal (SBC) vs. OPEX berulang (VPS)
-\end{enumerate}
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-order-to-acquisition}
+    \caption{BPMN alur \textit{order} ke pengambilan sampel (\textit{to-be})}
+    \label{fig:bpmn-to-be-order-to-acquisition}
+\end{figure}
 
-\textbf{Testing dan Monitoring:}
-\begin{enumerate}[a)]
-    \item \textbf{Load Testing:} Aplikasi berbasis Go untuk simulasi beban kerja (API calls, concurrent users, transaction patterns)
-    \item \textbf{Monitoring:} \textit{System metrics} (CPU, RAM, I/O disk) dan \textit{application metrics} (response time, throughput, error rate)
-\end{enumerate}
+Alur ini dikelola oleh aktor Planning. \textit{Sales Order} yang telah terkonfirmasi dipilih untuk dijadwalkan pengambilannya (UC-08). Planning menentukan titik-titik lokasi \textit{sampling} yang relevan dengan \textit{order} tersebut (UC-09), memilih teknisi lapangan yang memiliki keahlian sesuai (UC-10), dan menetapkan tanggal pengambilan berdasarkan jadwal kosong seluruh teknisi terpilih (UC-11). Jika jadwal perlu diubah, sistem menyediakan alur \textit{reschedule} (UC-12) yang mengembalikan proses ke pemilihan teknisi dan tanggal. Output alur ini adalah jadwal pengambilan yang terkunci dalam sistem, beserta identitas sampel dan titik \textit{sampling} yang siap dieksekusi oleh Petugas Sampling.
+
+\subsection{Alur Pengambilan Sampel ke Penyimpanan}
+
+Gambar \ref{fig:bpmn-to-be-acquisition-to-storing} menggambarkan alur registrasi sampel yang masuk hingga penyimpanan sampel sebelum proses pengujian dimulai.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-acquisition-to-storing}
+    \caption{BPMN alur pengambilan sampel ke penyimpanan (\textit{to-be})}
+    \label{fig:bpmn-to-be-acquisition-to-storing}
+\end{figure}
+
+Alur ini melibatkan dua aktor secara berurutan: Sales dan Petugas Sampling. Sebelum pengambilan dilaksanakan, Sales mengirimkan \textit{barcode} dan label identifikasi sampel kepada klien (UC-14) beserta instruksi tata cara \textit{sampling} (UC-15) melalui fitur \textit{mailer} atau WhatsApp yang tersedia di sistem. Di lapangan, Petugas Sampling mencatat hasil pengukuran \textit{in-situ} (UC-16) dan memberi keterangan abnormalitas jika ditemukan kondisi yang tidak normal pada titik pengambilan (UC-17). Sampel yang terkumpul kemudian dibawa ke laboratorium: penerimaan dilakukan dengan memindai \textit{barcode} sampel untuk memperbarui statusnya (UC-18), dan setiap kondisi fisik sampel yang menyimpang dicatat sebagai \textit{flag} di sistem (UC-19).
+
+\subsection{Alur Penyimpanan ke Pengujian}
+
+Gambar \ref{fig:bpmn-to-be-storing-to-testing} menggambarkan alur dari sampel yang tersimpan hingga proses pengujian parameter oleh analis dan pencatatan hasil uji.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-storing-to-testing}
+    \caption{BPMN alur penyimpanan ke pengujian (\textit{to-be})}
+    \label{fig:bpmn-to-be-storing-to-testing}
+\end{figure}
+
+Alur ini dimulai oleh Planning dan diselesaikan oleh Laboran. Planning menetapkan alat pengujian yang akan digunakan (UC-20), menugaskan laboran yang menguasai alat tersebut (UC-21), dan menentukan rentang waktu kerja pengujian (UC-22). Laboran kemudian melihat daftar penugasan yang masuk (UC-23), mengambil tiket pengerjaan dan sampel fisik dari penyimpanan (UC-24), lalu memasukkan hasil pengujian per parameter untuk setiap sampel (UC-25). Hasil yang tercatat menjadi input bagi alur penyeliaan — Penyelia memverifikasi setiap hasil sebelum sertifikat hasil uji dapat diterbitkan.
+
+\subsection{Manajemen Jadwal Pengujian}
+
+Gambar \ref{fig:bpmn-to-be-schedule-management} menggambarkan alur penjadwalan pengujian berdasarkan ketersediaan analis dan alat laboratorium dalam sistem Senling.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-to-be-schedule-management}
+    \caption{BPMN manajemen jadwal pengujian (\textit{to-be})}
+    \label{fig:bpmn-to-be-schedule-management}
+\end{figure}
+
+Berbeda dari lima alur sebelumnya yang mengikuti siklus \textit{Sales Order} tertentu, manajemen jadwal pengujian bersifat kapasitas dan dapat dilakukan secara proaktif tanpa menunggu \textit{order} masuk. Planning menetapkan ketersediaan alat dan laboran untuk periode tertentu — ketersediaan ini disimpan sebagai data kapasitas yang siap dipasangkan (\textit{matched}) saat pengujian perlu dijadwalkan (UC-20 s/d UC-22). Pemisahan antara jadwal kapasitas dan jadwal per-\textit{order} membuat SSLab dapat merencanakan sumber daya laboratorium jauh sebelum sampel tiba, sekaligus mempertahankan fleksibilitas apabila ada perubahan mendadak seperti kerusakan alat atau ketidakhadiran laboran.
 
 
+% ============================================================
+% T-14: ERD
+% ============================================================
+\section{Desain Data (\textit{Entity Relationship Diagram})}
+
+Gambar \ref{fig:erd-senling} menampilkan \textit{entity relationship diagram} (ERD) Senling yang memperlihatkan pemisahan domain Customer, Product Knowledge, Sales, Operations, dan Finance dalam satu basis data PostgreSQL.
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=\textwidth]{image/erd-senling}
+    \caption{ERD sistem Senling}
+    \label{fig:erd-senling}
+\end{figure}
+
+ERD Senling terdiri dari lima domain yang terisolasi: Customer (data klien dan kontak), Product Knowledge (produk uji, parameter, regulasi, alat, wadah), Sales (penawaran dan detailnya), Operations (sales order, pengambilan, sampel, hasil parameter), dan Finance (invoice, transaksi). Setiap domain membentuk klaster entitas yang mandiri dan hanya berinteraksi melalui relasi yang terdefinisi.
+
+Domain Customer menyimpan data master klien SSLab dalam tiga entitas: profil perusahaan, data kontak penanggung jawab, dan daftar alamat. Domain ini menjadi titik referensi pertama dalam siklus penawaran — setiap quotation terhubung ke satu klien sebagai pemilik order. Verifikasi keberadaan klien di basis data merupakan langkah awal dalam alur Sales sebelum penawaran dapat dibuat.
+
+Domain Product Knowledge menyimpan seluruh pengetahuan teknis laboratorium yang dibutuhkan untuk menyusun penawaran. Produk uji mendefinisikan matriks sampel yang tersedia, sementara regulasi mencatat standar yang berlaku untuk setiap produk uji. Parameter menyimpan item pengujian individual — masing-masing terhubung ke metode referensi, alat laboratorium, dan wadah sampel yang diperlukan untuk pelaksanaannya. Domain ini menjadi sumber referensi bagi domain Sales saat menyusun detail penawaran dan bagi domain Operations saat pengujian dilaksanakan.
+
+Domain Sales mencatat siklus penawaran dari \textit{draft} hingga konfirmasi klien. Quotation menyimpan penawaran beserta status dan nomor PO yang disetujui; quotation detail menyimpan produk uji, titik \textit{sampling}, dan frekuensi per baris penawaran; quotation detail parameter menyimpan parameter yang dipilih beserta harga satuannya. Saat klien mengonfirmasi dengan mengunggah PO, \textit{QuotationService} membaca data domain Sales untuk menghasilkan \textit{Sales Order} dan seluruh entitas turunannya di domain Operations dalam satu operasi atomik.
+
+Domain Operations adalah klaster terbesar, mencakup siklus operasional laboratorium dari perencanaan hingga hasil pengujian. \textit{Sales Order} dan detailnya menjadi titik masuk, diturunkan dari penawaran yang dikonfirmasi. Tabel pengambilan mencatat jadwal dan pelaksanaan pengambilan sampel di lapangan. Sampel merepresentasikan wadah fisik secara individual, sementara tabel \textit{sample parameter} mencatat hasil pengujian per parameter untuk setiap sampel. Semua aktivitas lapangan dan laboratorium — dari perencanaan pengambilan hingga pencatatan hasil — bermuara pada domain ini.
+
+Domain Finance mencatat kewajiban keuangan yang timbul dari \textit{Sales Order} yang telah selesai dieksekusi. Entitas invoice dan transaksi direferensikan dari domain Operations melalui identitas \textit{Sales Order}, tanpa ada modifikasi balik dari alur operasional ke Finance. Pemisahan ini memastikan bahwa pencatatan keuangan tidak bercampur dengan data operasional laboratorium dan dapat dikelola secara independen.
+
+
+% ============================================================
+% T-15: Use Case Overview
+% ============================================================
+\section{Daftar \textit{Use Case}}
+
+Sistem Senling mencakup 31 \textit{use case} (UC-01 s/d UC-31) yang dikelompokkan ke dalam lima alur operasional sesuai domain bisnis SSLab. Pengelompokan ini mengikuti pembagian tanggung jawab antar aktor — Sales, Planning, Petugas Sampling, Laboran, dan Penyelia — serta urutan alur data dari penerimaan \textit{order} hingga penerbitan sertifikat hasil uji. Tabel~\ref{tab:use-case} menyajikan seluruh daftar \textit{use case} beserta aktor dan status implementasinya.
+
+\begin{table}[h]
+\centering
+\caption{Daftar \textit{use case} sistem Senling}
+\label{tab:use-case}
+\begin{tabular}{|l|p{6.5cm}|p{3cm}|l|}
+\hline
+\textbf{Kode} & \textbf{Nama \textit{Use Case}} & \textbf{Aktor} & \textbf{Status} \\
+\hline
+\multicolumn{4}{|l|}{\textbf{Penjualan (Sales)}} \\
+\hline
+UC-01 & Generate \textit{repeat order} & Sales & Implemented \\
+UC-02 & Cek \textit{customer} di basis data & Sales & Implemented \\
+UC-03 & Input data \textit{customer} & Sales & Implemented \\
+UC-04 & Buat \textit{draft} penawaran & Sales & Implemented \\
+UC-05 & Buat penawaran & Sales & Implemented \\
+UC-06 & Revisi penawaran & Sales & Implemented \\
+UC-07 & \textit{Upload Purchase Order} & Sales & Implemented \\
+UC-14 & Kirim \textit{barcode} dan label ke klien & Sales & Implemented \\
+UC-15 & Kirim instruksi & Sales & Implemented \\
+\hline
+\multicolumn{4}{|l|}{\textbf{Perencanaan \textit{Sampling} (Planning)}} \\
+\hline
+UC-08 & Pilih \textit{Sales Order} yang akan di-\textit{sampling} & Planning & Implemented \\
+UC-09 & Pilih titik \textit{sampling} & Planning & Implemented \\
+UC-10 & Pilih teknisi & Planning & Implemented \\
+UC-11 & Pilih jadwal pengambilan & Planning & Implemented \\
+UC-12 & \textit{Reschedule} & Planning & Implemented \\
+UC-20 & Pilih alat pengujian & Planning & Planned \\
+UC-21 & Pilih laboran pemegang alat & Planning & Planned \\
+UC-22 & Tentukan waktu kerja & Planning & Planned \\
+\hline
+\multicolumn{4}{|l|}{\textbf{Persiapan dan Pelaksanaan \textit{Sampling}}} \\
+\hline
+UC-13 & Unduh \textit{barcode} dan label & Petugas Sampling & Implemented \\
+UC-16 & Catat hasil pengukuran & Petugas Sampling & Planned \\
+UC-17 & Catat abnormalitas di lapangan & Petugas Sampling & Planned \\
+UC-18 & \textit{Scan barcode} sampel & Petugas Sampling & Planned \\
+UC-19 & Catat abnormalitas penerimaan & Petugas Sampling & Planned \\
+\hline
+\multicolumn{4}{|l|}{\textbf{Pengujian di Laboratorium}} \\
+\hline
+UC-23 & Lihat penugasan & Laboran & Planned \\
+UC-24 & Ambil tiket dan sampel & Laboran & Planned \\
+UC-25 & Input hasil pengujian & Laboran & Planned \\
+\hline
+\multicolumn{4}{|l|}{\textbf{Penyeliaan}} \\
+\hline
+UC-26 & Pilih \textit{Sales Order Detail} & Penyelia & Planned \\
+UC-27 & Pilih \textit{Sales Order Detail} (tinjauan) & Penyelia & Planned \\
+UC-28 & Pilih parameter & Penyelia & Planned \\
+UC-29 & Kirim \textit{draft} ke \textit{customer} & Sales & Planned \\
+UC-30 & \textit{Request} uji ulang & Penyelia & Planned \\
+UC-31 & \textit{Request sampling} ulang & Penyelia & Planned \\
+\hline
+\end{tabular}
+\end{table}
+
+Dari 31 \textit{use case}, 15 (UC-01 s/d UC-15) telah diimplementasikan — mencakup seluruh alur penjualan dan perencanaan \textit{sampling}. Sisa 16 \textit{use case} (UC-16 s/d UC-31) merupakan target pengembangan fase berikutnya, meliputi alur pelaksanaan \textit{sampling} di lapangan, penerimaan sampel, pengujian di laboratorium, dan penyeliaan hasil uji sebelum sertifikat diterbitkan.

@@ -7,132 +7,163 @@
 \chapter{ANALISIS MASALAH}
 \label{chap:analisis-masalah}
 
-\section{Analisis Kondisi Saat ini}
+\section{Analisis Kondisi Saat Ini}
 
-Deployment ERP saat ini umumnya menggunakan dua model infrastruktur utama: \textit{cloud} berbasis \textit{Virtual Private Server} (VPS) atau \textit{Software-as-a-Service} (SaaS), dan model \textit{on-premise} dengan \textit{server} konvensional. Model \textit{cloud} menawarkan kemudahan implementasi dan skalabilitas dengan biaya operasional berulang (OPEX), sementara model \textit{on-premise} memerlukan investasi modal awal yang lebih besar (CAPEX) namun memiliki biaya operasional yang lebih rendah dalam jangka panjang \cite{Younus2024}.
+Sentral Sistem Laboratory (SSLab) merupakan laboratorium pengujian lingkungan komersil yang melayani klien dari berbagai sektor industri. Seluruh proses operasionalnya—dari penerimaan penawaran, penjadwalan pengujian, pencatatan hasil uji, hingga penerbitan sertifikat dan pencatatan transaksi keuangan—dijalankan tanpa sistem informasi yang terintegrasi. Kondisi ini terbentuk dari dua lapisan masalah: proses yang sepenuhnya manual, dan upaya digitalisasi sebelumnya yang tidak berhasil diteruskan.
 
-Perangkat berbasis prosesor ARM seperti \textit{single-board computer} (SBC) menawarkan potensi alternatif dengan karakteristik CAPEX yang rendah dan konsumsi daya yang minimal. Penelitian terdahulu menunjukkan bahwa SBC mampu menjalankan aplikasi server dengan kinerja yang memadai—Putra dkk. membuktikan SBC dapat membentuk \textit{cluster server} dengan peningkatan kinerja signifikan \cite{Putra2019}, sementara Arief dkk. memvalidasi efisiensi daya SBC sebagai \textit{portable server} \cite{Arief2018}. Dokumentasi komunitas juga menunjukkan bahwa ERP \textit{open-source} seperti \textit{Odoo} dan \textit{ERPNext} telah berhasil di-\textit{deploy} pada SBC secara informal \cite{cottafavi2023odoorpi,frappe2023erpnextpi}. Namun, studi-studi tersebut fokus pada \textit{workload} yang relatif ringan dan tidak mengevaluasi kelayakan untuk beban transaksional ERP yang intensif dengan operasi \textit{multi-user concurrent} dalam jangka panjang.
+\subsection{Proses Operasional Manual}
 
-Gap penelitian ini terletak pada ketiadaan data empiris yang sistematis mengenai tiga aspek kritis: kinerja transaksional ERP pada SBC, stabilitas operasional jangka panjang, dan analisis ekonomi komprehensif melalui \textit{Total Cost of Ownership} (TCO). Penelitian ini bertujuan mengisi gap tersebut dengan melakukan studi kelayakan yang mengevaluasi apakah SBC dapat menjadi alternatif infrastruktur ERP yang layak dan lebih ekonomis dibandingkan solusi \textit{mainstream}.
+Seluruh alur operasional SSLab bertumpu pada Google Sheets yang tidak terhubung satu sama lain. Tim \textit{sales} mencatat penawaran di dokumen terpisah dari tim operasional yang menjadwalkan pengujian, dan tim laboratorium yang mencatat hasil uji menggunakan berkas tersendiri pula. Setiap perubahan—revisi penawaran, pergeseran jadwal, atau koreksi hasil uji—memerlukan penyalinan manual antardokumen. Tidak ada validasi otomatis maupun jejak perubahan; konsistensi data bergantung sepenuhnya pada ketelitian individu.
+
+Kondisi ini juga tidak \textit{scalable}. Ketika volume pekerjaan bertambah, jumlah \textit{spreadsheet} yang harus dikelola bertambah pula tanpa mekanisme agregasi. Pelaporan ke klien, termasuk penerbitan sertifikat hasil uji, memerlukan rekap manual dari beberapa sumber berbeda setiap kali. SSLab telah terakreditasi KAN (ISO/IEC 17025) \cite{iso17025}, yang antara lain mensyaratkan keterlacakan proses dan konsistensi rekaman, keduanya sulit dipenuhi secara konsisten dengan skema \textit{spreadsheet} yang terpisah.
+
+Diagram BPMN berikut menggambarkan kondisi proses bisnis SSLab sebelum sistem terintegrasi dikembangkan. Gambar \ref{fig:bpmn-as-is-lv0} menunjukkan gambaran umum alur dari penerimaan \textit{order} hingga penerbitan sertifikat. Gambar \ref{fig:bpmn-as-is-penjualan} dan \ref{fig:bpmn-as-is-penyeliaan} memperlihatkan proses penjualan dan penyeliaan secara lebih rinci. Kedua diagram menunjukkan titik-titik keputusan yang tidak terdefinisi dengan jelas dan \textit{exit} yang ambigu—gambaran proses yang dijalankan secara informal tanpa panduan sistem.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{image/bpmn-as-is-lv0}
+    \caption{BPMN proses bisnis SSLab level 0 (kondisi saat ini)}
+    \label{fig:bpmn-as-is-lv0}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{image/bpmn-as-is-penjualan}
+        \caption{BPMN proses penjualan SSLab (kondisi saat ini)}
+        \label{fig:bpmn-as-is-penjualan}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}[t]{0.48\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{image/bpmn-as-is-penyeliaan}
+        \caption{BPMN proses penyeliaan SSLab (kondisi saat ini)}
+        \label{fig:bpmn-as-is-penyeliaan}
+    \end{subfigure}
+\end{figure}
+
+\subsection{Upaya Digitalisasi Sebelumnya}
+
+SSLab pernah memulai pengembangan aplikasi berbasis PHP 5 dan CodeIgniter 3 sebagai upaya digitalisasi pertama. Aplikasi tersebut tidak pernah sampai tahap dapat digunakan secara operasional. Tidak ada desain sistem yang terdokumentasi: tidak ada \textit{entity relationship diagram} (ERD) dan tidak ada diagram \textit{use case}. Pengembangan hanya didasarkan pada \textit{mockup} yang dibuat di Microsoft Excel. Diagram BPMN yang ada dibuat di Bizagi secara terpisah dan tidak pernah diintegrasikan ke dalam logika aplikasi.
+
+Dari sisi cakupan, aplikasi lama hanya menjangkau proses sampai tahap penawaran—belum menyentuh operasional pengujian, manajemen hasil uji, maupun penerbitan sertifikat. Gambar \ref{fig:quotation-lama} menunjukkan tampilan formulir \textit{Quotation} pada aplikasi lama, yang merupakan salah satu fitur yang sempat dikembangkan. Formulir ini memperlihatkan data \textit{sampling} yang diinput secara manual per baris tanpa validasi antarmodul. Gambar \ref{fig:hasil-test-lama} menunjukkan salah satu tampilan antarmuka aplikasi lama yang sempat dibangun. Sementara itu, infrastruktur yang digunakan adalah komputer dengan prosesor Intel Core Duo Quad dan RAM 8 GB yang kerap mengalami \textit{overheat} saat menjalankan beban kerja \textit{server}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{image/quotation-lama}
+    \caption{Tampilan formulir \textit{Quotation} pada aplikasi lama SSLab}
+    \label{fig:quotation-lama}
+\end{figure}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.75\textwidth]{image/hasil-test-lama}
+    \caption{Salah satu tampilan antarmuka aplikasi lama SSLab}
+    \label{fig:hasil-test-lama}
+\end{figure}
+
+Ketiadaan desain yang terdokumentasi, cakupan yang parsial, dan infrastruktur yang tidak memadai membuat aplikasi lama tidak layak untuk dilanjutkan. Berbeda dari pendekatan tersebut, Senling dirancang dari analisis proses bisnis, penyusunan \textit{use case}, dan pemodelan data, dengan cakupan seluruh alur operasional SSLab dari penerimaan \textit{order} hingga pencatatan keuangan. Dua kondisi di atas—proses manual yang tidak terintegrasi dan upaya digitalisasi yang tidak berhasil—membentuk dasar analisis kebutuhan pada bagian berikutnya.
 
 
 \section{Analisis Kebutuhan}
 
-Untuk melakukan studi kelayakan deployment ERP pada infrastruktur alternatif, diperlukan identifikasi kebutuhan penelitian yang mencakup aspek fungsional dan non-fungsional platform. Dari kebutuhan ini akan diturunkan kriteria pemilihan platform software (ERP) dan platform hardware (SBC) yang sesuai.
+Dari kondisi saat ini, dua kelompok kebutuhan perlu dipenuhi: kebutuhan fungsional yang menentukan cakupan modul, dan kebutuhan non-fungsional yang membatasi desain teknis sistem.
 
 \subsection{Kebutuhan Fungsional}
 
-Platform yang dipilih untuk studi kelayakan ini harus memenuhi kebutuhan fungsional berikut:
+Tujuh modul fungsional Senling dirancang untuk mencakup seluruh alur operasional SSLab dari penerimaan \textit{order} hingga pencatatan keuangan. Setiap modul mengelola domain yang berbeda namun saling terintegrasi melalui basis data yang sama.
 
 \begin{enumerate}[a)]
-    \item \textbf{KF-01:} Platform ERP harus memiliki modul-modul transaksional esensial (\textit{Accounting/Finance, Sales/CRM, Inventory Management}) untuk mensimulasikan beban kerja yang representatif terhadap operasi bisnis nyata.
+    \item \textbf{KF-01 — Manajemen Klien:} Sistem harus dapat menyimpan dan mengelola data klien, termasuk informasi kontak dan alamat pengambilan sampel. Modul ini menjadi titik awal alur operasional karena setiap \textit{order} pengujian berasal dari klien yang terdaftar.
 
-    \item \textbf{KF-02:} Platform ERP harus mendukung akses \textit{multi-user concurrent} dengan kapasitas minimal 5--10 pengguna untuk menguji kemampuan sistem menangani beban konkuren.
+    \item \textbf{KF-02 — Registrasi Sampel:} Sistem harus dapat mencatat sampel yang masuk, baik yang dikirim oleh klien maupun yang diambil langsung oleh tim lapangan SSLab. Setiap sampel terhubung ke \textit{order} klien dan parameter pengujian yang diminta.
 
-    \item \textbf{KF-03:} Platform ERP harus menggunakan \textit{database} relasional standar (PostgreSQL atau MariaDB) untuk memastikan komparabilitas dengan deployment \textit{mainstream} dan validitas hasil pengujian.
+    \item \textbf{KF-03 — Penjadwalan Pengujian:} Sistem harus dapat menjadwalkan proses pengujian berdasarkan ketersediaan analis, alat, dan tenggat waktu. Penjadwalan yang terdokumentasi menggantikan koordinasi manual yang saat ini dilakukan melalui \textit{spreadsheet} terpisah.
 
-    \item \textbf{KF-04:} Platform \textit{hardware} harus mampu menjalankan \textit{stack} teknologi ERP secara penuh, mencakup \textit{web server, application server}, dan \textit{database server}.
+    \item \textbf{KF-04 — Manajemen Hasil Uji:} Sistem harus dapat mencatat hasil pengujian per parameter yang diuji oleh analis. Hasil ini menjadi dasar penerbitan sertifikat dan harus terlacak hingga ke analis yang bertanggung jawab.
+
+    \item \textbf{KF-05 — Pelaporan Sertifikat Hasil Uji:} Sistem harus dapat menghasilkan dokumen sertifikat hasil uji berdasarkan data pengujian yang tercatat. Sertifikat merupakan dokumen resmi yang diterima klien sebagai bukti hasil pengujian laboratorium.
+
+    \item \textbf{KF-06 — Inventori Reagen dan Alat:} Sistem harus dapat mengelola stok reagen dan peralatan laboratorium, termasuk kartu stok yang mencatat setiap penerimaan dan penggunaan. Inventori yang tercatat memungkinkan SSLab mendeteksi kebutuhan pengadaan sebelum stok habis.
+
+    \item \textbf{KF-07 — Modul Keuangan:} Sistem harus dapat mencatat transaksi keuangan yang berkaitan dengan \textit{order} klien, mencakup pembuatan \textit{invoice}, pencatatan piutang (\textit{accounts receivable}), dan pencatatan hutang (\textit{accounts payable}).
 \end{enumerate}
 
 \subsection{Kebutuhan Non-Fungsional}
 
-Selain kebutuhan fungsional, platform yang dipilih harus memenuhi kebutuhan non-fungsional berikut:
+Di luar cakupan fungsional, ada empat kebutuhan non-fungsional yang membatasi pilihan teknologi dan infrastruktur.
 
 \begin{enumerate}[a)]
-    \item \textbf{KNF-01:} Platform ERP harus berlisensi \textit{open-source} penuh untuk menghindari biaya lisensi sebagai variabel pengganggu dalam analisis \textit{Total Cost of Ownership} (TCO).
+    \item \textbf{KNF-01 — Performa:} Sistem harus mampu melayani hingga 20 pengguna bersamaan (\textit{concurrent users}) tanpa degradasi performa yang signifikan. Angka ini didasarkan pada estimasi beban puncak operasional SSLab dalam satu waktu.
 
-    \item \textbf{KNF-02:} Platform ERP harus \textit{mature} dan memiliki dokumentasi lengkap untuk memastikan reliabilitas penelitian dan kemudahan \textit{troubleshooting} selama eksperimen.
+    \item \textbf{KNF-02 — Deployment \textit{On-Premise}:} Sistem harus dapat di-\textit{deploy} sepenuhnya pada infrastruktur milik SSLab tanpa ketergantungan pada layanan pihak ketiga. Kebutuhan ini berasal dari keinginan SSLab untuk mengelola sendiri seluruh infrastruktur sistem, termasuk data, konfigurasi, dan pemeliharaan.
 
-    \item \textbf{KNF-03:} Platform ERP harus kompatibel dengan arsitektur ARM untuk memungkinkan deployment pada \textit{Single-Board Computer}.
+    \item \textbf{KNF-03 — Kompatibilitas dengan Orange Pi 5 Pro:} Sistem harus dapat berjalan pada Orange Pi 5 Pro (prosesor ARM RK3588S \textit{octa-core}, RAM 16 GB, konsumsi daya 10--15W). Batasan ini mendorong efisiensi penggunaan sumber daya agar sistem tetap responsif di atas perangkat dengan spesifikasi terbatas dibanding \textit{server} konvensional.
 
-    \item \textbf{KNF-04:} Platform \textit{hardware} harus memenuhi spesifikasi minimum yang dipersyaratkan oleh platform ERP yang dipilih untuk memastikan kelayakan teknis deployment.
-
-    \item \textbf{KNF-05:} Platform \textit{hardware} harus memiliki konsumsi daya rendah (maksimal 15W) untuk memungkinkan analisis efisiensi energi sebagai bagian dari evaluasi kelayakan.
-
-    \item \textbf{KNF-06:} Platform \textit{hardware} harus tersedia di pasar lokal Indonesia untuk memastikan replikabilitas penelitian dan relevansi konteks lokal.
+    \item \textbf{KNF-04 — \textit{Maintainability}:} Arsitektur sistem harus modular sehingga modul baru dapat ditambahkan tanpa merombak komponen yang sudah ada. Kebutuhan ini relevan karena pengembangan dilakukan secara bertahap dan cakupan modul direncanakan berkembang setelah tahap desain ini selesai.
 \end{enumerate}
 
-Kebutuhan fungsional dan non-fungsional di atas menjadi dasar untuk pemilihan platform \textit{software} dan \textit{hardware} yang akan digunakan dalam penelitian. Platform yang dipilih harus memenuhi seluruh kebutuhan fungsional (KF-01 hingga KF-04) dan sebagian besar kebutuhan non-fungsional (KNF-01 hingga KNF-06) untuk memastikan validitas dan reliabilitas studi kelayakan yang dilakukan.
+Kebutuhan-kebutuhan ini menentukan pilihan teknologi dan infrastruktur yang dibahas pada bagian berikutnya.
 
 
-\section{Pemilihan Platform Software}
+\section{Justifikasi Pemilihan Teknologi}
 
-\subsection{Alternatif Platform ERP}
+\subsection{Pendekatan Pengembangan: \textit{Custom} vs. \textit{Off-the-Shelf}}
 
-Dua platform ERP \textit{open-source} yang paling populer dan telah terbukti \textit{production-ready} adalah \textit{Odoo} dan \textit{ERPNext}. Keduanya menawarkan solusi ERP modular dengan komunitas global yang besar, namun dengan karakteristik teknis dan model lisensi yang berbeda.
+Dua platform ERP \textit{off-the-shelf} yang umum dipertimbangkan untuk organisasi skala kecil-menengah adalah Odoo dan SAP. Odoo tersedia dalam versi \textit{open-source} dengan modul-modul generik yang mencakup CRM, inventori, akuntansi, dan manufaktur \cite{odoo2025documentation}. SAP merupakan platform ERP kelas \textit{enterprise} dengan cakupan fungsional yang luas, namun biaya lisensi dan implementasinya tidak proporsional untuk organisasi dengan skala SSLab.
 
-\subsubsection{Alternatif 1: \textit{Odoo}}
+Odoo menawarkan fleksibilitas kustomisasi dan komunitas yang besar, namun modulnya dirancang untuk proses bisnis generik. Proses operasional lab pengujian lingkungan—registrasi sampel berdasarkan parameter spesifik, penjadwalan analis per metode uji, hingga penerbitan sertifikat hasil uji—tidak dapat dipetakan langsung ke modul standar Odoo tanpa kustomisasi mendalam pada level domain. Kustomisasi sejauh itu, dalam praktiknya, memerlukan upaya yang setara dengan membangun sistem dari nol, dengan tambahan beban memahami arsitektur \textit{framework} yang sudah ada.
 
-\textit{Odoo} merupakan platform ERP \textit{open-source} yang sangat populer dengan lebih dari 7 juta pengguna global, ditulis menggunakan Python dan PostgreSQL sebagai \textit{database backend} \cite{odoo2025documentation}. Arsitektur modular \textit{Odoo} memungkinkan instalasi selektif modul sesuai kebutuhan spesifik organisasi. Platform ini memenuhi kebutuhan fungsional penelitian (KF-01, KF-02, KF-03) dengan modul-modul lengkap dan dukungan \textit{multi-user} yang baik, serta memenuhi kebutuhan non-fungsional terkait dokumentasi lengkap (KNF-02) dan kompatibilitas ARM (KNF-03). Namun, model bisnis \textit{freemium} dengan pembedaan Community Edition dan Enterprise Edition berpotensi mempengaruhi analisis TCO—beberapa fitur lanjutan hanya tersedia pada versi Enterprise, sehingga pemenuhan KNF-01 bersifat parsial. \textit{Odoo} telah terbukti dapat berjalan pada SBC berbasis ARM, meskipun dokumentasi resmi untuk deployment ARM tidak sekomprehensif dokumentasi arsitektur \textit{x86} \cite{cottafavi2023odoorpi}.
+Atas dasar ini, pengembangan \textit{custom} dipilih. Dengan membangun Senling dari nol, seluruh model domain, alur kerja, dan antarmuka dirancang sesuai proses bisnis SSLab tanpa kompromi terhadap keterbatasan modul generik.
 
-\subsubsection{Alternatif 2: \textit{ERPNext}}
+\subsection{Justifikasi \textit{Framework}: Laravel dan Filament}
 
-\textit{ERPNext} adalah platform ERP \textit{open-source} yang dibangun di atas \textit{Frappe Framework} berbasis Python dan MariaDB, menyediakan modul-modul ERP inti yang komprehensif dengan arsitektur modular \cite{erpnext2024introduction}. Platform ini memenuhi seluruh kebutuhan fungsional penelitian (KF-01, KF-02, KF-03, KF-04) dan seluruh kebutuhan non-fungsional yang relevan: \textit{fully open-source} tanpa model \textit{freemium} (KNF-01 terpenuhi penuh), dokumentasi komprehensif termasuk untuk deployment ARM (KNF-02, KNF-03), dan adopsi luas sebagai platform \textit{mature}. \textit{Frappe Framework} yang menjadi fondasi \textit{ERPNext} memiliki arsitektur yang lebih sederhana dibandingkan \textit{Odoo}, sehingga mempermudah proses deployment dan \textit{troubleshooting} dalam konteks eksperimental. Dokumentasi \textit{ERPNext} untuk deployment pada arsitektur ARM sangat komprehensif dengan panduan resmi dan dukungan komunitas aktif untuk instalasi pada SBC seperti \textit{Raspberry Pi} dan \textit{Orange Pi} \cite{frappe2023erpnextpi}.
+Laravel dipilih sebagai \textit{framework} utama karena tim pengembang sudah terbiasa dengan PHP. Familiaritas ini mengurangi waktu \textit{onboarding} dan risiko teknis yang muncul saat mengadopsi ekosistem baru. Dibandingkan \textit{framework} PHP lain seperti CodeIgniter—yang digunakan pada aplikasi lama SSLab—Laravel menawarkan ekosistem yang lebih \textit{mature}: ORM ekspresif (Eloquent), sistem migrasi basis data, manajemen dependensi via Composer, dan konvensi yang mendorong struktur kode yang konsisten.
 
-\subsection{Justifikasi Pemilihan \textit{ERPNext}}
+Filament dipilih sebagai lapisan panel admin di atas Laravel karena keterbatasan waktu pengembangan. Membangun antarmuka admin—tabel data, form, CRUD, manajemen RBAC—dari nol menghabiskan waktu yang signifikan sebelum logika domain bisnis dapat disentuh. Filament menyediakan komponen-komponen ini secara deklaratif. Waktu pengembangan dapat difokuskan pada logika domain lab yang spesifik. Kombinasi Laravel dan Filament membentuk fondasi \textit{modular monolith} yang dijabarkan pada subbagian berikutnya.
 
-Evaluasi kedua alternatif terhadap kebutuhan penelitian dilakukan secara sistematis untuk memilih platform ERP yang paling sesuai. Tabel \ref{tab:software-evaluation} menunjukkan hasil evaluasi terhadap seluruh kebutuhan fungsional dan non-fungsional.
+\subsection{Justifikasi Arsitektur: \textit{Modular Monolith}}
 
-\begin{table}[h]
-\centering
-\caption{Evaluasi Alternatif Platform ERP terhadap Kebutuhan Penelitian}
-\label{tab:software-evaluation}
-\begin{tabular}{|l|p{0.35\textwidth}|c|c|}
-\hline
-\textbf{Kode} & \textbf{Kebutuhan} & \textbf{\textit{Odoo}} & \textbf{\textit{ERPNext}} \\ \hline
-KF-01 & Modul transaksional esensial & \checkmark & \checkmark \\ \hline
-KF-02 & Multi-user concurrent & \checkmark & \checkmark \\ \hline
-KF-03 & Database relasional standar & \checkmark & \checkmark \\ \hline
-KF-04 & Stack teknologi lengkap & \checkmark & \checkmark \\ \hline
-KNF-01 & Fully open-source & Parsial & \checkmark \\ \hline
-KNF-02 & Mature \& documented & \checkmark & \checkmark \\ \hline
-KNF-03 & ARM compatible & \checkmark & \checkmark \\ \hline
-\end{tabular}
-\end{table}
+Dua pilihan arsitektur yang dipertimbangkan adalah \textit{modular monolith} dan \textit{microservice}. Arsitektur \textit{microservice} memecah sistem menjadi layanan-layanan kecil yang berjalan dan di-\textit{deploy} secara independen \cite{fowler2014microservices}. Pendekatan ini menguntungkan pada sistem berskala besar atau dengan kebutuhan \textit{scaling} per komponen, namun membawa \textit{overhead} koordinasi yang nyata: setiap interaksi antar layanan melewati jaringan, \textit{service discovery} perlu dikonfigurasi, dan penelusuran masalah melibatkan \textit{distributed tracing}.
 
-Berdasarkan evaluasi terhadap kebutuhan penelitian, \textbf{\textit{ERPNext} dipilih} sebagai platform ERP untuk studi kelayakan ini. Meskipun kedua platform memenuhi seluruh kebutuhan fungsional (KF-01 hingga KF-04), \textit{ERPNext} memiliki keunggulan signifikan pada aspek lisensi (KNF-01). Sebagai platform \textit{fully open-source} tanpa model \textit{freemium}, \textit{ERPNext} memastikan bahwa analisis \textit{Total Cost of Ownership} (TCO) tidak terdistorsi oleh biaya lisensi atau keterbatasan fitur pada versi Community Edition. Selain itu, \textit{ERPNext} memiliki dokumentasi komprehensif untuk deployment pada arsitektur ARM (KNF-03), yang krusial untuk keberhasilan instalasi pada \textit{Single-Board Computer}. Arsitektur \textit{ERPNext} yang dibangun di atas \textit{Frappe Framework} juga lebih sederhana untuk deployment eksperimental dibandingkan ekosistem \textit{Odoo} yang lebih kompleks \cite{erpnext2024introduction}.
+Skala operasional SSLab tidak memerlukan kompleksitas tersebut. Jumlah pengguna terbatas, volume transaksi tidak tinggi, dan tim pengembang kecil—kondisi di mana \textit{overhead microservice} tidak sebanding dengan manfaatnya. \textit{Modular monolith} dipilih karena memberikan keuntungan pemisahan domain sekaligus kesederhanaan \textit{deployment}: satu \textit{codebase}, satu proses, satu basis data PostgreSQL yang berjalan pada Orange Pi. Pemisahan domain dalam Senling terlihat eksplisit di struktur data: Customer, Product Knowledge, Sales, Operations, dan Finance masing-masing membentuk klaster entitas yang terisolasi dalam satu \textit{deployment} yang sama.
 
 
-\section{Pemilihan Platform Hardware}
+\section{Justifikasi Pemilihan Perangkat Keras}
 
-\subsection{Alternatif Single-Board Computer}
+\subsection{Alternatif Perangkat Keras}
 
-Setelah \textit{ERPNext} dipilih sebagai platform ERP, langkah berikutnya adalah memilih platform \textit{hardware Single-Board Computer} yang memenuhi kebutuhan penelitian. Pemilihan SBC didasarkan pada kemampuan memenuhi spesifikasi minimum \textit{ERPNext} (KNF-04), efisiensi daya (KNF-05), dan ketersediaan di pasar lokal (KNF-06).
+Pemilihan perangkat keras didasarkan pada kebutuhan SSLab untuk menjalankan Senling secara \textit{on-premise} dengan anggaran yang terbatas. Tiga alternatif dipertimbangkan: Raspberry Pi 5, Orange Pi 5 Pro, dan Mini PC berbasis Intel N100.
 
-\subsubsection{Alternatif 1: \textit{Raspberry Pi} 5}
+\subsubsection{Alternatif 1: Raspberry Pi 5}
 
-\textit{Raspberry Pi} 5 merupakan generasi terbaru dari platform SBC paling populer di dunia dengan komunitas pengguna terbesar dan ekosistem \textit{software} yang paling \textit{mature} \cite{raspberrypi2024pi5}. Platform ini menggunakan prosesor \textit{quad-core} ARM Cortex-A76 dengan kecepatan hingga 2.4GHz dan tersedia dalam varian RAM 4GB dan 8GB. \textit{Raspberry Pi} 5 mendukung sistem operasi \textit{Raspberry Pi} OS (berbasis Debian) dan distribusi Linux lainnya seperti Ubuntu.
+Raspberry Pi 5 merupakan generasi terbaru dari SBC paling populer di dunia, menggunakan prosesor \textit{quad-core} ARM Cortex-A76 2.4GHz dan tersedia dalam varian RAM 4 GB dan 8 GB \cite{raspberrypi2024pi5}. Konsumsi daya sistem berkisar 8--12W. Ekosistem Raspberry Pi memiliki komunitas global yang besar dengan dokumentasi yang \textit{mature} dan dukungan distribusi Linux yang luas. Keterbatasan utamanya terletak pada kapasitas RAM maksimum 8 GB, yang menjadi batasan untuk menjalankan \textit{stack} lengkap Senling (Nginx, PHP-FPM, PostgreSQL, Redis) secara bersamaan dengan beban pengguna puncak.
 
-\textit{Raspberry Pi} 5 memenuhi spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{quad-core} ARM Cortex-A76 2.4GHz dan RAM hingga 8GB (KNF-04). Konsumsi daya perangkat ini berkisar 8--12W, memenuhi batasan 15W (KNF-05). \textit{Raspberry Pi} 5 juga tersedia secara luas di Indonesia dan memiliki dokumentasi serta dukungan komunitas yang sangat \textit{mature} (KNF-06). Keunggulan utama \textit{Raspberry Pi} 5 adalah komunitas global yang sangat besar, dokumentasi yang sangat lengkap, dan ekosistem \textit{software} yang \textit{mature} dengan dukungan luas dari vendor dan pengembang \cite{raspberrypi2024pi5}.
+\subsubsection{Alternatif 2: Orange Pi 5 Pro}
 
-\subsubsection{Alternatif 2: \textit{Orange Pi} 5 Pro}
-
-\textit{Orange Pi} 5 Pro merupakan SBC berbasis prosesor Rockchip RK3588S dengan arsitektur \textit{octa-core} (8 core) yang terdiri dari 4 core ARM Cortex-A76 (2.4GHz) and 4 core ARM Cortex-A55 (1.8GHz) dalam konfigurasi \textit{big.LITTLE} \cite{orangepi2024pi5pro}. Platform ini tersedia dalam varian RAM 4GB, 8GB, and 16GB, sehingga menawarkan kapasitas memori yang lebih tinggi dibandingkan \textit{Raspberry Pi} 5. \textit{Orange Pi} 5 Pro mendukung berbagai distribusi Linux termasuk Ubuntu, Debian, and Armbian.
-
-\textit{Orange Pi} 5 Pro memenuhi dan melampaui spesifikasi minimum \textit{ERPNext} dengan prosesor \textit{octa-core} Rockchip RK3588S hingga 2.4GHz and RAM hingga 16GB (KNF-04). Konsumsi daya perangkat ini berkisar 10--15W, memenuhi batasan yang ditetapkan (KNF-05). \textit{Orange Pi} 5 Pro juga tersedia di pasar Indonesia melalui berbagai distributor lokal (KNF-06). Keunggulan utama \textit{Orange Pi} 5 Pro adalah kinerja yang lebih tinggi dengan 8 core dan kapasitas RAM hingga 16GB, sehingga lebih mampu menangani beban kerja ERP yang lebih intensif. Harga \textit{Orange Pi} 5 Pro di pasar Indonesia juga \textit{comparable} dengan \textit{Raspberry Pi} 5 untuk varian RAM yang setara \cite{orangepi2024pi5pro}.
+Orange Pi 5 Pro berbasis prosesor Rockchip RK3588S dengan konfigurasi \textit{octa-core} (4 core ARM Cortex-A76 2.4GHz + 4 core ARM Cortex-A55 1.8GHz) dalam arsitektur \textit{big.LITTLE} \cite{orangepi2024pi5pro}. Perangkat ini tersedia hingga varian RAM 16 GB dan mendukung Ubuntu, Debian, serta Armbian. Konsumsi daya sistem berkisar 10--15W. Dibandingkan Raspberry Pi 5, Orange Pi 5 Pro menawarkan jumlah core yang lebih banyak dan kapasitas RAM dua kali lebih besar pada varian tertinggi. Harga unit termasuk casing dan adapter berkisar Rp~2 juta di pasar Indonesia \cite{orangepi2024pi5pro}.
 
 \subsubsection{Alternatif 3: Mini PC Intel N100}
 
-Mini PC berbasis prosesor Intel N100 sering kali dianggap sebagai alternatif \textit{low-power} untuk \textit{server} skala kecil. Meskipun secara teoritis memiliki TDP sebesar 6W, dalam implementasi praktis prosesor ini sering mengalami lonjakan daya (\textit{power burst}) hingga 25W pada level SoC untuk menangani beban komputasi transaksional. Dari aspek arsitektur, penggunaan instruksi \textit{Complex Instruction Set Computing} (CISC) pada x86 cenderung kurang efisien dibandingkan arsitektur RISC pada ARM untuk rasio \textit{performance-per-watt} dalam operasional 24/7 \cite{blem2013power}. Selain itu, Mini PC N100 umumnya dijual dalam kondisi \textit{barebone} (tanpa RAM), sehingga total biaya pengadaan menjadi lebih tinggi dibandingkan SBC dengan memori terintegrasi, menjadikannya kurang ekonomis untuk konteks penelitian ini.
+Mini PC berbasis Intel N100 sering dipertimbangkan sebagai alternatif \textit{server} berdaya rendah berbasis x86. Meskipun TDP tercatat 6W, konsumsi daya aktual saat menjalankan beban transaksional dapat mencapai 25W akibat \textit{power burst} pada level SoC \cite{blem2013power}. Mini PC N100 umumnya dijual dalam kondisi \textit{barebone} tanpa RAM, sehingga biaya total pengadaan lebih tinggi dari SBC dengan memori terintegrasi. Arsitektur x86 juga tidak memiliki keunggulan khusus untuk \textit{workload} seperti Senling dibandingkan ARM pada kisaran daya yang setara.
 
-\subsection{Justifikasi Pemilihan \textit{Orange Pi} 5 Pro}
+\subsection{Justifikasi Pemilihan Orange Pi 5 Pro}
 
-Evaluasi ketiga alternatif SBC dan \textit{low-power hardware} terhadap kebutuhan penelitian dilakukan secara sistematis. Tabel \ref{tab:hardware-evaluation} menunjukkan hasil perbandingan terhadap kriteria utama.
+Tabel \ref{tab:hardware-evaluation} merangkum perbandingan ketiganya.
 
 \begin{table}[h]
 \centering
-\caption{Evaluasi Alternatif Hardware terhadap Kebutuhan Penelitian}
+\caption{Perbandingan Alternatif Perangkat Keras untuk Server Senling}
 \label{tab:hardware-evaluation}
-\begin{tabular}{|l|p{0.38\textwidth}|c|c|c|}
+\begin{tabular}{|p{0.32\textwidth}|c|c|c|}
 \hline
-\textbf{Kode} & \textbf{Kebutuhan} & \textbf{RPi 5} & \textbf{OPi 5 Pro} & \textbf{Mini PC N100} \\ \hline
-KF-04 & Stack teknologi ERP & \checkmark & \checkmark & \checkmark \\ \hline
-KNF-04 & Memenuhi spek minimum & \checkmark (4 core) & \checkmark (8 core) & \checkmark (4 core) \\ \hline
-KNF-05 & Konsumsi daya $\leq$ 15W & \checkmark & \checkmark & \texttimes \\ \hline
-KNF-06 & Budget Friendly & \checkmark & \checkmark & \texttimes \\ \hline
+\textbf{Kriteria} & \textbf{RPi 5} & \textbf{OPi 5 Pro} & \textbf{Mini PC N100} \\ \hline
+Arsitektur ARM & \checkmark & \checkmark & \texttimes \\ \hline
+RAM tersedia $\geq$ 16 GB & \texttimes & \checkmark & \checkmark \\ \hline
+Konsumsi daya $\leq$ 15W & \checkmark & \checkmark & \texttimes \\ \hline
+Harga all-in $\leq$ Rp 3 juta & \checkmark & \checkmark & \texttimes \\ \hline
 \end{tabular}
 \end{table}
 
-Berdasarkan evaluasi tersebut, \textbf{\textit{Orange Pi} 5 Pro dipilih} sebagai platform utama. Dibandingkan dengan \textit{Raspberry Pi} 5, \textit{Orange Pi} 5 Pro menawarkan keunggulan komputasi yang signifikan melalui konfigurasi \textit{octa-core} RK3588S yang lebih tangguh untuk beban kerja \textit{database} intensif. Sementara itu, dibandingkan dengan Mini PC Intel N100, \textit{Orange Pi} 5 Pro lebih unggul dari aspek efisiensi energi sistem total (maksimal 15W) dan biaya investasi awal karena memori yang sudah terintegrasi (\textit{on-board}), sesuai dengan batasan anggaran organisasi skala kecil \cite{orangepi2024pi5pro}.
-
-Untuk keperluan perbandingan, penelitian ini juga menggunakan \textit{Virtual Private Server} (VPS) sebagai platform \textit{baseline}. VPS dengan spesifikasi \textit{comparable} (2--4 vCPU, 4--8GB RAM) akan digunakan untuk evaluasi kinerja guna memastikan \textit{fair comparison}. Untuk analisis \textit{Total Cost of Ownership}, \textit{commercial} VPS dengan \textit{pricing} transparan akan dipilih sebagai representasi alternatif infrastruktur \textit{mainstream}. Pemilihan VPS tidak melalui proses evaluasi kebutuhan yang sama karena VPS berfungsi sebagai \textit{baseline} pembanding, bukan sebagai variabel penelitian yang dievaluasi kelayakannya.
+\textbf{Orange Pi 5 Pro dipilih} sebagai server \textit{on-premise} untuk Senling. Raspberry Pi 5 gugur pada satu kriteria: kapasitas RAM maksimum 8 GB tidak cukup untuk menjalankan seluruh komponen \textit{stack} Senling secara bersamaan dengan beban 20 pengguna puncak (KNF-01 dan KNF-03). Mini PC Intel N100 gugur pada dua kriteria: konsumsi daya aktual melampaui 15W dan harga total setelah penambahan RAM melebihi anggaran yang tersedia. Orange Pi 5 Pro memenuhi seluruh kriteria—ARM \textit{octa-core}, RAM hingga 16 GB, konsumsi daya 10--15W, dan harga sekitar Rp~2 juta termasuk casing dan adapter \cite{orangepi2024pi5pro}.

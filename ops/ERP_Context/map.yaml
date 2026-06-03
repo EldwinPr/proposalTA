@@ -1,0 +1,137 @@
+# Senling — Codebase Map
+# Maps UCs and system components to their Filament resources, models, and services.
+# Agents: load this to navigate without reading the full codebase.
+# Humans: reference for tickets and onboarding.
+# Update when adding new resources or pages.
+
+---
+
+pages:  # app/Filament/Pages/ — custom pages (not resource-based)
+  - path: app/Filament/Pages/TerimaSampel.php
+    uc: [UC-18, UC-19]
+    models: [Sample, SalesOrderDetail, SalesOrder]
+    service: ~
+    note: hybrid QR scan + manual intake. Uses html5-qrcode JS. Mobile-optimised.
+
+---
+
+resources:  # app/Filament/Resources/
+  - path: app/Filament/Resources/Quotation/
+    uc: [UC-01, UC-02, UC-03, UC-04, UC-05, UC-06, UC-07]
+    models: [Quotation, QuotationDetail, QuotationDetailParameter, QuotationAdditionalCost]
+    service: QuotationService
+    note: generateSalesOrders() triggers SO creation. Revision tracking mandatory.
+
+  - path: app/Filament/Resources/SalesOrders/
+    uc: [UC-08, UC-09, UC-10]
+    models: [SalesOrder, SalesOrderDetail, Sample, SampleParameter]
+    service: QuotationService
+    note: DetailsRelationManager shows SOD. SamplesRelationManager nested under SOD.
+
+  - path: app/Filament/Resources/BuatPengambilan/
+    uc: [UC-11, UC-12, FEAT-02]
+    models: [Pengambilan, SalesOrderDetail]
+    service: ~
+
+  - path: app/Filament/Resources/Pengambilan/
+    uc: [UC-11, UC-12]
+    models: [Pengambilan, SalesOrder]
+    service: ~
+
+  - path: app/Filament/Resources/Persiapan/
+    uc: [UC-13, UC-14, UC-15]
+    models: [PersiapanSample, Pengambilan, Wadah]
+    service: ~
+    note: PersiapanSample is read-only, backed by PostgreSQL view v_persiapan_samples — not a real table.
+
+  - path: app/Filament/Resources/PersiapanKiriman/
+    uc: [UC-13, FEAT-01]
+    models: [SalesOrder, Sample, SalesOrderDetail, Wadah]
+    service: ~
+    note: kirim_sampling variant — grouped by SalesOrder, not Pengambilan. Same logic as Persiapan.
+
+  - path: app/Filament/Resources/Samples/
+    uc: [UC-18, UC-24]
+    models: [Sample, SampleParameter]
+    service: ~
+    note: navigation hidden post UC-18; tracking now via SalesOrder → SOD → Samples relation chain.
+
+  - path: app/Filament/Resources/Customer/
+    uc: [UC-01]
+    models: [Customer, CustomerContact, CustomerAddress]
+    service: ~
+
+  - path: app/Filament/Resources/ProdukUji/
+    uc: []
+    models: [ProdukUji, Regulasi, Paket, PaketParameter, MetodeSampling]
+    service: ~
+    note: master data — product under test, test packages, regulations.
+
+  - path: app/Filament/Resources/Parameter/
+    uc: []
+    models: [Parameter, ReferenceMethod]
+    service: ~
+    note: individual test parameters. parameter.parameter (string) is the label used in Sample.
+
+  - path: app/Filament/Resources/Paket/
+    uc: []
+    models: [Paket, PaketParameter]
+    service: ~
+
+  - path: app/Filament/Resources/PaketSentral/
+    uc: []
+    models: [PaketSentral, PaketSentralRegulasi]
+    service: ~
+
+  - path: app/Filament/Resources/Regulation/
+    uc: []
+    models: [Regulasi]
+    service: ~
+
+  - path: app/Filament/Resources/ReferenceMethod/
+    uc: []
+    models: [ReferenceMethod]
+    service: ~
+
+  - path: app/Filament/Resources/Alats/
+    uc: [UC-20]
+    models: [Alat]
+    service: ~
+
+  - path: app/Filament/Resources/Wadahs/
+    uc: [SYS-02a]
+    models: [Wadah]
+    service: ~
+    note: counter-based container tracking.
+
+  - path: app/Filament/Resources/AdditionalCosts/
+    uc: []
+    models: [AdditionalCost]
+    service: ~
+
+  - path: app/Filament/Resources/TermOfPayment/
+    uc: []
+    models: []
+    service: ~
+
+  - path: app/Filament/Resources/Users/
+    uc: []
+    models: [User]
+    service: ~
+    note: users.id is bigint PK — exception to ULID rule.
+
+---
+
+services:
+  - path: app/Services/QuotationService.php
+    key_method: generateSalesOrders()
+    touches: [Quotation, SalesOrder, SalesOrderDetail, Sample, SampleParameter]
+    note: only place SO generation happens — never duplicate this logic.
+
+---
+
+views:  # PostgreSQL views — read-only models backed by DB views
+  - view: v_persiapan_samples
+    model: app/Models/PersiapanSample.php
+    used_by: [Persiapan, PersiapanKiriman]
+    note: recreate via migration (DROP + CREATE) — no schema changes to the model itself.

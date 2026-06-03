@@ -1,0 +1,166 @@
+# ops/context/map.yaml — High-Level Module / File Map
+
+backend:
+  entry: main.go
+  app_bootstrap: app/routes.go          # DI wiring + route registration
+
+  models:
+    - file: app/models/master.go
+      exports: [COA, CompanyBalance, CustomerCredit, CompanyTransaction]
+    - file: app/models/invoice.go
+      exports: [Invoice, InvoiceDetail]   # Invoice has so_id, so_number since FEAT-002
+    - file: app/models/journal.go
+      exports: [Journal, JournalEntry]
+    - file: app/models/ticket.go
+      exports: [AdjustmentTicket]
+    - file: app/models/voucher.go
+      exports: [Voucher]
+    - file: app/models/user.go
+      exports: [User]
+    - file: app/models/utils.go
+      exports: [GenerateULID]
+    - file: app/models/seeder.go
+      purpose: Dev seed data
+
+  remote:
+    - file: app/remote/client.go
+      exports: [Client, NewClient]
+      purpose: "Typed HTTP client for Laravel ERP API (ERP_API_URL + ERP_API_KEY from env)"
+      methods: [GetSalesOrders, GetSalesOrder, MarkSOInvoiced]
+    - file: app/remote/types.go
+      exports: [SOSummary, SODetail, SOCustomer, SOQuotation, SOLineItem, SOAdditionalCost]
+      purpose: "API response structs — no GORM tags"
+
+  repositories:
+    base: app/repositories/base_repository.go   # BaseRepository[T], PaginationResult[T]
+    modules:
+      - app/repositories/invoice_repository.go
+      - app/repositories/journal_repository.go
+      - app/repositories/master_repository.go   # COA, CompanyBalance, CustomerCredit, CompanyTransaction
+      - app/repositories/ticket_repository.go
+      - app/repositories/user_repository.go
+
+  services:
+    base: app/services/base_service.go          # BaseService[T], Transaction helper
+    modules:
+      - app/services/auth_service.go
+      - app/services/invoice_service.go         # Invoice create/approve + journal creation
+      - app/services/journal_service.go         # Core double-entry engine, XLSX export
+      - app/services/so_service.go              # SO→Invoice creation + resolveCustomer
+      - app/services/ticket_service.go          # Maker-checker approval workflow
+      - app/services/voucher_service.go         # Voucher journaling + status updates
+
+  controllers:
+    base: app/controllers/base_controller.go    # Generic CRUD handler factory
+    modules:
+      - app/controllers/auth_controller.go
+      - app/controllers/balance_controller.go
+      - app/controllers/dashboard_controller.go
+      - app/controllers/explorer_controller.go  # DB explorer (dev-only)
+      - app/controllers/invoice_controller.go
+      - app/controllers/journal_controller.go
+      - app/controllers/payment_controller.go
+      - app/controllers/so_controller.go        # List/Get SO proxies + CreateFromSO
+      - app/controllers/ticket_controller.go
+      - app/controllers/transaction_controller.go
+      - app/controllers/user_controller.go
+      - app/controllers/voucher_controller.go
+
+  routes:
+    main: app/routes.go
+    modules:
+      - app/routes/auth.go
+      - app/routes/coa.go
+      - app/routes/customer.go
+      - app/routes/invoice.go
+      - app/routes/journal.go
+      - app/routes/master.go
+      - app/routes/so.go                        # GET /api/sales-orders, POST /api/invoices/from-so
+      - app/routes/ticket.go
+      - app/routes/transaction.go
+      - app/routes/voucher.go
+
+  middleware: app/middleware/middleware.go       # Auth + RequireClearance
+
+frontend:
+  entry: web/src/main.ts
+  root_component: web/src/App.svelte            # Router + layout
+  api_client: web/src/lib/api.ts               # Central fetch wrapper
+  auth_store: web/src/lib/auth.svelte.ts
+
+  pages:
+    - web/src/pages/Login.svelte
+    - web/src/pages/Dashboard.svelte
+    - web/src/pages/Invoices.svelte
+    - web/src/pages/InvoiceDetail.svelte
+    - web/src/pages/Payments.svelte
+    - web/src/pages/Journal.svelte              # Ledger / journal explorer
+    - web/src/pages/ManualJournal.svelte        # Create manual journal entry
+    - web/src/pages/ManualJournalList.svelte
+    - web/src/pages/Transactions.svelte         # Bank statement (mutasi bank)
+    - web/src/pages/Balances.svelte             # Company bank accounts
+    - web/src/pages/COA.svelte
+    - web/src/pages/Customers.svelte
+    - web/src/pages/Vouchers.svelte
+    - web/src/pages/VoucherCreate.svelte
+    - web/src/pages/Tickets.svelte              # Adjustment ticket queue
+    - web/src/pages/SalesOrders.svelte          # Browse Laravel SOs + create invoice (FEAT-002)
+    - web/src/pages/Pengajuan.svelte            # Employee advance requests (read-only view)
+    - web/src/pages/PengajuanDetail.svelte
+    - web/src/pages/Kasbon.svelte               # Short-term employee loans (read-only view)
+    - web/src/pages/KasbonDetail.svelte
+    - web/src/pages/Users.svelte
+    - web/src/pages/Explorer.svelte             # Dev DB explorer
+
+  ui_components:
+    - name: DataTable
+      path: web/src/lib/DataTable.svelte
+      description: >
+        Paginated table with search, sort, URL-sync.
+        Pass `endpoint` for server-side (expects PaginatedResult<T>)
+        or `items` for client-side (filters/sorts locally).
+      key_props: [endpoint, items, columns, rowKey, extraParams, dateFilter, headerActions, cell, onDataLoaded]
+
+    - name: Badge
+      path: web/src/lib/Badge.svelte
+      description: "Solid-fill status chip. types: default|primary|success|error|warning|blue|cyan|violet|rose|amber|indigo"
+
+    - name: Button
+      path: web/src/lib/Button.svelte
+      description: "Action button. variants: primary|outline|ghost. Note: large padding (px-10 py-4) — don't use inline in table rows."
+
+    - name: Modal
+      path: web/src/lib/Modal.svelte
+      description: "Centred overlay modal. Props: isOpen ($bindable), title, subtitle. Slots: children, footer."
+
+    - name: ConfirmDialog
+      path: web/src/lib/ConfirmDialog.svelte
+      description: "Singleton destructive-action confirm. Already mounted in Layout. Trigger via dialog store."
+      usage: "dialog.confirm(title, message, asyncCallback)"
+
+    - name: SearchableSelect
+      path: web/src/lib/SearchableSelect.svelte
+      description: "Dropdown with fuzzy search for FK fields (customer, COA, user)."
+
+  utilities:
+    - "formatCurrency(n) — IDR formatting"
+    - "formatDate(s) — id-ID locale date+time"
+    - "formatInput(n) / parseInput(s) — currency input pair"
+    - "clickOutside(node, handler) — Svelte action"
+    path: web/src/lib/utils.ts
+
+  stores:
+    - "toast.success/error/info(msg) — web/src/lib/toast.svelte.ts"
+    - "dialog.confirm(title, msg, cb) — web/src/lib/dialog.svelte.ts"
+    - "auth.user / auth.logout() — web/src/lib/auth.svelte.ts"
+
+  icons:
+    library: lucide-svelte
+    note: "Check existing imports before pulling new icon packs."
+
+build:
+  frontend_output: static/                      # Compiled Svelte SPA served by Go
+  backend_binary: bin/server.exe
+  hot_reload: air (backend), vite (frontend)
+  database_dev: SQLite (system.db)
+  database_prod: PostgreSQL (docker-compose)
