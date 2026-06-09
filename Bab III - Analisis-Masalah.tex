@@ -7,15 +7,25 @@
 \chapter{ANALISIS MASALAH}
 \label{chap:analisis-masalah}
 
+\section{Profil Perusahaan}
+
+Sentral Sistem Laboratory merupakan salah satu unit usaha di bawah PT Sentral Tehnologi Managemen, perusahaan yang berdiri sejak tahun 1999 \cite{ssl_website}. Lini pertamanya, Sentral Sistem Consulting, bergerak di bidang konsultansi manajemen dengan cakupan yang luas: kinerja bisnis, mutu, lingkungan, keselamatan kerja, energi, hingga pengembangan sumber daya manusia dan budaya perusahaan.
+
+Bidang usaha kedua menyusul pada tahun 2014 melalui Sentral Sistem Calibration. Unit ini menyediakan jasa kalibrasi alat ukur dan pelatihan kalibrasi, dengan sebagian lingkup layanannya telah terakreditasi Komite Akreditasi Nasional (KAN).
+
+Unit pengujian laboratorium baru berdiri belakangan, yaitu pada tahun 2025, dengan nama Sentral Sistem Laboratory (SSLab). Unit ini berfokus pada pengujian mekanik dan lingkungan serta melayani klien dari berbagai sektor industri. Sebagai lini termuda dalam kelompok usaha, SSLab menjadi objek pengembangan sistem ERP yang dibahas dalam proposal ini.
+
+Ketiga unit tersebut menempatkan Sentral Sistem Group pada rantai layanan yang berurutan: konsultansi sistem manajemen, kalibrasi alat ukur, dan pengujian laboratorium. Posisi SSLab sebagai unit termuda turut menjelaskan kondisi yang dibahas pada bagian berikutnya, yaitu proses operasional yang belum sepenuhnya didukung sistem informasi terintegrasi.
+
 \section{Analisis Kondisi Saat Ini}
 
-Sentral Sistem Laboratory (SSLab) merupakan laboratorium pengujian lingkungan komersil yang melayani klien dari berbagai sektor industri. Seluruh proses operasionalnya—dari penerimaan penawaran, penjadwalan pengujian, pencatatan hasil uji, hingga penerbitan sertifikat dan pencatatan transaksi keuangan—dijalankan tanpa sistem informasi yang terintegrasi. Kondisi ini terbentuk dari dua lapisan masalah: proses yang sepenuhnya manual, dan upaya digitalisasi sebelumnya yang tidak berhasil diteruskan.
+Seluruh proses operasional SSLab—dari penerimaan penawaran, penjadwalan pengujian, pencatatan hasil uji, hingga penerbitan sertifikat dan pencatatan transaksi keuangan—dijalankan tanpa sistem informasi yang terintegrasi. Kondisi ini terbentuk dari dua lapisan masalah: proses yang sepenuhnya manual, dan upaya digitalisasi sebelumnya yang tidak berhasil diteruskan.
 
 \subsection{Proses Operasional Manual}
 
 Seluruh alur operasional SSLab bertumpu pada Google Sheets yang tidak terhubung satu sama lain. Tim \textit{sales} mencatat penawaran di dokumen terpisah dari tim operasional yang menjadwalkan pengujian, dan tim laboratorium yang mencatat hasil uji menggunakan berkas tersendiri pula. Setiap perubahan—revisi penawaran, pergeseran jadwal, atau koreksi hasil uji—memerlukan penyalinan manual antardokumen. Tidak ada validasi otomatis maupun jejak perubahan; konsistensi data bergantung sepenuhnya pada ketelitian individu.
 
-Kondisi ini juga tidak \textit{scalable}. Ketika volume pekerjaan bertambah, jumlah \textit{spreadsheet} yang harus dikelola bertambah pula tanpa mekanisme agregasi. Pelaporan ke klien, termasuk penerbitan sertifikat hasil uji, memerlukan rekap manual dari beberapa sumber berbeda setiap kali. SSLab telah terakreditasi KAN (ISO/IEC 17025) \cite{iso17025}, yang antara lain mensyaratkan keterlacakan proses dan konsistensi rekaman, keduanya sulit dipenuhi secara konsisten dengan skema \textit{spreadsheet} yang terpisah.
+Kondisi ini juga tidak \textit{scalable}. Ketika volume pekerjaan bertambah, jumlah \textit{spreadsheet} yang harus dikelola bertambah pula tanpa mekanisme agregasi. Pelaporan ke klien, termasuk penerbitan sertifikat hasil uji, memerlukan rekap manual dari beberapa sumber berbeda setiap kali. SSLab telah terakreditasi KAN (ISO/IEC 17025) \cite{iso17025} untuk sebagian parameter pengujiannya, dan akreditasi tersebut antara lain mensyaratkan keterlacakan proses dan konsistensi rekaman—keduanya sulit dipenuhi secara konsisten dengan skema \textit{spreadsheet} yang terpisah.
 
 Diagram BPMN berikut menggambarkan kondisi proses bisnis SSLab sebelum sistem terintegrasi dikembangkan. Gambar \ref{fig:bpmn-as-is-lv0} menunjukkan gambaran umum alur dari penerimaan \textit{order} hingga penerbitan sertifikat. Gambar \ref{fig:bpmn-as-is-penjualan} dan \ref{fig:bpmn-as-is-penyeliaan} memperlihatkan proses penjualan dan penyeliaan secara lebih rinci. Kedua diagram menunjukkan titik-titik keputusan yang tidak terdefinisi dengan jelas dan \textit{exit} yang ambigu—gambaran proses yang dijalankan secara informal tanpa panduan sistem.
 

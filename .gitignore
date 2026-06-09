@@ -32,12 +32,6 @@
 .DS_Store
 Thumbs.db
 
-<<<<<<< Updated upstream
 *.txt
-=======
-
-.claude
-# sources
-CLAUDE.md
-GEMINI.mdg
->>>>>>> Stashed changes
+claude.md
+.claude/

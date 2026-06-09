@@ -1,0 +1,40 @@
+Kode, Nama Use Case,User,Asal proses,deskripsi,Nav/group, Filament Resource Name,Tables used
+UC-01,Cek Customer di Database,Sales,Penawaran,Mencari customer yang sudah terdaftar di sistem,Customer -> Customers,CustomerResource,customers
+UC-02,Daftarkan Customer Ke Sistem,Sales,Penawaran,Mendaftarkan customer baru beserta kontak dan alamat,Customer -> Customers,CustomerResource,"customers, customer_contacts, customer_addresses"
+UC-03,Cek List Produk/Parameter,Sales,Penawaran,Melihat daftar produk uji dan parameter yang tersedia,Product,ParameterResource / ProdukUjiResource,"parameter, produk_uji, paket, regulasi, reference_method"
+UC-04,Buat Penawaran,Sales,Penawaran,Membuat quotation baru untuk customer,Sales -> Quotation,QuotationResource (CreateQuotation),"quotations, quotation_details, quotation_detail_parameters, quotation_detail_regulations, quotation_additional_costs"
+UC-05,Revisi Penawaran,Sales,Penawaran,Merevisi quotation yang sudah ada atas permintaan customer,Sales -> Quotation,QuotationResource (EditQuotation),"quotations, quotation_revisions, quotation_detail_revisions, quotation_detail_parameter_revisions"
+UC-06,Upload PO,Sales,Penawaran,Upload Purchase Order dari customer sebagai tanda deal,Sales -> Quotation,QuotationResource,quotations
+UC-07,Pilih SO,Planning,Pengambilan Sampel,Memilih sales order yang akan dibuatkan pengambilan,Planning -> Buat Pengambilan,BuatPengambilanResource,"sales_orders, sales_order_details"
+UC-08,Klik Buat COC,Planning,Pengambilan Sampel,Membuat Chain of Custody untuk rencana pengambilan sampel,Planning -> Buat Pengambilan,BuatPengambilanResource (CreatePengambilan),"pengambilan, sales_order_details"
+UC-09,"Masukan Pilih/Data yang sesuai, Pilih titik, Klik buat COC",Planning,Pengambilan Sampel,"Mengisi detail pengambilan: titik, jadwal, petugas, alamat",Planning -> Buat Pengambilan,BuatPengambilanResource (CreatePengambilan),"pengambilan, jadwal_pengambilan, samples, sales_order_details"
+UC-10,Pilih Pengambilan di menu persiapan,Petugas Sampling,Pengambilan Sampel,Petugas memilih jadwal pengambilan yang akan disiapkan wadahnya,Lab -> Persiapan,PersiapanResource,"pengambilan, samples"
+UC-11,Tentukan Wadah dan print barcode,Petugas Sampling,Pengambilan Sampel,Menentukan wadah untuk setiap sampel dan mencetak label barcode,Lab -> Persiapan,PersiapanResource,"samples, wadah"
+UC-12,Update Status persiapan,Petugas Sampling,Pengambilan Sampel,Menandai persiapan wadah sampel selesai dan siap berangkat,Lab -> Persiapan,PersiapanResource,"samples, sales_order_details"
+UC-13,"Klik Sampling by Customer, pilih titik yang ingin diproses",Petugas Sampling,Pengambilan Sampel,Memproses titik yang sampelnya dikirim oleh customer,Planning -> Buat Pengambilan,BuatPengambilanResource,"sales_order_details, samples"
+UC-14,Pilih Wadah Customer,Petugas Sampling,Pengambilan Sampel,Menentukan wadah yang disediakan oleh customer untuk sampel kiriman,Lab -> Persiapan Kiriman,PersiapanKirimanResource,"samples, wadah"
+UC-15,Pilih Wadah SSLab,Petugas Sampling,Pengambilan Sampel,Menentukan wadah yang disediakan lab untuk sampel kiriman,Lab -> Persiapan Kiriman,PersiapanKirimanResource,"samples, wadah"
+UC-16,Pilih SO di persiapan kiriman,Petugas Sampling,Pengambilan Sampel,Memilih sales order untuk memproses sampel kiriman,Lab -> Persiapan Kiriman,PersiapanKirimanResource,"sales_orders, sales_order_details"
+UC-17,Tentukan Wadah dan print barcode (sampling by customer),Petugas Sampling,Pengambilan Sampel,Menentukan wadah dan cetak label barcode untuk sampel kiriman,Lab -> Persiapan Kiriman,PersiapanKirimanResource,"samples, wadah"
+UC-18,Update Status persiapan,Petugas Sampling,Pengambilan Sampel,Menandai persiapan sampel kiriman selesai,Lab -> Persiapan Kiriman,PersiapanKirimanResource,"samples, sales_order_details"
+UC-19,Lihat sampel yang perlu dikerjakan,Petugas Sampling,Pengujian Insitu,Analis melihat daftar pengujian yang ditugaskan kepadanya,Lab -> Worklist,KerjaPengujian (Page),"sample_parameter, pengujian, samples"
+UC-20,Input hasil sampling,Petugas Sampling,Pengujian Insitu,Analis menginput hasil pengujian onsite/insitu,Lab -> Worklist,KerjaPengujian (Page),sample_parameter
+UC-21,Scan Barcode Sampel atau pilih sampel,Teknisi,Penerimaan Sampel,Teknisi menerima sampel dari lapangan dengan scan barcode atau pilih manual,Lab -> Terima Sampel,TerimaSampel (Page),"samples, pengambilan"
+UC-22,Catat Abnormalitas,Teknisi,Penerimaan Sampel,Mencatat kondisi abnormal sampel yang diterima di lab,Lab -> Terima Sampel,TerimaSampel (Page),samples
+UC-23,Pilih sampel,Planning,Pengujian Sampel,Planning memilih sampel yang siap dijadwalkan pengujiannya,Planning -> Buat Pengujian,JadwalPengujianResource,"samples, pengujian"
+UC-24,Pilih unit alat,Planning,Pengujian Sampel,Memilih unit alat dan slot waktu untuk pengujian,Planning -> Buat Pengujian,JadwalPengujianResource,"pengujian, unit_alat"
+UC-25,Pilih Parameter,Planning,Pengujian Sampel,Memilih parameter sample yang akan masuk ke satu batch pengujian,Planning -> Buat Pengujian,JadwalPengujianResource,"sample_parameter, pengujian"
+UC-26,pilih analis,Planning,Pengujian Sampel,Menugaskan analis ke pengujian yang telah dijadwalkan,Planning -> Buat Pengujian,JadwalPengujianResource,"pengujian, users"
+UC-27,Lihat Penugasan,Teknisi,Pengujian Sampel,Analis melihat daftar pengujian yang ditugaskan sebelum mulai,Lab -> Penugasan,Penugasan (Page),"pengujian, sample_parameter"
+UC-28,Klik Mulai pengerjaan dan masukan kondisi awal alat,Teknisi,Pengujian Sampel,Analis memulai pengujian dan mencatat kondisi awal alat,Lab -> Penugasan,Penugasan (Page),pengujian
+UC-29,Input hasil sampling dan link worksheet,Teknisi,Pengujian Sampel,Analis menginput hasil pengujian dan menyimpan link worksheet,Lab -> Worklist,KerjaPengujian (Page),sample_parameter
+UC-30,Cek hasil pengujian,selia,Penyeliaan,Penyelia mengecek hasil pengujian yang disubmit analis,Penyelia -> Worklist Penyeliaan,KerjaPenyeliaan (Page),"sample_parameter, pengujian"
+UC-31,Approve/Tolak hasil,selia,Penyeliaan,Penyelia menyetujui atau menolak hasil pengujian per parameter,Penyelia -> Worklist Penyeliaan,KerjaPenyeliaan (Page),"sample_parameter, pengujian, samples, sales_order_details"
+UC-32,Cek draft sertifikat,MT,Penyeliaan,MT mengecek draft sertifikat yang digenerate sistem sebelum dikirim ke Sales,Management -> Periksa Sertifikat,PeriksaSertifikatResource,"sales_order_details, sample_parameter"
+UC-33,Approve/Tolak Sertifikat,MT,Penyeliaan,MT menyetujui sertifikat (→ konfirmasi customer) atau tolak (→ penyeliaan ulang),Management -> Periksa Sertifikat,PeriksaSertifikatResource,"sales_order_details, sample_parameter"
+UC-34,Kirim Sertifikat ke customer,Sales,Pembayaran dan Penerbitan Sertifikat,Sales mengirim draft sertifikat ke customer untuk dikonfirmasi,Sales -> Sertifikat,SertifikatResource,sales_order_details
+UC-35,Tandai sertifikat disetujui atau tidak,Sales,Pembayaran dan Penerbitan Sertifikat,Sales mencatat keputusan customer — setuju lanjut ke pembayaran / tolak ke evaluasi,Sales -> Sertifikat,SertifikatResource,"sales_order_details, certificates"
+UC-36,Buat Invoice,Finance,Pembayaran dan Penerbitan Sertifikat,Finance membuat invoice untuk SO yang sudah disetujui customer,Microservice Finance,Finance App (external),(Finance microservice)
+UC-37,Masukan pembayaran dan tandai invoice sudah dibayar,Finance,Pembayaran dan Penerbitan Sertifikat,Finance mencatat pembayaran customer dan menandai invoice lunas,Microservice Finance,Finance App (external),(Finance microservice)
+UC-38,Upload sertifikat yang sudah ditanda tangan,MT,Pembayaran dan Penerbitan Sertifikat,MT mengupload sertifikat yang telah ditandatangani fisik setelah pembayaran,Management -> Tanda Tangan Sertifikat,TandatanganSertifikatResource,"certificates, sales_order_details"
+UC-39,Kirim sertifikat akhir ke customer,Sales,Pembayaran dan Penerbitan Sertifikat,Sales mengirim sertifikat final bertanda tangan ke customer dan menutup SO,Sales -> Sertifikat,SelesaiSertifikatResource,"sales_order_details, certificates"

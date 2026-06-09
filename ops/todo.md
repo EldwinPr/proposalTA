@@ -105,19 +105,36 @@ Dikerjakan satu per satu. Pick → active.md → selesai → log.md → kembali 
 ---
 
 ## T-16 — Bab V: Rencana Pengembangan
-- [ ] Ganti "Rencana Evaluasi" → "Rencana Pengembangan"
-- [ ] Fase: setup dev environment → implementasi modul inti → integrasi → testing → evaluasi hardware
-- [ ] Menyelesaikan UC yang pending (UC-16 s/d UC-31) sebagai salah satu rencana
+- [x] Ganti "Rencana Evaluasi" → "Rencana Pengembangan"
+- [x] Fase: 8 fase sekuensial (doc setup, migrasi, 7 modul) × 1–3 minggu each
+- [x] Dokumentasi lengkap 39 UC tercakup dalam fase-fase implementasi
 
 ## T-17 — Bab V: Metodologi Pengembangan (RM 2)
-- [ ] Tulis section metodologi: PM approach, development process, tools
-- [ ] SBC sebagai dev+UAT server — bagian dari setup metodologi
-- [ ] Placeholder untuk AI-assisted development (jika disetujui pembimbing)
+- [x] Tulis section metodologi: PM approach (GitHub → .md → agents), development process, tools
+- [x] SBC sebagai dev+UAT server — bagian dari setup metodologi
+- [x] Placeholder untuk AI-assisted development (agents + context management)
 
 ## T-18 — Bab V: Gantt Chart
-- [ ] Buat Gantt chart baru (timeline pengembangan, bukan penelitian)
-- [ ] Sesuaikan dengan fase di T-16
+- [x] Gantt chart reference updated (timeline pengembangan, 17 minggu)
+- [x] Sesuaikan dengan 8 fase di T-16
 
 ## T-19 — Bab V: Analisis Risiko
-- [ ] Revisi: ganti risiko penelitian → risiko implementasi
-      (hardware failure, scope creep, data parameter belum siap, dll)
+- [x] Revisi: ganti risiko penelitian → risiko implementasi
+      (5 risiko implementasi: go-live delay, scope creep, data loss, parameter availability, hardware failure)
+
+---
+
+## T-21 — Narasi perusahaan: broad → specific funnel
+Prinsip: Bab I & II bersifat broad (ERP, SBC, lab pengujian secara umum, tech stack).
+Detail spesifik perusahaan baru masuk mulai Bab III → IV → V.
+
+- [x] Bab I: hapus semua penyebutan perusahaan spesifik (SSLab / Sentral Sistem Laboratory) — broad-ified (2026-06-09)
+- [x] Bab II: hapus semua penyebutan perusahaan spesifik — semua SSLab → generik (2026-06-09)
+      (Bab II baris 66 di-broad-kan; sekaligus menghapus overclaim akreditasi)
+- [x] Bab III.1: \section{Profil Perusahaan} ditulis — paraphrase profil Sentral Sistem Group (PT Sentral Tehnologi Managemen 1999 → Consulting → Calibration 2014 → SSLab 2025), \cite{ssl_website} (2026-06-09)
+
+### Akurasi akreditasi ISO/IEC 17025
+- [x] Bab III baris 18: overclaim diperbaiki → "terakreditasi KAN (ISO/IEC 17025) untuk sebagian parameter pengujiannya" (2026-06-09)
+- [x] decisions.md sudah dikoreksi (2026-06-09) — jangan pakai frasa "terakreditasi penuh".
+
+Catatan: Bab I, II, III sudah diberi treatment. Hanya III.1 (company background prose) yang tersisa — milik user.

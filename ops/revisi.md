@@ -28,7 +28,7 @@
 - [ ] Tujuan 2: Mengevaluasi kelayakan Orange Pi sebagai server on-premise (vs x86 on-premise, bukan vs VPS)
 
 **Batasan Masalah** (tulis ulang)
-- [ ] Tentukan modul yang masuk scope (kandidat: registrasi sampel, penjadwalan pengujian, manajemen hasil uji, pelaporan CoA, inventori reagen, manajemen klien, finance microservice)
+- [ ] Tentukan modul yang masuk scope (kandidat: registrasi sampel, penjadwalan pengujian, manajemen hasil uji, pelaporan CoA, inventori reagen, manajemen klien, finance)
 - [ ] Tegaskan: deployment on-premise only, tidak ada perbandingan vs VPS
 - [ ] Sebutkan Orange Pi 5 Pro sebagai hardware yang digunakan
 - [ ] Tentukan apakah UAT dengan pengguna nyata masuk scope
@@ -45,7 +45,7 @@
 - [ ] Proses bisnis lab pengujian lingkungan (referensi ISO 17025 sebagai standar)
 - [ ] LIMS (Laboratory Information Management System) dan hubungannya dengan ERP
 - [ ] Laravel + Filament sebagai platform pengembangan ERP
-- [ ] Arsitektur microservice (justifikasi memisahkan finance ke Go + Svelte)
+- [ ] Justifikasi arsitektur modular monolith (vs microservice) untuk skala lab + deployment SBC
 
 **Hapus atau kurangi:**
 - [ ] Literatur TCO comparison cloud vs on-premise
@@ -58,7 +58,7 @@
 - [ ] Tulis ulang "Analisis Kondisi Saat Ini": proses lab saat ini (manual/spreadsheet yang tidak terintegrasi)
 - [ ] Tulis ulang "Kebutuhan Fungsional": modul-modul ERP untuk lab (bukan kebutuhan penelitian)
 - [ ] Tulis ulang "Kebutuhan Non-Fungsional": performa, keamanan, deployable di Orange Pi
-- [ ] Ganti seluruh section "Pemilihan Platform Software" (ERPNext vs Odoo) → "Justifikasi Tech Stack" (Laravel + Filament, Go + Svelte sebagai microservice finance)
+- [ ] Ganti seluruh section "Pemilihan Platform Software" (ERPNext vs Odoo) → "Justifikasi Tech Stack" (Laravel + Filament, arsitektur modular monolith)
 - [ ] Pertahankan dan sesuaikan "Pemilihan Platform Hardware" (justifikasi Orange Pi 5 Pro masih relevan)
 
 ---
@@ -66,7 +66,7 @@
 ## Bab IV — Desain Konsep Solusi
 
 Tulis ulang total:
-- [ ] Gambaran umum arsitektur sistem: Laravel + Filament (monolith utama) + Go + Svelte (microservice finance), terhubung via REST/gRPC, dijalankan di Orange Pi dengan Nginx sebagai reverse proxy
+- [ ] Gambaran umum arsitektur sistem: Laravel + Filament sebagai modular monolith, dijalankan di Orange Pi dengan Nginx sebagai reverse proxy (Nginx → PHP-FPM → Laravel+Filament → PostgreSQL + Redis)
 - [ ] Desain per modul (alur data, tanggung jawab tiap modul)
 - [ ] ERD atau diagram relasi antar entitas utama
 - [ ] Deployment architecture di Orange Pi (stack lengkap: Nginx, PHP-FPM, PostgreSQL/MariaDB, Redis, Go service)
@@ -76,7 +76,7 @@ Tulis ulang total:
 ## Bab V — Rencana Selanjutnya
 
 - [ ] Ganti "Rencana Evaluasi" → "Rencana Pengembangan"
-- [ ] Tulis fase-fase pembangunan: setup dev environment → implementasi modul inti → finance microservice → integrasi → testing → evaluasi hardware
+- [ ] Tulis fase-fase pembangunan: setup dev environment → implementasi modul inti → integrasi → testing → evaluasi hardware
 - [ ] Revisi kriteria keberhasilan: dari throughput/response time benchmark → fungsionalitas modul + UAT + evaluasi Orange Pi untuk prod
 - [ ] Buat Gantt chart baru sesuai timeline pengembangan
 - [ ] Revisi analisis risiko: sesuaikan dengan risiko implementasi (bukan risiko penelitian)

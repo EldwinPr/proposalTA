@@ -99,8 +99,16 @@
   trans-ak-si-onal
   di-ban-ding-kan
   mem-ban-ding-kan
-  per-ban-ding-an
+  per-ban-dingan
+  ser-ver
+  ke-uangan
+  pem-be-lian
+  ling-kungan
+  pen-ca-tatan
+  di-tun-jukkan
+  data
 }
+\setlength{\emergencystretch}{2em} % jaga justifikasi tetap rapi tanpa overfull box
 \usepackage{setspace} % for line spacing
 \onehalfspacing % spasi 1.5
 \usepackage{graphicx} % for images
@@ -224,6 +232,10 @@
 % AWAL DOKUMEN
 % ==========================================
 \begin{document}
+
+% Cegah pemenggalan yang menyisakan <=2 huruf di awal baris (mis. pembeli-an, lingkung-an,
+% da-ta). Diletakkan setelah \begin{document} agar tidak ditimpa oleh babel.
+\righthyphenmin=3
 
 % ==========================================
 % HALAMAN JUDUL

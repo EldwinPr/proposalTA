@@ -1,5 +1,5 @@
 \begin{longtable}{|p{0.22\textwidth}|c|c|p{0.42\textwidth}|}
-\caption{Analisis Risiko Penelitian}
+\caption{Analisis Risiko Implementasi Sistem ERP}
 \label{tab:risk-analysis} \\
 \hline
 \textbf{Risiko} & \textbf{Frekuensi} & \textbf{Dampak} & \textbf{Strategi Mitigasi} \\ \hline
@@ -17,10 +17,14 @@
 \hline
 \endlastfoot
 
-Tidak mene\-mu\-kan perangkat \textit{Orange Pi 5 Pro} & Sedang & Sedang & Gunakan alternatif SBC dengan spesifikasi setara (\textit{Raspberry Pi 5} atau \textit{Raspberry Pi 4}); penyesuaian minor pada konfigurasi \\ \hline
+Keterlambatan go-live atau produksi sistem & Tinggi & Sedang & Definisikan scope MVP yang jelas (7 modul inti); tandai fitur di luar scope sebagai backlog; gunakan versioning untuk rilis bertahap \\ \hline
 
-Kerusakan pada SBC saat pengujian & Rendah & Tinggi & Penanganan perangkat dengan hati-hati; backup konfigurasi dan data secara berkala; siapkan dana cadangan untuk penggantian komponen \\ \hline
+Scope creep --- permintaan modul atau fitur tambahan di luar 7 modul yang disepakati & Sedang & Tinggi & Dokumentasikan batasan masalah sebagai acuan; semua perubahan scope harus disetujui secara eksplisit; kelola backlog terpisah \\ \hline
 
-Gangguan internet saat pengujian & Sedang & Sedang & Pengujian pada waktu dengan koneksi stabil; caching dependencies lokal; dokumentasi dan retry untuk pengujian yang gagal \\ \hline
+Kehilangan atau korupsi data selama pengembangan & Rendah & Tinggi & Backup database otomatis sebelum setiap migrasi; gunakan transaction-safe migrations di Laravel; simpan snapshot konfigurasi secara berkala \\ \hline
+
+Parameter uji belum tersedia untuk validasi modul hasil uji & Tinggi & Sedang & Gunakan data dummy untuk functional testing; tandai modul hasil uji sebagai pending UAT; jangan menghalangi modul lain \\ \hline
+
+Kerusakan atau kegagalan hardware \textit{Orange Pi} & Rendah & Tinggi & Backup konfigurasi dan data secara berkala; siapkan SBC cadangan atau fallback ke development di mesin lokal \\ \hline
 
 \end{longtable}

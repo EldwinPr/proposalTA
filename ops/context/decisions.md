@@ -65,7 +65,8 @@ domain:
   lab_abbr: SSLab
   lab_type: "lab pengujian lingkungan komersil"
   company_name_in_proposal: "boleh disebut langsung"
-  iso_17025: "sudah terakreditasi ISO/IEC 17025; referensikan sebagai standar yang sudah dipegang SSLab, bukan sekadar target"
+  iso_17025: "akreditasi ISO/IEC 17025 bersifat PER-PARAMETER (ruang lingkup), bukan lab-wide. SSLab (unit baru, berdiri 2025) memegang akreditasi untuk SEBAGIAN parameter pengujiannya — bukan akreditasi penuh. Hindari frasa 'sudah terakreditasi penuh'. Lihat ops/context/company-profile.md"
+  group_structure: "SSLab adalah unit pengujian (2025) di bawah PT Sentral Tehnologi Managemen / Sentral Sistem Group (berdiri 1999). Sister units: Sentral Sistem Consulting (1999), Sentral Sistem Calibration (2014, terakreditasi KAN). Detail di ops/context/company-profile.md"
 
 pain_points:
   - "Seluruh proses (penawaran, operasional, sertifikat, jurnal) masih manual menggunakan Google Sheets — tidak ada integrasi"

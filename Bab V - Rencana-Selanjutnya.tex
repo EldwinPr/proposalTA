@@ -4,81 +4,85 @@
 \chapter{RENCANA SELANJUTNYA}
 \label{chap:rencana-selanjutnya}
 
-\section{Rencana Implementasi}
+\section{Metodologi Pengembangan}
 
-Implementasi penelitian ini akan dilakukan melalui tahapan berikut:
+Metodologi pengembangan Senling mengikuti pendekatan iteratif yang berfokus pada penyampaian modul-modul inti secara bertahap. Setiap modul dirancang untuk mengatasi alur proses bisnis yang spesifik, divalidasi melalui pengujian fungsional, kemudian diintegrasikan ke dalam sistem monolitik. Metodologi ini didukung oleh sistem manajemen proyek yang berkembang dari pendekatan sederhana menjadi struktur yang lebih terorganisir seiring dengan pertumbuhan basis kode dan kompleksitas fitur.
 
-\subsection{Penyiapan Infrastruktur}
+\subsection{Pendekatan Manajemen Proyek}
 
-Tahap pertama dalam implementasi penelitian adalah penyiapan infrastruktur yang mencakup perangkat keras dan perangkat lunak yang diperlukan untuk melakukan evaluasi komparatif. Infrastruktur ini harus dikonfigurasi dengan identik pada kedua platform (SBC dan VPS) untuk memastikan validitas perbandingan kinerja dan analisis TCO.
+Manajemen proyek pengembangan Senling mengalami evolusi metodologi untuk menyesuaikan dengan skala tim dan kompleksitas sistem. Fase awal menggunakan GitHub Issues sebagai sistem pelacakan tugas, namun pendekatan ini terbukti tidak optimal untuk tim dua orang karena kompleksitas pengelolaan dan transparansi konteks proyek. Pendekatan kemudian diubah menjadi sistem berbasis berkas Markdown (.md) sebagai pengganti GitHub Issues, memberikan fleksibilitas dan kesederhanaan dalam dokumentasi rencana pengembangan.
 
-\subsubsection{Perangkat Keras}
+Seiring dengan peningkatan kompleksitas alur \textit{Order to Acquisition} (fase implementasi kedua), tim mengadopsi disiplin perencanaan yang lebih ketat dengan memerlukan rencana tertulis sebelum implementasi dimulai. Praktik ini menghasilkan peningkatan signifikan dalam komunikasi tim, pengurangan \textit{rework}, dan dokumentasi yang lebih konsisten. Pada fase-fase selanjutnya, metodologi berkembang lebih lanjut dengan mengintegrasikan alat-alat bantu pengembangan berbasis agen untuk otomatisasi aspek-aspek tertentu dari proses pengembangan, seperti pembuatan kerangka kode, verifikasi konsistensi skema basis data, dan dokumentasi otomatis.
 
-Penyiapan perangkat keras untuk penelitian ini mencakup tiga komponen utama. Pertama, \textbf{SBC Platform} yang akan digunakan adalah \textit{Orange Pi} 5 Pro beserta aksesoris pendukungnya, meliputi \textit{power supply}, \textit{storage} microSD/eMMC, dan \textit{cooling system}. Kedua, \textbf{VPS Platform} akan menggunakan Oracle Cloud Free Tier dengan spesifikasi 4 OCPU Ampere ARM dan 24GB RAM sebagai platform untuk evaluasi kinerja. Ketiga, \textbf{Testing Infrastructure} berupa laptop atau PC yang akan digunakan untuk menjalankan aplikasi \textit{load testing}, yang diperlukan untuk menghindari \textit{bottleneck} pada mesin penguji.
+\subsection{Proses Pengembangan}
 
-\subsubsection{Perangkat Lunak}
+Proses pengembangan sistem Senling mengikuti alur yang terdiri dari enam fase implementasi utama, masing-masing dipetakan langsung pada satu alur BPMN \textit{to-be} yang telah dirancang pada Bab IV. Setiap fase mencakup tahapan analisis alur proses, perancangan model data, implementasi antarmuka pengguna dan layanan aplikasi, pengujian fungsional, dan integrasi dengan modul-modul sebelumnya.
 
-Penyiapan perangkat lunak mencakup lima komponen utama. Pertama, \textbf{Sistem Operasi} Linux akan diinstalasi pada kedua platform, dengan Armbian untuk \textit{Orange Pi} dan Ubuntu/Oracle Linux untuk VPS. Kedua, \textbf{Dependensi ERP} berupa instalasi \textit{stack} perangkat lunak yang dibutuhkan \textit{ERPNext}, meliputi Python 3.10+, Node.js dan npm, MariaDB/PostgreSQL sebagai sistem basis data, Nginx sebagai \textit{web server} dan \textit{reverse proxy}, Redis untuk \textit{caching} dan \textit{session management}, serta Supervisor untuk \textit{process management}. Ketiga, \textbf{Aplikasi ERP} berupa Frappe Framework dan \textit{ERPNext} akan diinstalasi dengan konfigurasi yang identik pada kedua platform. Keempat, \textbf{Dataset Demo} yang konsisten akan dipersiapkan untuk memastikan perbandingan yang adil antara kedua platform. Kelima, \textbf{Aplikasi Pengujian} berbasis Go akan dikembangkan untuk simulasi beban kerja ERP, mencakup \textit{API calls}, \textit{concurrent users}, dan \textit{transaction patterns}.
+Pengembangan dimulai dengan fase inisial berupa penyiapan dokumentasi dan infrastruktur selama dua minggu, diikuti dengan enam fase implementasi yang masing-masing menyelesaikan satu alur BPMN \textit{to-be}. Durasi tiap fase berkisar antara satu hingga tiga minggu tergantung pada kompleksitas alur proses dan jumlah \textit{use case} yang diimplementasikan. Alur \textit{Order to Acquisition} mendapatkan alokasi tiga minggu karena merupakan alur perencanaan multitahap yang paling kompleks, sekaligus menjadi titik transisi metodologi manajemen proyek dari pendekatan berbasis GitHub Issues ke pendekatan berbasis Markdown dengan dukungan agen.
 
-\subsection{Konfigurasi dan Validasi}
+\subsection{Alat dan Infrastruktur Pengembangan}
 
-Tahap konfigurasi dan validasi mencakup empat aktivitas utama. Pertama, akan dilakukan konfigurasi jaringan dan keamanan dasar pada kedua platform, meliputi pengaturan \textit{firewall}, akses SSH, dan SSL/TLS. Kedua, instalasi \textit{ERPNext} akan diverifikasi melalui akses \textit{web interface} dan pengujian fungsional dasar untuk memastikan sistem berjalan dengan baik. Ketiga, akan dilakukan validasi kompatibilitas \textit{ERPNext} pada arsitektur ARM, khususnya pada \textit{Orange Pi}, mengingat perbedaan arsitektur prosesor dengan platform x86. Keempat, \textit{baseline benchmarking} akan dilakukan untuk karakterisasi perbedaan intrinsik antara kedua platform, mencakup \textit{CPU kinerjance}, \textit{I/O throughput}, dan \textit{network latency}, yang akan menjadi acuan untuk analisis kinerja selanjutnya.
+Pengembangan sistem Senling menggunakan \textit{technology stack} berikut. Untuk aplikasi monolitik utama, digunakan Laravel 12 sebagai \textit{framework} aplikasi web dan Filament 5 sebagai \textit{framework} untuk membangun antarmuka administrasi yang cepat. Sistem basis data menggunakan PostgreSQL untuk penyimpanan data relasional dan Redis untuk \textit{caching} serta manajemen sesi. Untuk penyajian aplikasi, digunakan Nginx sebagai \textit{web server} dan \textit{reverse proxy}.
 
-\section{Rencana Evaluasi}
+Infrastruktur pengembangan dan pengujian awal (UAT) menggunakan Orange Pi 5 Pro sebagai server on-premise, memungkinkan tim untuk melakukan pengujian fungsional dalam lingkungan yang identik dengan rencana \textit{deployment} produksi. Pendekatan ini mengurangi risiko \textit{environment mismatch} dan memberikan validasi awal terhadap kelayakan perangkat keras yang dipilih. Selain itu, infrastruktur pengembangan lokal (mesin pengembang) didukung dengan Git untuk manajemen versi kode dan dokumentasi Markdown untuk pengelolaan proyek, memfasilitasi kolaborasi antara anggota tim.
 
-Setelah infrastruktur disiapkan dan dikonfigurasi, tahap selanjutnya adalah melakukan evaluasi komprehensif terhadap kelayakan \textit{deployment} ERP pada platform SBC dibandingkan dengan VPS. Evaluasi ini dirancang untuk menjawab pertanyaan penelitian melalui pengujian sistematis yang mencakup aspek kinerja fungsional, batasan kinerja, serta analisis ekonomi. Bagian ini menjelaskan metode pengujian yang akan digunakan, alat dan metrik yang akan diukur, kriteria keberhasilan penelitian, serta rencana analisis data hasil pengujian.
+\subsection{Peran AI dalam Pengembangan}
 
-\subsection{Metode Pengujian}
+Pengembangan sistem Senling mengintegrasikan alat-alat berbasis agen dan \textit{prompt caching} untuk meningkatkan efisiensi proses pengembangan, khususnya dalam otomatisasi tugas-tugas berulang dan pemeliharaan konsistensi dokumentasi. Alat-alat ini digunakan untuk fungsi-fungsi seperti verifikasi skema basis data, pembuatan kerangka kode berdasarkan desain modul, dan pembaruan otomatis dokumentasi konteks proyek. Integrasi ini direncanakan untuk difasilitasi melalui Model Konteks Panjang yang memungkinkan agen untuk mempertahankan pemahaman mendalam tentang arsitektur sistem dan keputusan desain yang telah ditetapkan sebelumnya.
 
-Evaluasi akan dilakukan melalui dua tahap pengujian utama:
+\section{Rencana Pengembangan}
 
-\subsubsection{Pengujian Kelayakan Fungsional}
+Rencana pengembangan ini merupakan tindak lanjut dari desain konsep solusi yang telah dipaparkan pada Bab IV. Setiap fase implementasi dipetakan langsung pada satu alur BPMN \textit{to-be} yang telah dirancang, sehingga pengembangan dapat dilakukan secara sekuensial mengikuti aliran data antar modul. Total durasi pengembangan diperkirakan 14 minggu, mencakup fase penyiapan dokumentasi dan infrastruktur selama 2 minggu serta enam fase implementasi yang masing-masing menyelesaikan satu alur proses bisnis.
 
-Pengujian kelayakan fungsional bertujuan untuk memastikan platform SBC mampu menjalankan fungsionalitas inti ERP dengan kinerja yang dapat diterima. Skenario pengujian akan mencakup simulasi alur kerja bisnis umum, meliputi pembuatan \textit{sales order}, validasi faktur (operasi tulis), penarikan laporan, dan pencarian data produk (operasi baca) \cite{maddodi2018generating}. Pengujian akan dilakukan dengan beban kerja normal sekitar 5-10 \textit{concurrent users} untuk periode waktu tertentu, misalnya selama 1 minggu, guna mengevaluasi stabilitas sistem dalam jangka panjang.
+\subsection{Jadwal Pengembangan}
 
-Metode eksekusi pengujian akan dilakukan dalam dua konfigurasi. Konfigurasi A menempatkan ERP di SBC dengan aplikasi \textit{testing} di VPS untuk mensimulasikan akses jarak jauh, sementara Konfigurasi B menempatkan ERP di VPS dengan aplikasi \textit{testing} di SBC sebagai pembanding. Selama pengujian, akan dilakukan pencatatan metrik kinerja yang mencakup \textit{response time}, \textit{error rate}, dan \textit{resource utilization} pada kedua platform.
+Gambar \ref{tab:gantt-chart} menunjukkan visualisasi jadwal pengembangan untuk seluruh fase, diorganisasikan sesuai dengan urutan alur BPMN \textit{to-be} pada Bab IV.
 
-\subsubsection{Pengujian Batasan Kinerja (\textit{Stress Test})}
-
-Pengujian batasan kinerja bertujuan untuk mengidentifikasi titik batas (\textit{breaking point}) platform SBC dalam menangani beban kerja ERP. Skenario pengujian akan mencakup simulasi lalu lintas tinggi dengan peningkatan bertahap jumlah \textit{concurrent users}, dimulai dari 10, kemudian 25, 50, hingga 100 pengguna. Selain itu, akan dilakukan peningkatan frekuensi pemanggilan API secara bertahap hingga sistem menunjukkan degradasi kinerja yang signifikan atau mulai menghasilkan \textit{error}.
-
-Metode eksekusi pengujian akan menggunakan aplikasi \textit{load testing} berbasis Go yang dijalankan dari laptop terdedikasi, hal ini dilakukan untuk menghindari \textit{bottleneck} pada mesin penguji. Pengujian akan diarahkan secara terpisah ke SBC dan VPS untuk mendapatkan data kinerja puncak dari masing-masing platform, sehingga dapat dibandingkan kapasitas maksimal keduanya.
-
-\subsection{Alat dan Metrik Evaluasi}
-
-Evaluasi kinerja akan menggunakan dua jenis alat pengujian utama. Pertama, aplikasi \textit{load testing} berbasis Go yang dipilih karena kemampuannya dalam menangani konkurensi tinggi dan memberikan kontrol granular atas beban kerja yang disimulasikan. Kedua, utilitas \textit{monitoring} Linux standar seperti \texttt{vmstat}, \texttt{iostat}, dan \texttt{htop} yang akan digunakan untuk \textit{monitoring resource utilization} secara real-time selama pengujian berlangsung.
-
-Metrik kinerja yang akan dikumpulkan terbagi dalam dua kategori. Kategori pertama adalah \textbf{Application Metrics} yang mencakup \textit{response time} (dalam milidetik), \textit{throughput} (diukur dalam \textit{requests/second}), dan \textit{error rate} (dalam persentase). Kategori kedua adalah \textbf{System Metrics} yang meliputi \textit{CPU utilization} (dalam persentase), penggunaan RAM (dalam MB dan persentase), \textit{disk I/O} (dalam MB/s), dan \textit{network latency} (dalam milidetik).
-
-\subsection{Kriteria Keberhasilan}
-
-Keberhasilan penelitian ini akan dievaluasi berdasarkan tiga aspek utama: kelayakan fungsional, kinerja komparatif, dan kelayakan ekonomi. Tabel \ref{tab:success-criteria} menunjukkan kriteria keberhasilan untuk masing-masing aspek yang akan menjadi acuan dalam menentukan apakah platform SBC layak digunakan sebagai alternatif infrastruktur ERP.
-
-\input{table/tabelkriteriakeberhasilan.tex}
-
-\subsection{Rencana Analisis Data}
-
-Analisis data hasil pengujian akan dilakukan melalui empat pendekatan utama. Pertama, \textbf{Analisis Kinerja} akan dilakukan dengan membuat grafik perbandingan, seperti grafik \textit{throughput} terhadap jumlah \textit{concurrent users} dan distribusi \textit{response time}, untuk memvisualisasikan perbedaan kinerja antar platform secara jelas. Kedua, \textbf{Identifikasi Bottleneck} akan dilakukan melalui analisis korelasi antara \textit{resource utilization} dan degradasi kinerja untuk mengidentifikasi komponen mana yang menjadi \textit{bottleneck}, baik itu CPU, RAM, maupun I/O.
-
-Ketiga, \textbf{Perhitungan TCO} akan dilakukan untuk periode 3 dan 5 tahun dengan mempertimbangkan komponen biaya yang berbeda untuk masing-masing platform. Untuk SBC, perhitungan mencakup CAPEX (biaya \textit{hardware}) dan OPEX (biaya listrik), sedangkan untuk VPS komersial, perhitungan berfokus pada OPEX berupa biaya sewa bulanan dari penyedia layanan seperti Hostinger, Biznet, atau DigitalOcean. Keempat, \textbf{Trade-off Analysis} akan dilakukan secara kualitatif untuk menganalisis \textit{trade-off} antara kelayakan teknis (kinerja dan kapasitas) dengan kelayakan finansial (TCO dan \textit{break-even point}), sehingga dapat memberikan rekomendasi yang komprehensif mengenai pemilihan platform yang sesuai untuk berbagai skenario penggunaan.
-
-\subsection{Jadwal Pelaksanaan Penelitian}
-
-Penelitian ini direncanakan akan dilaksanakan dalam periode Oktober 2025 hingga Maret 2026 dengan target penyelesaian pada 29 Maret 2026. Tabel \ref{tab:gantt-chart} menunjukkan rincian jadwal pelaksanaan untuk setiap tahapan penelitian.
-
-\begin{table}[htbp]
+\begin{figure}[htbp]
 \centering
-\includegraphics[width=0.95\textwidth]{image/Gantt-Chart.png}
-\caption{Jadwal pelaksanaan penelitian}
+\input{table/gantt-pengembangan.tex}
+\caption{Jadwal pengembangan sistem Senling}
 \label{tab:gantt-chart}
-\end{table}
+\end{figure}
 
-\textbf{Catatan Jadwal:} Jadwal di atas bersifat estimasi dan dapat berubah sesuai kondisi pelaksanaan penelitian. Beberapa faktor yang dapat mempengaruhi jadwal antara lain keterlambatan pengadaan perangkat keras atau infrastruktur pendukung, kompleksitas instalasi dan konfigurasi yang melebihi perkiraan, temuan hasil pengujian yang memerlukan investigasi mendalam, serta kebutuhan pengujian tambahan untuk validasi hasil. Apabila terjadi pergeseran jadwal, prioritas akan diberikan pada kualitas dan kedalaman analisis daripada kecepatan penyelesaian.
+\subsection{Detail Fase Pengembangan}
+
+\subsubsection{Fase 0: Penyiapan Dokumentasi dan Infrastruktur (Minggu 1–2)}
+
+Fase awal berfokus pada penyiapan dokumentasi dan infrastruktur pengembangan. Aktivitas mencakup pemetaan proses bisnis saat ini (\textit{as-is}), perancangan proses target (\textit{to-be}) melalui BPMN, perancangan model data (ERD), dan identifikasi 31 \textit{use case} sistem sebagaimana didokumentasikan pada Bab IV. Secara paralel, infrastruktur pengembangan disiapkan, mencakup konfigurasi Orange Pi 5 Pro, instalasi \textit{stack} teknologi (Laravel, PostgreSQL, Redis, Nginx), serta penyiapan repositori Git dan sistem dokumentasi berbasis Markdown sebagai pondasi manajemen proyek.
+
+\subsubsection{Fase 1: \textit{Sales} ke \textit{Order} (Minggu 3–4)}
+
+Fase ini mengimplementasikan alur BPMN \textit{to-be} \textit{Sales to Order} (lihat Bab IV Subbab~2.2) yang ditangani oleh aktor Sales. Implementasi mencakup verifikasi identitas klien, pendaftaran klien baru, penyusunan \textit{draft} penawaran, penerbitan penawaran final, revisi penawaran, dan konfirmasi melalui unggahan \textit{Purchase Order} (UC-01 hingga UC-07). Fase ini juga menyelesaikan migrasi modul Penawaran dari sistem CI3 lama ke arsitektur Laravel dan Filament, sehingga modul ini menjadi fondasi sistem yang memastikan integritas data dan kontinuitas bisnis.
+
+\subsubsection{Fase 2: \textit{Order} ke \textit{Acquisition} (Minggu 5–7)}
+
+Fase ini mengimplementasikan alur BPMN \textit{to-be} \textit{Order to Acquisition} (lihat Bab IV Subbab~2.3) yang ditangani oleh aktor Planning. Implementasi mencakup pemilihan \textit{Sales Order} untuk dijadwalkan, pemilihan titik \textit{sampling}, pemilihan teknisi, penetapan jadwal pengambilan, alur \textit{reschedule}, dan pencetakan \textit{barcode} serta label sampel (UC-08 hingga UC-13). Durasi 3 minggu untuk fase ini mencerminkan kompleksitas alur perencanaan multitahap. Fase ini juga merupakan titik transisi metodologi manajemen proyek: pada minggu kelima tim beralih dari GitHub Issues ke sistem pelacakan berbasis Markdown; pada minggu keenam diterapkan disiplin perencanaan tertulis sebelum implementasi; pada minggu ketujuh diintegrasikan alat-alat bantu pengembangan berbasis agen untuk meningkatkan determinisme proses pengembangan.
+
+\subsubsection{Fase 3: \textit{Acquisition} ke \textit{Storing} (Minggu 8–9)}
+
+Fase ini mengimplementasikan alur BPMN \textit{to-be} \textit{Acquisition to Storing} (lihat Bab IV Subbab~2.4) yang melibatkan aktor Sales dan Petugas Sampling. Implementasi mencakup pengiriman \textit{barcode} dan instruksi \textit{sampling} kepada klien, pencatatan hasil pengukuran di lapangan, pencatatan abnormalitas di titik pengambilan, pemindaian \textit{barcode} sampel saat penerimaan di laboratorium, dan dokumentasi abnormalitas kondisi fisik sampel (UC-14 hingga UC-19). Fase ini menjembatani aktivitas lapangan dengan operasi laboratorium.
+
+\subsubsection{Fase 4: \textit{Storing} ke \textit{Testing} (Minggu 10–11)}
+
+Fase ini mengimplementasikan alur BPMN \textit{to-be} \textit{Storing to Testing} (lihat Bab IV Subbab~2.5) yang dimulai oleh aktor Planning dan diselesaikan oleh Laboran. Implementasi mencakup penetapan alat pengujian, penugasan laboran pemegang alat, penentuan waktu kerja, tampilan daftar penugasan, pengambilan tiket dan sampel dari penyimpanan, serta pencatatan hasil pengujian per parameter (UC-20 hingga UC-25). Fase ini merupakan jantung operasi laboratorium dan memiliki ketergantungan data yang kompleks terhadap modul-modul sebelumnya.
+
+\subsubsection{Fase 5: Manajemen Jadwal Pengujian (Minggu 12)}
+
+Fase ini mengimplementasikan alur BPMN \textit{to-be} \textit{Schedule Management} (lihat Bab IV Subbab~2.6) yang bersifat kapasitas dan dapat dijalankan secara proaktif terlepas dari siklus \textit{Sales Order} tertentu. Implementasi memungkinkan Planning untuk menetapkan ketersediaan alat dan laboran untuk periode tertentu sebagai data kapasitas yang akan dipasangkan saat pengujian perlu dijadwalkan. Durasi 1 minggu dialokasikan karena alur ini relatif sederhana dan menggunakan kembali entitas dan layanan yang telah dibangun pada Fase 4.
+
+\subsubsection{Fase 6: Penyeliaan (Minggu 13–14)}
+
+Fase terakhir mengimplementasikan alur penyeliaan hasil uji yang ditangani oleh aktor Penyelia. Implementasi mencakup tinjauan hasil per parameter, persetujuan atau penolakan hasil, permintaan uji ulang atau \textit{sampling} ulang apabila ditemukan ketidaksesuaian, serta pengiriman \textit{draft} sertifikat hasil uji kepada klien (UC-26 hingga UC-31). Fase ini menjamin bahwa setiap sertifikat hasil uji yang diterbitkan telah melalui mekanisme pengendalian kualitas sesuai dengan standar ISO/IEC 17025 yang telah dipegang SSLab.
+
+\subsection{Catatan Jadwal}
+
+Jadwal di atas bersifat estimasi dan dapat berubah sesuai kondisi pengembangan yang aktual. Beberapa faktor yang dapat mempengaruhi jadwal antara lain perubahan persyaratan proses bisnis dari SSLab, tantangan teknis yang tidak terduga, atau ketersediaan anggota tim yang terbatas. Apabila terjadi pergeseran jadwal, prioritas akan diberikan pada kualitas implementasi dan pengujian fungsional daripada kecepatan penyelesaian.
 
 \section{Analisis Risiko}
 
-Tabel \ref{tab:risk-analysis} menunjukkan identifikasi risiko utama yang mungkin terjadi selama pelaksanaan penelitian beserta strategi mitigasi yang akan diterapkan.
+Tabel \ref{tab:risk-analysis} menunjukkan identifikasi risiko utama yang mungkin terjadi selama implementasi dan pengembangan sistem ERP beserta strategi mitigasi yang akan diterapkan.
 
 \input{table/tabelanalisisrisiko.tex}
 
-\textbf{Catatan:} \textbf{Frekuensi} mengacu pada estimasi kemungkinan terjadinya risiko, sedangkan \textbf{Dampak} mengacu pada estimasi dampak terhadap pelaksanaan penelitian jika risiko tersebut terjadi (Rendah/Sedang/Tinggi).
+\textbf{Catatan:} \textbf{Frekuensi} mengacu pada estimasi kemungkinan terjadinya risiko, sedangkan \textbf{Dampak} mengacu pada estimasi dampak terhadap keberhasilan implementasi sistem jika risiko tersebut terjadi (Rendah/Sedang/Tinggi).
